@@ -1,0 +1,8 @@
+.github
+docs
+*.yml
+*.yaml
+*.md
+.gitattributes
+coverage
+.nyc_output
