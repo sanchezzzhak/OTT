@@ -1,0 +1,25 @@
+{
+  "name": "node-open-tracker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sanchezzzhak/curly-octo-funicular.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sanchezzzhak/curly-octo-funicular/issues"
+  },
+  "homepage": "https://github.com/sanchezzzhak/curly-octo-funicular#readme",
+  "dependencies": {
+    "node-device-detector": "^1.3.8"
+  }
+}
