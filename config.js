@@ -1,4 +1,4 @@
-const config = {
+const CONFIG = {
   port: 3001,
   ssl: {
     enable: false,
@@ -17,4 +17,4 @@ const config = {
 
 
 
-module.exports = config;
+export default CONFIG;
