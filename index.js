@@ -1,14 +1,14 @@
 // const pathRegexp = require('path-to-regexp');
 
 const {resolve} = require('path');
-const {ServiceBroker } = require('moleculer');
+const {ServiceBroker} = require('moleculer');
 // configs init
 const moleculerConfig = require('./config/moleculer.config');
 // microservices init
 const broker = new ServiceBroker(moleculerConfig);
 
 broker.loadServices(
-	resolve(__dirname, 'services'), '*.service.js',
+  resolve(__dirname, 'services'), '*.service.js',
 );
 
 broker.start().then(() => {

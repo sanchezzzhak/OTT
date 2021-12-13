@@ -1,3 +1,3 @@
 module.exports = {
-    transporter: 'tcp'
+  transporter: 'tcp'
 };
