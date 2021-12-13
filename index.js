@@ -1,29 +1,16 @@
-
 // const pathRegexp = require('path-to-regexp');
 
-import CONFIG from './config.js';
-import UWS  from 'uWebSockets.js'
+const {resolve} = require('path');
+const {ServiceBroker } = require('moleculer');
+// configs init
+const moleculerConfig = require('./config/moleculer.config');
+// microservices init
+const broker = new ServiceBroker(moleculerConfig);
 
-let server;
+broker.loadServices(
+	resolve(__dirname, 'services'), '*.service.js',
+);
 
-if (CONFIG.ssl.enable) {
-    server = UWS.SSLApp({
-        key_file_name: CONFIG.ssl.keyPath,
-        cert_file_name: CONFIG.ssl.certPath
-    })
-} else {
-    server = UWS.App({});
-}
-server.any('/*', async (res, req) => {
+broker.start().then(() => {
 
-    // adds middleware
-
-
-    req.setYield(true);
-});
-
-server.listen(CONFIG.port, (listenSocket) => {
-    if (listenSocket) {
-        console.log('Server listening to port %s', CONFIG.port);
-    }
 });

@@ -1,4 +1,4 @@
-const CONFIG = {
+const appConfig = {
   port: 3001,
   ssl: {
     enable: false,
@@ -8,13 +8,6 @@ const CONFIG = {
   ws: {
     enable: false
   }
-  
-  
-  
-  
 };
 
-
-
-
-export default CONFIG;
+module.exports = appConfig;

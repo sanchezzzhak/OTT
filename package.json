@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "main": "src/app.js",
-  "type": "module",
   "directories": {
     "test": "tests"
   },
@@ -21,6 +20,7 @@
   },
   "homepage": "https://github.com/sanchezzzhak/curly-octo-funicular#readme",
   "dependencies": {
+    "moleculer": "^0.14.18",
     "node-device-detector": "^1.4.2",
     "uWebSockets.js": "uNetworking/uWebSockets.js#v19.3.0"
   }
