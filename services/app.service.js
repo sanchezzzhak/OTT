@@ -10,8 +10,16 @@ class AppService extends Service {
       mixins: [
         UwsServer({config: appConfig})
       ],
+      started: this.start,
+
+
     });
   }
+
+  start(){
+
+  }
+
 }
 
 

@@ -1,10 +1,15 @@
 const UWS = require('uWebSockets.js');
 const { randomUUID } = require('crypto');
+const fs = require('fs');
+const fsPath = require('path');
+const uwsSendFile = require('../utils/uws-send-file');
 
 const UwsServer = ({config: config} = {}) => ({
   server: null,
   name: 'web-server',
-  actions: {},
+  actions: {
+
+  },
   routes: [],
   settings: {
     port: config.port ?? 3001,
@@ -12,12 +17,14 @@ const UwsServer = ({config: config} = {}) => ({
     ip: config.ip ?? '127.0.0.1',
   },
 
-  created() {
+  async created() {
     this.createServer()
+    return Promise.resolve();
   },
 
-  started() {
+  async started() {
     this.listenServer();
+    return Promise.resolve();
   },
 
   stopped() {
@@ -25,22 +32,37 @@ const UwsServer = ({config: config} = {}) => ({
 
   methods: {
     listenServer() {
+      // send static files js
+
       // adds middleware
       this.server.any('/*', async (res, req) => {
         req.setYield(true);
       });
+
       // init tracker traffic
       this.server.get('/t/:id', async (res, req) => {
         let id = req.getParameter(0);
         let data = JSON.stringify({
           trafficId: randomUUID(),
         });
-        res.end(`window[_ott_${id}] = ${data}`);
+        res.end(`window['_ott_${id}'] = ${data}`);
       });
-      // send static files
-      this.server.get('/public/*', async (res, req) => {
-      
+
+      this.server.get('/*', (res, req) => {
+        let root = fsPath.resolve(__dirname + '/../public');
+        let path = req.getUrl();
+
+        if(path === '/') {
+          return uwsSendFile(req, res, {
+            path: fsPath.join(root, 'index.html')
+          });
+        }
+        return uwsSendFile(req, res, {
+          path:   fsPath.join(root,path)
+        });
+
       });
+
       // If it is possible to run on a normal port (80, 441)
       // without proxying in ngnix (do this)
       this.server.listen(this.settings.port, (listenSocket) => {
@@ -49,6 +71,7 @@ const UwsServer = ({config: config} = {}) => ({
         }
       })
     },
+
 
     createServer() {
       if (this.settings.ssl.enable) {
@@ -60,6 +83,9 @@ const UwsServer = ({config: config} = {}) => ({
       }
       this.server = UWS.App({});
     }
+  },
+  getServerUws(){
+    return this.server;
   }
 });
 
