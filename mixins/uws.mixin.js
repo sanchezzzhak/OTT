@@ -1,4 +1,5 @@
 const UWS = require('uWebSockets.js');
+const { randomUUID } = require('crypto');
 
 const UwsServer = ({config: config} = {}) => ({
   server: null,
@@ -24,10 +25,24 @@ const UwsServer = ({config: config} = {}) => ({
 
   methods: {
     listenServer() {
+      // adds middleware
       this.server.any('/*', async (res, req) => {
-        // adds middleware
         req.setYield(true);
       });
+      // init tracker traffic
+      this.server.get('/t/:id', async (res, req) => {
+        let id = req.getParameter(0);
+        let data = JSON.stringify({
+          trafficId: randomUUID(),
+        });
+        res.end(`window[_ott_${id}] = ${data}`);
+      });
+      // send static files
+      this.server.get('/public/*', async (res, req) => {
+      
+      });
+      // If it is possible to run on a normal port (80, 441)
+      // without proxying in ngnix (do this)
       this.server.listen(this.settings.port, (listenSocket) => {
         if (listenSocket) {
           this.logger.info(`Server listening port:${this.settings.port}`);
