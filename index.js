@@ -8,7 +8,7 @@ const moleculerConfig = require('./config/moleculer.config');
 const broker = new ServiceBroker(moleculerConfig);
 
 broker.loadServices(
-  resolve(__dirname, 'services'), '*.service.js',
+  resolve(__dirname, 'services'), '/*.service.js',
 );
 
 broker.start().then(() => {

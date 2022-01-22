@@ -37,7 +37,7 @@ function writeHeaders(res, headers) {
 async function uwsSendFile(req, res, options = {}) {
   options = Object.assign(defaultOptions, options);
   let path = options.path;
-  if (root === void 0) {
+  if (path === void 0) {
     res.writeStatus('404 Not Found');
     res.end();
     return false;

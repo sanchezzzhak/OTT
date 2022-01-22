@@ -99,3 +99,5 @@
   
   win._ott = TrackApp;
 }(window, document);
+
+console.log('install tr.mjs')

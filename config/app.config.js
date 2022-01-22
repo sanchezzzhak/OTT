@@ -7,7 +7,7 @@ const appConfig = {
   },
   ws: {
     enable: false
-  }
+  },
 };
 
 module.exports = appConfig;

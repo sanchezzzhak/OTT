@@ -11,19 +11,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sanchezzzhak/curly-octo-funicular.git"
+    "url": "git+https://github.com/sanchezzzhak/OTT.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/sanchezzzhak/curly-octo-funicular/issues"
+    "url": "https://github.com/sanchezzzhak/OTT/issues"
   },
-  "homepage": "https://github.com/sanchezzzhak/curly-octo-funicular#readme",
+  "homepage": "https://github.com/sanchezzzhak/OTT#readme",
   "dependencies": {
     "eventemitter2": "^6.4.5",
     "moleculer": "^0.14.18",
+    "moleculer-db": "^0.8.17",
+    "moleculer-db-adapter-sequelize": "^0.2.13",
     "node-device-detector": "^1.4.3",
+    "path-to-regexp": "^6.2.0",
     "pg": "^8.7.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.13.0",
+    "sequelize-cli": "^6.4.1",
     "uWebSockets.js": "uNetworking/uWebSockets.js#v20.6"
   }
 }

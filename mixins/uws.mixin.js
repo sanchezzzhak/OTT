@@ -1,20 +1,20 @@
 const UWS = require('uWebSockets.js');
-const { randomUUID } = require('crypto');
+const {randomUUID} = require('crypto');
 const fs = require('fs');
 const fsPath = require('path');
 const uwsSendFile = require('../utils/uws-send-file');
+const {pathToRegexp} = require('path-to-regexp');
 
 const UwsServer = ({config: config} = {}) => ({
   server: null,
   name: 'web-server',
-  actions: {
+  actions: {},
 
-  },
-  routes: [],
   settings: {
     port: config.port ?? 3001,
     ssl: config.ssl ?? {},
     ip: config.ip ?? '127.0.0.1',
+    routes: [],
   },
 
   async created() {
@@ -31,8 +31,57 @@ const UwsServer = ({config: config} = {}) => ({
   },
 
   methods: {
+
+    addRoute(opts, toLastPos = true) {
+
+      const method = opts.method !== void 0 ? opts.method : 'any';
+      const route = this.createRoute(opts);
+
+      if (this.routes[method] === void 0) {
+        this.routes[method] = [];
+      }
+
+      const idx = this.routes[method].findIndex(r => r.opts.path === route.opts.path);
+
+      if (idx !== -1) {
+        this.routes[method][idx] = route;
+      } else if (toLastPos) {
+        this.routes[method].push(route);
+      } else {
+        this.routes[method].unshift(route);
+      }
+      return route;
+    },
+
+    createRoute(opts) {
+      let route = {
+        opts,
+        keys: [],
+        params: {},
+        middlewares: []
+      };
+
+      route.regexp = pathToRegexp(opts.path, route.keys, {});
+      route.regexp.fast_star = opts.path === '*';
+      route.regexp.fast_slash = opts.path === '/';
+
+      // `onBeforeCall` handler
+      if (opts.onBeforeCall) {
+        route.onBeforeCall = this.Promise.method(opts.onBeforeCall);
+      }
+      // `onAfterCall` handler
+      if (opts.onAfterCall) {
+        route.onAfterCall = this.Promise.method(opts.onAfterCall);
+      }
+
+      // `onError` handler
+      if (opts.onError){
+        route.onError = opts.onError;
+      }
+      return route;
+    },
+
     listenServer() {
-      // send static files js
 
       // adds middleware
       this.server.any('/*', async (res, req) => {
@@ -52,15 +101,14 @@ const UwsServer = ({config: config} = {}) => ({
         let root = fsPath.resolve(__dirname + '/../public');
         let path = req.getUrl();
 
-        if(path === '/') {
+        if (path === '/') {
           return uwsSendFile(req, res, {
             path: fsPath.join(root, 'index.html')
           });
         }
         return uwsSendFile(req, res, {
-          path:   fsPath.join(root,path)
+          path: fsPath.join(root, path)
         });
-
       });
 
       // If it is possible to run on a normal port (80, 441)
@@ -84,9 +132,12 @@ const UwsServer = ({config: config} = {}) => ({
       this.server = UWS.App({});
     }
   },
-  getServerUws(){
+  getServerUws() {
     return this.server;
   }
 });
 
-module.exports = UwsServer;
+module.exports.UwsServer = UwsServer;
+module.exports.METHOD_GET = 'get';
+module.exports.METHOD_ANY = 'any';
+module.exports.METHOD_POST = 'post';

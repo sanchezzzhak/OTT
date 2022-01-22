@@ -1,5 +1,5 @@
 const {Service} = require('moleculer');
-const UwsServer = require('../mixins/uws.mixin');
+const {UwsServer} = require('../mixins/uws.mixin');
 const appConfig = require('../config/app.config');
 
 class AppService extends Service {
@@ -11,14 +11,13 @@ class AppService extends Service {
         UwsServer({config: appConfig})
       ],
       started: this.start,
-
-
     });
   }
 
   start(){
 
   }
+
 
 }
 
