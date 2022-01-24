@@ -1,0 +1,11 @@
+GET http://localhost:3001/t/key-id
+Accept: */*
+Cache-Control: no-cache
+
+###
+
+GET http://localhost:3001/
+Accept: */*
+Cache-Control: no-cache
+
+###

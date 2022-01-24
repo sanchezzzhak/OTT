@@ -1,8 +1,12 @@
 # Open Traffic Tracker (OTT)
 
+# The project is under development
+
  * Track for events in sites
  * Conversion analysis and effective sale traffic
  
+### Node support versions (14.17.0, 17.1.0  or later)
+
 # Install
 ```
 git clone repository
