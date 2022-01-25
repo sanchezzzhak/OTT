@@ -3,7 +3,7 @@ const DbService = require("moleculer-db");
 const SqlAdapter = require("moleculer-db-adapter-sequelize");
 const Sequelize = require("sequelize");
 
-const config = require('../../config/pg.config');
+const config = require('../../../config/pg.config');
 
 class UserService extends Service {
   constructor(broker) {

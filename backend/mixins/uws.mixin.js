@@ -109,7 +109,7 @@ const UwsServer = ({config: config} = {}) => ({
           const {controller, action} = router.opts;
           // try {
           let controllerClass = require(
-            `./../controllers/${controller}-controller`);
+            `./backend/controllers`);
           
           return (new controllerClass(
             {broker: this.broker, req, res}))[action]();

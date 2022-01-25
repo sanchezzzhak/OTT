@@ -3,7 +3,7 @@
 const {resolve} = require('path');
 const {ServiceBroker} = require('moleculer');
 // configs init
-const moleculerConfig = require('./config/moleculer.config');
+const moleculerConfig = require('../config/moleculer.config');
 // microservices init
 const broker = new ServiceBroker(moleculerConfig);
 

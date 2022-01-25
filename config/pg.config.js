@@ -1,4 +1,4 @@
-const requireLocalConfig = require('../utils/require-local-config')
+const requireLocalConfig = require('../backend/utils/require-local-config')
 
 /**
  * docs https://github.com/moleculerjs/moleculer-db/tree/master/packages/moleculer-db-adapter-sequelize#readme
