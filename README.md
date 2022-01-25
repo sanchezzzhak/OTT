@@ -10,7 +10,8 @@
 # Install
 ```
 git clone repository
-yarn install 
+yarn install
+yarn build
 ``` 
 set database dsn for config
 ```

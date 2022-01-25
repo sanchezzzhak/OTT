@@ -1,4 +1,5 @@
 const webpack = require('webpack');
+const copyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path');
 
 module.exports = {
@@ -10,12 +11,21 @@ module.exports = {
     resolve: {
       alias: {
         // 'chart.js': 'chart.js/dist/Chart.js'
-         './src': path.resolve(__dirname, 'frontend')
+        './src': path.resolve(__dirname, 'frontend'),
       },
     },
     plugins: [
       new webpack.optimize.LimitChunkCountPlugin({
         maxChunks: 6
+      }),
+      new copyWebpackPlugin({
+        patterns: [
+          {
+            from: path.join(__dirname, 'frontend/tr.mjs'),
+            to: path.join(__dirname, 'public'),
+            // toType: 'file'
+          },
+        ],
       })
     ]
   },
