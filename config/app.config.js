@@ -1,3 +1,5 @@
+const fsPath = require('path');
+
 const appConfig = {
   port: 3001,
   ssl: {
@@ -8,6 +10,7 @@ const appConfig = {
   ws: {
     enable: false
   },
+  publicDir: fsPath.resolve(__dirname + '/../public')
 };
 
 module.exports = appConfig;

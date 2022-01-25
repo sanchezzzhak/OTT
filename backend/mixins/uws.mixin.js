@@ -35,6 +35,7 @@ const UwsServer = ({config: config} = {}) => ({
     port: config.port ?? 3001,
     ssl: config.ssl ?? {},
     ip: config.ip ?? '127.0.0.1',
+    publicDir: config.publicDir,
     routes: [],
   },
   
@@ -108,8 +109,7 @@ const UwsServer = ({config: config} = {}) => ({
         try {
           const {controller, action} = router.opts;
           // try {
-          let controllerClass = require(
-            `./backend/controllers`);
+          let controllerClass = require(`./../controllers/${controller}-controller`);
           
           return (new controllerClass(
             {broker: this.broker, req, res}))[action]();
@@ -167,7 +167,7 @@ const UwsServer = ({config: config} = {}) => ({
         }
         
         // static files
-        let root = fsPath.resolve(__dirname + '/../public');
+        let root = this.settings.publicDir;
         let path = req.getUrl();
         
         if (path === '/') {

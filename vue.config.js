@@ -2,6 +2,8 @@ const webpack = require('webpack');
 const copyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path');
 
+const rootPath = path.resolve(__dirname, 'frontend');
+
 module.exports = {
   publicPath: "/",
   outputDir: "./public",
@@ -11,7 +13,7 @@ module.exports = {
     resolve: {
       alias: {
         // 'chart.js': 'chart.js/dist/Chart.js'
-        './src': path.resolve(__dirname, 'frontend'),
+        './src': rootPath,
       },
     },
     plugins: [
@@ -23,7 +25,6 @@ module.exports = {
           {
             from: path.join(__dirname, 'frontend/tr.mjs'),
             to: path.join(__dirname, 'public'),
-            // toType: 'file'
           },
         ],
       })
@@ -46,6 +47,6 @@ module.exports = {
   },
   css: {
     // Enable CSS source maps.
-    sourceMap: process.env.NODE_ENV !== 'production'
+    sourceMap: process.env.NODE_ENV !== 'production',
   }
 };
