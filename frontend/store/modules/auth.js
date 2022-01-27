@@ -14,8 +14,9 @@ const actions = {
     UserForm.append('password', form.password)
     await dispatch('LogIn', UserForm)
   },
-  async login({commit}, user) {
-    await axios.post("login", user);
+  async login({commit, dispatch}, user) {
+    let res = await axios.post("login", user);
+    console.log('login', res);
     await commit("setUser", user.get("username"));
   },
   async logout({ commit }) {

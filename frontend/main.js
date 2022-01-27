@@ -2,7 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import RouterPrefetch from 'vue-router-prefetch'
 import store from './store';
-import router from "./router/index";
+import router from "./router";
 import App from "./app.vue";
 
 // import BlackDashboard from "./plugins/blackDashboard";
@@ -21,5 +21,13 @@ new Vue({
   router,
   store,
   i18n,
-  render: h => h(App)
+  render: h => h(App),
+  watch: {
+    $route: {
+      immediate: true,
+      handler(to, from) {
+        document.title = to.meta.title || 'OTT';
+      }
+    },
+  },
 }).$mount("#app");
