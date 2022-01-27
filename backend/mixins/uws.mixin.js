@@ -62,6 +62,10 @@ const UwsServer = ({config: config} = {}) => ({
       let pathUrl = req.getUrl();
       let method = req.getMethod();
       
+      if(!this.settings.routes[method]) {
+        return null;
+      }
+      
       for (let i = 0, l = this.settings.routes[method].length; i < l; i++) {
         let route = this.settings.routes[method][i];
         let match = route.regexp.exec(pathUrl);
@@ -103,16 +107,26 @@ const UwsServer = ({config: config} = {}) => ({
       }
       return route;
     },
+  
+    /**
+     *
+     * @param {string} controller
+     * @param {string} action
+     * @param res
+     * @param req
+     * @param route
+     * @returns {*}
+     */
+    runControllerAction(controller, action, res, req, route = {}) {
+      controller = controller.toLowerCase();
+      action = action.toLowerCase();
+    },
     
-    runRoute(router, res, req) {
-      if (router !== null) {
+    runRoute(route, res, req) {
+      if (route !== null) {
         try {
-          const {controller, action} = router.opts;
-          // try {
-          let controllerClass = require(`./../controllers/${controller}-controller`);
-          
-          return (new controllerClass(
-            {broker: this.broker, req, res}))[action]();
+          const {controller, action} = route.opts;
+          return this.runControllerAction(controller, action, res, req, route);
         } catch (e) {
           this.logger.error(e);
         } finally {

@@ -9,7 +9,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "vue-cli-service serve --open",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --dest ./public",
     "e2e": "node test/e2e/runner.js",
     "lint": "vue-cli-service lint",
     "lint-fix": "vue-cli-service lint --fix"
@@ -47,7 +47,8 @@
     "vue-router": "^3.3.4",
     "vue-router-prefetch": "^1.6.0",
     "vue2-transitions": "^0.3.0",
-    "vuex": "^2.5.0"
+    "vuex": "^2.5.0",
+    "vuex-persistedstate": "^4.1.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.4.6",

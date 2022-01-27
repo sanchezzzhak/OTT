@@ -1,8 +1,11 @@
 const webpack = require('webpack');
 const copyWebpackPlugin = require('copy-webpack-plugin')
 const path = require('path');
+const fs = require('fs');
 
 const rootPath = path.resolve(__dirname, 'frontend');
+
+fs.rmSync(path.join(__dirname, 'public'), { recursive: true, force: true });
 
 module.exports = {
   publicPath: "/",

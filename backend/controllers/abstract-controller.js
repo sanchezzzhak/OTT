@@ -11,6 +11,7 @@ class AbstractController {
     this.broker = opts.broker;
     this.req = opts.req;
     this.res = opts.res;
+    this.route = opts.route ?? {};
   }
   
   /**
