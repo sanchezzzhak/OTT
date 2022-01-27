@@ -2,8 +2,10 @@ const AbortController = require('./abstract-controller');
 
 class HomeController extends AbortController {
   index() {
-    this.renderString(
-      'home controller welcome <a href="/index.html">index.html</a>');
+    this.renderRaw({
+      view: '<html><body>controller welcome <a href="/index.html">index.html</a></body></html>',
+      format: null
+    });
   }
   
 }

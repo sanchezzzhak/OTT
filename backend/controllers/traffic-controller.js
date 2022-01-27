@@ -7,7 +7,7 @@ class TrafficController extends AbortController {
     let data = JSON.stringify({
       trafficId: randomUUID(), // this.broker.generateUid()
     });
-    this.renderString(`window['_ott_${id}'] = ${data}`);
+    this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});
     
   }
   
