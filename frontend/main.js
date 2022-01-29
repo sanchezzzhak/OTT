@@ -1,33 +1,18 @@
-import Vue from "vue";
-import VueRouter from "vue-router";
-import RouterPrefetch from 'vue-router-prefetch'
-import store from './store';
-import router from "./router";
-import App from "./app.vue";
+import {createApp} from 'vue';
+import router from './routes';
+import App from './App.vue';
+import axios from "axios";
 
-// import BlackDashboard from "./plugins/blackDashboard";
-import i18n from "./i18n"
-// import './registerServiceWorker'
-
-import "bootstrap/scss/bootstrap.scss"
+import "bootstrap/dist/css/bootstrap.min.css"
 import "./assets/scss/main.scss"
 
-// Vue.use(BlackDashboard);
-Vue.use(VueRouter);
-Vue.use(RouterPrefetch);
+const axiosInstance = axios.create({
+  baseURL: '//' + navigator.host + ':3001'
+});
 
-/* eslint-disable no-new */
-new Vue({
-  router,
-  store,
-  i18n,
-  render: h => h(App),
-  watch: {
-    $route: {
-      immediate: true,
-      handler(to, from) {
-        document.title = to.meta.title || 'OTT';
-      }
-    },
-  },
-}).$mount("#app");
+const app = createApp(App);
+app.config.globalProperties.$axios = axiosInstance;
+app.config.globalProperties.mode = 'production';
+
+app.use(router)
+app.mount('#app')
