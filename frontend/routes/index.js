@@ -16,14 +16,16 @@ const routes = [
     name: 'Login',
     component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
     meta: {
-      title: 'Login'
+      title: 'Login',
+      layout: 'auth'
     }
   }, {
     path: '/register',
     name: 'Register',
     component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
     meta: {
-      title: 'Register'
+      title: 'Register',
+      layout: 'auth'
     }
   },
   //  {
@@ -51,5 +53,6 @@ router.beforeEach((to, from, next) => {
     return next("/login");
   }
   document.title = to.meta.title || DEFAULT_TITLE;
+  next();
 });
 export default router;

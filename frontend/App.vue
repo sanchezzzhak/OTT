@@ -1,12 +1,14 @@
 <template>
 
-  <p>
-    <router-link to="/">Home</router-link>
-    <router-link to="/login">Login</router-link>
-    <router-link to="/register">Register</router-link>
-  </p>
+  <nav class="nav-links">
+    <router-link :to="{name: 'Home'}">Home</router-link>
+    <router-link :to="{name: 'Login'}">Login</router-link>
+    <router-link :to="{name: 'Register'}">Register</router-link>
+  </nav>
 
-  <router-view></router-view>
+  <component :is="layout">
+    <router-view></router-view>
+  </component>
 
 </template>
 
@@ -19,4 +21,19 @@
   color: #2c3e50;
   margin-top: 60px;
 }
+.nav-links {
+  a {
+    margin: 0 2px;
+  }
+}
 </style>
+
+<script>
+export default {
+  computed: {
+    layout() {
+      return this.$route.meta.layout || 'default'
+    }
+  }
+}
+</script>
