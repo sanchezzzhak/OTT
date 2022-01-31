@@ -5,7 +5,8 @@
 </template>
 
 <script>
-export default {}
+export default {
+}
 </script>
 
 <style lang="scss" scoped>
@@ -15,6 +16,8 @@ export default {}
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: linear-gradient(to bottom right, #004d40, #00bfa5);
+    .container {
+        max-width:380px;
+    }
 }
 </style>

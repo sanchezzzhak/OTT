@@ -1,10 +1,11 @@
-import {createStore} from 'vuex'
+import {createStore} from 'vuex';
+import {$axios} from '../api';
 
 export default createStore({
   state: {
     success: '',
     token: localStorage.getItem('token') || '',
-    user: {}
+    user: {},
   },
   mutations: {
     auth_request(state) {
@@ -26,37 +27,37 @@ export default createStore({
   actions: {
     login({commit}, data) {
       return new Promise((resolve, reject) => {
-        commit('auth_request')
-
-        this.$axios.post('login', {data}).then(response => {
-          const token = response.data.token
+        commit('auth_request');
+        $axios.post('login', {data}).then(response => {
+          const token = response.data.token;
           const user = response.data.user;
-          localStorage.setItem('token', token)
-          localStorage.setItem('user', JSON.stringify(user))
-          this.$axios.defaults.headers.common['Authorization'] = "Bearer" + token;
-          commit('auth_success', token, user)
-          resolve(response)
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
+          this.$axios.defaults.headers.common['Authorization'] = 'Bearer' +
+            token;
+          commit('auth_success', token, user);
+          resolve(response);
         }).catch(err => {
           commit('auth_error');
-          localStorage.removeItem('token')
-          reject(err)
-        })
-
-      })
+          localStorage.removeItem('token');
+          reject(err);
+        });
+        
+      });
     },
-    logout({ commit }) {
+    logout({commit}) {
       return new Promise((resolve) => {
         commit('auth_logout');
-        localStorage.removeItem('token')
-        localStorage.removeItem('user')
-        delete this.$axios.defaults.headers.common['Authorization']
-        resolve()
-      })
-    }
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        delete this.$axios.defaults.headers.common['Authorization'];
+        resolve();
+      });
+    },
   },
   getters: {
     isAuth: state => !!state.token,
     authStatus: state => state.status,
   },
-  modules: {}
+  modules: {},
 });

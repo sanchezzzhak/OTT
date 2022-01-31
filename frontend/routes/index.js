@@ -27,6 +27,14 @@ const routes = [
       title: 'Register',
       layout: 'auth'
     }
+  },{
+    path: '/remind',
+    name: 'Remind',
+    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+    meta: {
+      title: 'Remind',
+      layout: 'auth'
+    }
   },
   //  {
   //   path: '/dashboard',

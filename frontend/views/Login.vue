@@ -19,14 +19,19 @@
                 <button @click.prevent="login" class="btn btn-primary btn-block">Login</button>
               </div>
           </div>
+          <div class="row">
+              <div class="col-6">
+                  <p class="text-center">
+                      <router-link :to="{name: 'Register'}">Register</router-link>
+                  </p>
+              </div>
+              <div class="col-6">
+                  <p class="text-center">
+                      <router-link :to="{name: 'Remind'}">Remind</router-link>
+                  </p>
+              </div>
+          </div>
         </div>
-
-        <div class="register mt-3 text-center">
-          <p>
-            <router-link :to="{name: 'Register'}">Register!</router-link>
-          </p>
-        </div>
-
       </div>
     </div>
   </div>
