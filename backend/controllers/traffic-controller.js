@@ -1,7 +1,7 @@
-const AbortController = require('./abstract-controller');
+const AbstractController = require('./abstract-controller');
 const {randomUUID} = require('crypto');
 
-class TrafficController extends AbortController {
+class TrafficController extends AbstractController {
   index() {
     let id = this.req.getParameter(0);
     let data = JSON.stringify({

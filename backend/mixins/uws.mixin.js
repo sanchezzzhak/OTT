@@ -30,7 +30,7 @@ const UwsServer = ({config: config} = {}) => ({
   server: null,
   name: 'web-server',
   actions: {},
-  
+
   settings: {
     port: config.port ?? 3001,
     ssl: config.ssl ?? {},
@@ -38,34 +38,34 @@ const UwsServer = ({config: config} = {}) => ({
     publicDir: config.publicDir,
     routes: [],
   },
-  
+
   async created() {
     this.createServer();
     return Promise.resolve();
   },
-  
+
   async started() {
     this.listenServer();
     return Promise.resolve();
   },
-  
+
   stopped() {
   },
-  
+
   methods: {
-    
+
     getServerUws() {
       return this.server;
     },
-    
+
     matchRouter(res, req) {
       let pathUrl = req.getUrl();
       let method = req.getMethod();
-      
-      if(!this.settings.routes[method]) {
+
+      if (!this.settings.routes[method]) {
         return null;
       }
-      
+
       for (let i = 0, l = this.settings.routes[method].length; i < l; i++) {
         let route = this.settings.routes[method][i];
         let match = route.regexp.exec(pathUrl);
@@ -86,18 +86,18 @@ const UwsServer = ({config: config} = {}) => ({
       }
       return null;
     },
-    
+
     addRoute(opts, toLastPos = true) {
       const method = opts.method !== void 0 ? opts.method : 'any';
       const route = this.createRoute(opts);
-      
+
       if (this.settings.routes[method] === void 0) {
         this.settings.routes[method] = [];
       }
-      
+
       const idx = this.settings.routes[method].findIndex(
-        r => r.opts.path === route.opts.path);
-      
+          r => r.opts.path === route.opts.path);
+
       if (idx !== -1) {
         this.settings.routes[method][idx] = route;
       } else if (toLastPos) {
@@ -107,7 +107,7 @@ const UwsServer = ({config: config} = {}) => ({
       }
       return route;
     },
-  
+
     /**
      *
      * @param {string} controller
@@ -120,8 +120,17 @@ const UwsServer = ({config: config} = {}) => ({
     runControllerAction(controller, action, res, req, route = {}) {
       controller = controller.toLowerCase();
       action = action.toLowerCase();
+      const inst = new (require('../controllers/' + controller + '-controller'))({
+        res,
+        req,
+        broker: this.broker,
+        route
+      });
+      inst[action]().then(()=>{
+
+      });
     },
-    
+
     runRoute(route, res, req) {
       if (route !== null) {
         try {
@@ -133,10 +142,10 @@ const UwsServer = ({config: config} = {}) => ({
           return 0;
         }
       }
-      
+
       return -1;
     },
-    
+
     createRoute(opts) {
       let route = {
         opts,
@@ -144,11 +153,11 @@ const UwsServer = ({config: config} = {}) => ({
         params: {},
         middlewares: [],
       };
-      
+
       route.regexp = pathToRegexp(opts.path, route.keys, {});
       route.regexp.fast_star = opts.path === '*';
       route.regexp.fast_slash = opts.path === '/';
-      
+
       // `onBeforeCall` handler
       if (opts.onBeforeCall) {
         route.onBeforeCall = this.Promise.method(opts.onBeforeCall);
@@ -157,21 +166,21 @@ const UwsServer = ({config: config} = {}) => ({
       if (opts.onAfterCall) {
         route.onAfterCall = this.Promise.method(opts.onAfterCall);
       }
-      
+
       // `onError` handler
       if (opts.onError) {
         route.onError = opts.onError;
       }
       return route;
     },
-    
+
     listenServer() {
-      
+
       // // adds middleware hook
       // this.server.any('/*', async (res, req) => {
       //   req.setYield(true);
       // });
-      
+
       this.server.any('/*', (res, req) => {
         let router = this.matchRouter(res, req);
         if (router !== null) {
@@ -179,11 +188,11 @@ const UwsServer = ({config: config} = {}) => ({
             return;
           }
         }
-        
+
         // static files
         let root = this.settings.publicDir;
         let path = req.getUrl();
-        
+
         if (path === '/') {
           return uwsSendFile(req, res, {
             path: fsPath.join(root, 'index.html'),
@@ -193,7 +202,7 @@ const UwsServer = ({config: config} = {}) => ({
           path: fsPath.join(root, path),
         });
       });
-      
+
       // If it is possible to run on a normal port (80, 441)
       // without proxying in ngnix (do this)
       this.server.listen(this.settings.port, (listenSocket) => {
@@ -202,7 +211,7 @@ const UwsServer = ({config: config} = {}) => ({
         }
       });
     },
-    
+
     createServer() {
       if (this.settings.ssl.enable) {
         this.server = UWS.SSLApp({

@@ -2,10 +2,6 @@ const {Service} = require('moleculer');
 const {UwsServer} = require('../mixins/uws.mixin');
 const appConfig = require('../../config/app.config');
 
-const excludeControllers = [
-  'traffic'
-];
-
 class AppService extends Service {
   constructor(broker) {
     super(broker);
@@ -20,14 +16,12 @@ class AppService extends Service {
   
   start() {
     // native uws routers
-    this.getServerUws()
-    .get('/t/:id', async (res, req) => {
-      return this.runControllerAction(
-        'traffic',
-        'index',
-        res,
-        req,
-      );
+    this.getServerUws().get('/t/:id', async (res, req) => {
+      return this.runControllerAction('traffic', 'index', res, req);
+    });
+
+    this.getServerUws().post('/login', async (res, req) => {
+      return this.runControllerAction('auth', 'login', res, req);
     });
   }
   

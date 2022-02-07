@@ -49,8 +49,8 @@ export default {
   name: 'login',
   methods: {
     login() {
-      const {username, password} = this;
-      this.$store.dispatch('login', {username, password}).then(() => {
+      const {email, password} = this;
+      this.$store.dispatch('login', {email, password}).then(() => {
         if (this.$store.isAuth) {
           this.$router.push('/dashboard');
         }
