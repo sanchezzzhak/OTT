@@ -5,7 +5,7 @@ const requireLocalConfig = require('../backend/utils/require-local-config')
  */
 module.exports = {
   ...{
-    dsn: 'postgres://root:mysql@localhost:5432/ott',
+    dsn: 'postgres://postgres:mysql@localhost:5432/ott',
     options: {}
   },
   ...requireLocalConfig(__dirname + '/local/pg.config.js')

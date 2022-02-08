@@ -28,12 +28,12 @@ export default createStore({
     login({commit}, data) {
       return new Promise((resolve, reject) => {
         commit('auth_request');
-        $axios.post('login', {data}).then(response => {
+        $axios.post('login', data).then(response => {
           const token = response.data.token;
           const user = response.data.user;
           localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(user));
-          this.$axios.defaults.headers.common['Authorization'] = 'Bearer' +
+          $axios.defaults.headers.common['Authorization'] = 'Bearer' +
             token;
           commit('auth_success', token, user);
           resolve(response);
@@ -50,7 +50,7 @@ export default createStore({
         commit('auth_logout');
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        delete this.$axios.defaults.headers.common['Authorization'];
+        delete $axios.defaults.headers.common['Authorization'];
         resolve();
       });
     },

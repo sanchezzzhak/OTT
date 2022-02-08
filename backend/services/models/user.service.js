@@ -13,11 +13,12 @@ class UserService extends Service {
       mixins: [DbService],
       adapter: new SqlAdapter(config.dsn),
       model: {
-        name: "user",
+        name: 'user',
         define: {
           id: {
             type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true,
           },
+          token: Sequelize.STRING,
           username: Sequelize.STRING,
           password_hash: Sequelize.STRING,
           status: {
@@ -35,6 +36,9 @@ class UserService extends Service {
     });
   }
 
+  auth(){
+
+  }
 
 }
 
