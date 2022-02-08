@@ -1,4 +1,5 @@
 const AbstractController = require('./abstract-controller');
+const crypto = require('crypto');
 
 class AuthController extends AbstractController {
 
@@ -9,13 +10,22 @@ class AuthController extends AbstractController {
       this.end('');
       return;
     }
-
     try {
       let content = await this.readBody();
       let json = JSON.parse(content.toString());
-      console.log(json)
+      let email = json.email;
+      let password = json.password;
+
+      let response = await this.broker.call('user.model.login', {
+        email, password
+      })
+      console.log(response);
+
+
+
+
     } catch (e) {
-      this.renderRaw('Invalid json format', 403, 'json');
+      this.renderRaw({view: 'Invalid json format', statusCode: 403, format: 'json'});
       return;
     }
 
