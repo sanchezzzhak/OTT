@@ -52,7 +52,7 @@ class UserService extends Service {
             type: Sequelize.SMALLINT, defaultValue: 0,
           },
           pin_code: {
-            type: Sequelize.SMALLINT(6), allowNull: true, defaultValue: null,
+            type: Sequelize.INTEGER, allowNull: true, defaultValue: null,
           },
         },
         options: {
@@ -70,37 +70,65 @@ class UserService extends Service {
         fields: ['id', 'email', 'salt', 'password_hash', 'status']
       },
       actions: {
-        /**
-         * auth get jwt token
-         * @param {Context} ctx
-         * @returns {Promise<{err: string}|{email: *, token: string}>}
-         * @route user.model.login
-         */
-        async login(ctx) {
-          const defaultError = 'login or password is not correct';
-          let {email, password} = ctx.params;
+        // ====
+        login: {
+          params: {
+            email: {type: 'email'},
+            password: {type: 'string', min: 6},
+          },
+          /**
+           * auth and get jwt token
+           * @param {Context} ctx
+           * @returns {Promise<{err: string}|{email: *, token: string}>}
+           * @route user.model.login
+           */
+          async handler(ctx) {
+            const defaultError = 'Email or Password is not correct';
+            let {email, password} = ctx.params;
 
-          const user = await this.model.findOne({
-            where: {
-              email: email.toLowerCase()
+            const user = await this.model.findOne({
+              where: {
+                email: email.toLowerCase()
+              }
+            });
+
+            if (!user) {
+              return {err: defaultError}
             }
-          });
+            if (!this.validatePassword(password, user)) {
+              return {err: defaultError}
+            }
+            if (user.status === UserService.STATUS_BANNED) {
+              return {err: 'User banned'}
+            }
 
-          if (!user) {
-            return {err: defaultError}
+            return {
+              email: user.email,
+              token: this.makeToken(user)
+            };
           }
-          if (!this.validatePassword(password, user)) {
-            return {err: defaultError}
-          }
-          if (user.status === UserService.STATUS_BANNED) {
-            return {err: 'User banned'}
-          }
+        },
 
-          return {
-            email: user.email,
-            token: this.makeToken(user)
-          };
+        // ====
+        register: {
+          params: {
+            email: {type: 'email'},
+            password: {type: 'string', min: 6},
+            passwordConfirm: {type: 'equal', field: 'password'},
+          },
+          /**
+           * Register for site
+           * @param {Context} ctx
+           * @returns {Promise<void>}
+           * @route user.model.register
+           */
+          async handler(ctx) {
+            // check global config open register
+            // send verify email
+            let {email, password, passwordConfirm} = ctx.params;
+          }
         }
+        // ====
       }
     });
   }

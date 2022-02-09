@@ -51,7 +51,7 @@ class AbstractController {
   }
 
   asJson(obj, statusCode = 200){
-    this.renderRaw(JSON.stringify(obj), statusCode, 'json');
+    this.renderRaw({view: JSON.stringify(obj), statusCode, format: 'json'});
   }
 
   end(context) {

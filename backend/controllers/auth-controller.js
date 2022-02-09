@@ -16,20 +16,21 @@ class AuthController extends AbstractController {
       let email = json.email;
       let password = json.password;
 
-      let response = await this.broker.call('user.model.login', {
-        email, password
-      })
-      console.log(response);
-
-
-
-
+      try {
+        let response = await this.broker.call('user.model.login', {
+          email, password
+        })
+        return this.asJson(response);
+      } catch (e){
+        if (e.type === 'VALIDATION_ERROR') {
+          return this.asJson({err: 'Validation error', data: e.data})
+        }
+      }
     } catch (e) {
-      this.renderRaw({view: 'Invalid json format', statusCode: 403, format: 'json'});
-      return;
+      this.broker.logger.error(e);
     }
 
-    this.end('OK');
+    return this.asJson({err: 'Invalid JSON format'}, 403);
   }
 
 }
