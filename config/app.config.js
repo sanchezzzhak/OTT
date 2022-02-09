@@ -1,4 +1,5 @@
 const fsPath = require('path');
+const requireLocalConfig = require('../backend/utils/require-local-config')
 
 const appConfig = {
   port: 3001,
@@ -10,7 +11,8 @@ const appConfig = {
   ws: {
     enable: false
   },
-  publicDir: fsPath.resolve(__dirname + '/../public')
+  publicDir: fsPath.resolve(__dirname + '/../public'),
+  jwt: "DEV_KEY"
 };
 
-module.exports = appConfig;
+module.exports = {...appConfig, ...requireLocalConfig(__dirname + '/local/app.config.js')};

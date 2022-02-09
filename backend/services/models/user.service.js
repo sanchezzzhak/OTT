@@ -1,14 +1,23 @@
 const crypto = require('crypto');
 const {Service} = require('moleculer');
-const DbService = require("moleculer-db");
-const SqlAdapter = require("moleculer-db-adapter-sequelize");
-const Sequelize = require("sequelize");
+const DbService = require('moleculer-db');
+const SqlAdapter = require('moleculer-db-adapter-sequelize');
+const Sequelize = require('sequelize');
+const JWT = require('../../utils/jwt');
 
 const config = require('../../../config/pg.config');
+const {jwt} = require('../../../config/app.config');
 
 class UserService extends Service {
+
+  static STATUS_ENABLE = 1;
+  static STATUS_DISABLE = 0;
+  static STATUS_BANNED = 3;
+
   constructor(broker) {
     super(broker);
+    this.jwt = new JWT({key: jwt})
+
     this.parseServiceSchema({
       name: 'user.model',
       mixins: [DbService],
@@ -35,7 +44,16 @@ class UserService extends Service {
           },
           last_seen_at: {
             type: Sequelize.DATE, allowNull: true
-          }
+          },
+          telegram_id: {
+            type: Sequelize.STRING, allowNull: true, defaultValue: null
+          },
+          pin_auth: {
+            type: Sequelize.SMALLINT, defaultValue: 0,
+          },
+          pin_code: {
+            type: Sequelize.SMALLINT(6), allowNull: true, defaultValue: null,
+          },
         },
         options: {
           underscored: true,
@@ -52,47 +70,92 @@ class UserService extends Service {
         fields: ['id', 'email', 'salt', 'password_hash', 'status']
       },
       actions: {
-
         /**
-         * @param ctx
-         * @returns {Promise<object>}
+         * auth get jwt token
+         * @param {Context} ctx
+         * @returns {Promise<{err: string}|{email: *, token: string}>}
+         * @route user.model.login
          */
         async login(ctx) {
+          const defaultError = 'login or password is not correct';
           let {email, password} = ctx.params;
 
-          const user = await this.model.findOne({where: {
-            email: email.toLowerCase()
-          }});
-
-          let defaultError = 'login or password is not correct';
+          const user = await this.model.findOne({
+            where: {
+              email: email.toLowerCase()
+            }
+          });
 
           if (!user) {
             return {err: defaultError}
           }
-
-          if (!this.__validateHash(password, user.salt)) {
+          if (!this.validatePassword(password, user)) {
             return {err: defaultError}
           }
+          if (user.status === UserService.STATUS_BANNED) {
+            return {err: 'User banned'}
+          }
 
-          console.log('user', user);
-
-
-          return {id, email} = user;
+          return {
+            email: user.email,
+            token: this.makeToken(user)
+          };
         }
       }
     });
   }
 
-  __validateHash(sourcePassword, salt) {
+  /**
+   * Make token with payload
+   * @param {{}} user - user model
+   * @returns {string}
+   */
+  makeToken(user) {
+    return this.jwt.create({
+      id: user.id,
+      email: user.email,
+      status: user.status,
+    })
+  }
+
+  /**
+   * Compare open password with password hash
+   * @param {string} sourcePassword
+   * @param {{}} user - user model
+   * @returns {boolean}
+   */
+  validatePassword(sourcePassword, user) {
+    return this.makeHash(sourcePassword, user.salt) === user.password_hash;
+  }
+
+  /**
+   * Make random new salt
+   * @returns {string}
+   */
+  makeSalt() {
+    return crypto.randomBytes(16).toString('hex');
+  }
+
+  /**
+   * Get password hash based on public password and salt
+   * @param {string} sourcePassword
+   * @param {string} salt
+   * @returns {string}
+   */
+  makeHash(sourcePassword, salt) {
     return crypto.pbkdf2Sync(sourcePassword, salt, 1000, 64, `sha512`).toString(`hex`)
   }
 
-  __createHash(sourcePassword) {
-    let salt = crypto.randomBytes(16).toString('hex');
-    let hash = this.__validateHash(sourcePassword, salt);
+  /**
+   * Get password hash and new salt
+   * @param {string} sourcePassword
+   * @returns {{salt: string, hash: string}}
+   */
+  makeHashSalt(sourcePassword) {
+    let salt = this.makeSalt();
+    let hash = this.makeHash(sourcePassword, salt);
     return {hash, salt}
   }
 }
-
 
 module.exports = UserService;
