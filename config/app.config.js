@@ -12,7 +12,8 @@ const appConfig = {
     enable: false
   },
   publicDir: fsPath.resolve(__dirname + '/../public'),
-  jwt: "DEV_KEY"
+  jwt: "",
+  telegram: '',
 };
 
 module.exports = {...appConfig, ...requireLocalConfig(__dirname + '/local/app.config.js')};
