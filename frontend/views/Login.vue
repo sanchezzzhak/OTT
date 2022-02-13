@@ -4,42 +4,54 @@
       <div class="col-md-4">
 
         <div class="card border-0 shadow rounded">
+
           <div class="card-body">
-              <div class="form-floating">
-                <input type="email" id="email" v-model="email" class="form-control">
-                <label for="email">Email</label>
-              </div>
+              <bs-input
+                  type="email"
+                  id="email"
+                  label="Email"
+                  v-model="email"
+              />
+              <bs-input
+                  type="password"
+                  id="password"
+                  label="Password"
+                  v-model="password"
+              />
 
-              <div class="form-floating mt-3">
-                <input type="password" id="password" v-model="password" class="form-control">
-                <label for="password">Password</label>
-              </div>
-
-              <div class="d-grid gap-2 mt-3">
-                <button @click.prevent="login" class="btn btn-primary btn-block">Login</button>
-              </div>
+            <div class="d-grid gap-2 mt-3">
+              <button @click.prevent="login" class="btn btn-primary btn-block">Login</button>
+            </div>
           </div>
+
           <div class="row">
-              <div class="col-6">
-                  <p class="text-center">
-                      <router-link :to="{name: 'Register'}">Register</router-link>
-                  </p>
-              </div>
-              <div class="col-6">
-                  <p class="text-center">
-                      <router-link :to="{name: 'Remind'}">Remind</router-link>
-                  </p>
-              </div>
+            <div class="col-6">
+              <p class="text-center">
+                <router-link :to="{name: 'Register'}">Register</router-link>
+              </p>
+            </div>
+            <div class="col-6">
+              <p class="text-center">
+                <router-link :to="{name: 'Remind'}">Remind</router-link>
+              </p>
+            </div>
           </div>
+
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
 
+import bsInput from "../components/bootstrap/bsInput.vue";
+
 export default {
+  components: {
+    bsInput
+  },
   data() {
     return {
       email: '',
@@ -50,10 +62,18 @@ export default {
   methods: {
     login() {
       const {email, password} = this;
-      this.$store.dispatch('login', {email, password}).then(() => {
+      this.$store
+      .dispatch('login', {email, password})
+      .then((data) => {
         if (this.$store.isAuth) {
           this.$router.push('/dashboard');
         }
+      }).catch((response) => {
+
+
+
+
+
       });
     }
   }
