@@ -46,12 +46,7 @@
 
 <script>
 
-import bsInput from "../components/bootstrap/bsInput.vue";
-
 export default {
-  components: {
-    bsInput
-  },
   data() {
     return {
       email: '',
@@ -69,11 +64,6 @@ export default {
           this.$router.push('/dashboard');
         }
       }).catch((response) => {
-
-
-
-
-
       });
     }
   }

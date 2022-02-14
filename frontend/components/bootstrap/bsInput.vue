@@ -7,10 +7,11 @@
           :class="getClasses(size, valid)"
           :name="name"
           :id="id"
-          :value="value"
           :form="form"
           :placeholder="placeholder"
           :isRequired="isRequired"
+          v-model="value"
+          @input="$emit('update:modelValue', $event.target.value)"
       />
       <label v-if="labelPos === 'bottom'" :for="id">{{label}}</label>
     </div>
@@ -19,7 +20,9 @@
 <script>
 export default {
   name: "bs-input",
+  emits: ['update:modelValue'],
   props: {
+    modelValue: String,
     size: {
       type: String,
       default: "default",
