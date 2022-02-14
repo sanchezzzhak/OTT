@@ -8,10 +8,12 @@
           :name="name"
           :id="id"
           :form="form"
+          :maxlength="maxLength"
           :placeholder="placeholder"
           :isRequired="isRequired"
           v-model="value"
           @input="$emit('update:modelValue', $event.target.value)"
+          v-bind="$attrs"
       />
       <label v-if="labelPos === 'bottom'" :for="id">{{label}}</label>
     </div>
@@ -31,6 +33,7 @@ export default {
       type: Boolean,
       default: false,
     },
+    maxLength:Number,
     form:String,
     formType: {
       type: String,

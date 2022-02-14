@@ -4,21 +4,34 @@
       <div class="col-md-4">
 
         <div class="card border-0 shadow rounded">
-
+          <div class="card-header">
+              Sign in
+          </div>
           <div class="card-body">
+              <div v-if="error.length > 0" class="alert alert-danger fade show" role="alert">
+                  {{error}}
+                  <button type="button" @click="clearErrors()" class="btn-close"></button>
+              </div>
               <bs-input
                   type="email"
                   id="email"
                   label="Email"
                   v-model="email"
+                  @focus="clearErrors()"
               />
+              <div v-for="item in errorEmail">
+                  {{item}}
+              </div>
               <bs-input
                   type="password"
                   id="password"
                   label="Password"
                   v-model="password"
+                  @focus="clearErrors()"
               />
-
+              <div v-for="item in errorPassword">
+                  {{item}}
+              </div>
             <div class="d-grid gap-2 mt-3">
               <button @click.prevent="login" class="btn btn-primary btn-block">Login</button>
             </div>
@@ -50,20 +63,37 @@ export default {
   data() {
     return {
       email: '',
-      password: ''
+      password: '',
+      error: '',
+      errorPassword: [],
+      errorEmail: [],
+      errorPin: [],
     }
   },
   name: 'login',
   methods: {
+    clearErrors() {
+      this.errorPassword = [];
+      this.errorEmail = [];
+      this.error = '';
+    },
     login() {
+      this.clearErrors();
       const {email, password} = this;
       this.$store
       .dispatch('login', {email, password})
       .then((data) => {
+
         if (this.$store.isAuth) {
           this.$router.push('/dashboard');
         }
       }).catch((response) => {
+        this.error = response.err;
+        response.errors && response.errors.forEach((error) => {
+          let {message, field} = error;
+          field === 'email' && this.errorEmail.push(message)
+          field === 'password' && this.errorPassword.push(message)
+        })
       });
     }
   }
