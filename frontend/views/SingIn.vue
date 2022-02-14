@@ -1,14 +1,14 @@
 <template>
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-4">
+      <div class="col-md-6">
 
-        <div class="card border-0 shadow rounded">
+        <div class="card border-0 shadow rounded bg-light bg-gradient">
           <div class="card-header">
-              Sign in
+              Sign in to OTT Dashboard
           </div>
           <div class="card-body">
-              <div v-if="error.length > 0" class="alert alert-danger fade show" role="alert">
+              <div v-if="error.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
                   {{error}}
                   <button type="button" @click="clearErrors()" class="btn-close"></button>
               </div>
@@ -33,14 +33,14 @@
                   {{item}}
               </div>
             <div class="d-grid gap-2 mt-3">
-              <button @click.prevent="login" class="btn btn-primary btn-block">Login</button>
+              <button @click.prevent="login" class="btn btn-primary btn-block">Sign in</button>
             </div>
           </div>
 
           <div class="row">
             <div class="col-6">
               <p class="text-center">
-                <router-link :to="{name: 'Register'}">Register</router-link>
+                <router-link :to="{name: 'SingUp'}">Sing up</router-link>
               </p>
             </div>
             <div class="col-6">

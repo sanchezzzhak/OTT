@@ -12,25 +12,25 @@ const routes = [
       title: 'Home'
     }
   }, {
-    path: '/login',
-    name: 'Login',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Login.vue'),
+    path: '/sing-in',
+    name: 'SingIn',
+    component: () => import(/* webpackChunkName: "login" */ '../views/SingIn.vue'),
     meta: {
-      title: 'Login',
+      title: 'Sing In',
       layout: 'auth'
     }
   }, {
-    path: '/register',
-    name: 'Register',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+    path: '/sing-up',
+    name: 'SingUp',
+    component: () => import(/* webpackChunkName: "register" */ '../views/SingUp.vue'),
     meta: {
-      title: 'Register',
+      title: 'Sing Up',
       layout: 'auth'
     }
   },{
     path: '/remind',
     name: 'Remind',
-    component: () => import(/* webpackChunkName: "register" */ '../views/Register.vue'),
+    component: () => import(/* webpackChunkName: "register" */ '../views/SingUp.vue'),
     meta: {
       title: 'Remind',
       layout: 'auth'
