@@ -1,16 +1,18 @@
 body {
-
-  background-image: linear-gradient( 132.6deg,  rgba(71,139,214,1) 23.3%, rgba(37,216,211,1) 84.7% );
-  //background: var(--bs-dark);
-  color: var(--bs-dark)
+  background-image: linear-gradient(132.6deg, rgba(71, 139, 214, 1) 23.3%, rgba(37, 216, 211, 1) 84.7%);
+  color: var(--bs-dark);
+  min-width: 380px;
 }
 
-.body-wrapper {
-  padding: 35px;
-  background: transparent;
+.body-wrapper, {
+  padding: 0 35px;
 }
-.auth-wrapper {
-  background-color: rgba(36, 43, 64, 0.9);
+
+.auth-wrapper, .default-wrapper {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  background-color: rgba(0, 0, 0, .4);
 }
 
 #app {
@@ -20,6 +22,7 @@ body {
   text-align: center;
   color: #2c3e50;
 }
+
 .nav-links {
   a {
     margin: 0 2px;
