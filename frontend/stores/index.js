@@ -49,6 +49,23 @@ export default createStore({
         });
       });
     },
+    register({commit}, data) {
+      return new Promise((resolve, reject) => {
+        // commit('auth_request');
+        $axios.post('register', data).then(response => {
+          let data = response.data;
+          if(data.err) {
+            return reject(data);
+          }
+          // commit('auth_success', token, user);
+          return resolve(data);
+        }).catch(err => {
+          commit('auth_error');
+          localStorage.removeItem('token');
+          return reject(err);
+        });
+      });
+    },
     logout({commit}) {
       return new Promise((resolve) => {
         commit('auth_logout');

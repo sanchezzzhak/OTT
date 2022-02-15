@@ -9,16 +9,18 @@ const randomInt = require('../../utils/random-int');
 const config = require('../../../config/pg.config');
 const {jwt, secretRegisterKey} = require('../../../config/app.config');
 
-class UserService extends Service {
+console.log({secretRegisterKey})
 
+class UserService extends Service {
+  
   static STATUS_ENABLE = 1;
   static STATUS_DISABLE = 0;
   static STATUS_BANNED = 3;
-
+  
   constructor(broker) {
     super(broker);
-    this.jwt = new JWT({key: jwt})
-
+    this.jwt = new JWT({key: jwt});
+    
     this.parseServiceSchema({
       name: 'user.model',
       mixins: [DbService],
@@ -27,7 +29,9 @@ class UserService extends Service {
         name: 'users',
         define: {
           id: {
-            type: Sequelize.UUID, defaultValue: Sequelize.UUIDV4, primaryKey: true,
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+            primaryKey: true,
           },
           email: {
             type: Sequelize.STRING, unique: true, allowNull: false,
@@ -38,16 +42,16 @@ class UserService extends Service {
             type: Sequelize.SMALLINT, defaultValue: 0,
           },
           created_at: {
-            type: Sequelize.DATE, defaultValue: Sequelize.NOW
+            type: Sequelize.DATE, defaultValue: Sequelize.NOW,
           },
           updated_at: {
-            type: Sequelize.DATE, defaultValue: Sequelize.NOW, allowNull: true
+            type: Sequelize.DATE, defaultValue: Sequelize.NOW, allowNull: true,
           },
           last_seen_at: {
-            type: Sequelize.DATE, allowNull: true
+            type: Sequelize.DATE, allowNull: true,
           },
           telegram_id: {
-            type: Sequelize.STRING, allowNull: true, defaultValue: null
+            type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
           pin_auth: {
             type: Sequelize.SMALLINT, defaultValue: 0,
@@ -58,17 +62,18 @@ class UserService extends Service {
         },
         options: {
           underscored: true,
-          indexes: [{
-            unique: false,
-            fields: ['status']
-          }, {
-            unique: false,
-            fields: ['created_at']
-          }],
-        }
+          indexes: [
+            {
+              unique: false,
+              fields: ['status'],
+            }, {
+              unique: false,
+              fields: ['created_at'],
+            }],
+        },
       },
       settings: {
-        fields: ['id', 'email', 'salt', 'password_hash', 'status']
+        fields: ['id', 'email', 'salt', 'password_hash', 'status'],
       },
       actions: {
         // ====
@@ -76,7 +81,7 @@ class UserService extends Service {
           params: {
             email: {type: 'email'},
             password: {type: 'string', min: 6},
-            pin: {type: 'string', optional: true,  min: 4, max:  10},
+            pin: {type: 'string', optional: true, min: 4, max: 10},
           },
           /**
            * auth and get jwt token
@@ -90,36 +95,36 @@ class UserService extends Service {
             
             const user = await this.model.findOne({
               where: {
-                email: email.toLowerCase()
-              }
+                email: email.toLowerCase(),
+              },
             });
             // check stage user
             if (!user) {
-              return {err: defaultError}
+              return {err: defaultError};
             }
             if (!this.validatePassword(password, user)) {
-              return {err: defaultError}
+              return {err: defaultError};
             }
             if (user.status === UserService.STATUS_BANNED) {
-              return {err: 'User banned'}
+              return {err: 'User banned'};
             }
             // check pin code or send pin code to telegram
             if (user.pin_auth && user.telegram_id) {
               if (user.pin_code !== pin) {
                 await this.sendPinCode(user);
-                return {err: 'Wrong pin code'}
+                return {err: 'Wrong pin code'};
               } else {
                 await this.updatePinCode(user, '');
               }
             }
-
+            
             return {
               email: user.email,
-              token: this.makeToken(user)
+              token: this.makeToken(user),
             };
-          }
+          },
         },
-
+        
         // ====
         register: {
           params: {
@@ -127,8 +132,8 @@ class UserService extends Service {
             password: {type: 'string', min: 6},
             passwordConfirm: {type: 'equal', field: 'password'},
             secretKey: {
-              type: function(value) { return secretRegisterKey === value},
-              message: 'Wrong'
+              type: 'equal', value: secretRegisterKey,
+              messages: { equalValue: 'Wrong secretKey'},
             },
           },
           
@@ -142,38 +147,38 @@ class UserService extends Service {
             // check global config open register
             // send verify email
             let {email, password} = ctx.params;
-
+            
             const user = await this.model.findOne({
               where: {
-                email: email.toLowerCase()
-              }
+                email: email.toLowerCase(),
+              },
             });
             if (user) {
-              return {err: 'Email exists or invalid address'}
+              return {err: 'Email exists or invalid address'};
             }
             let securityData = this.makeHashSalt(password);
-            let inserted = await this.model.create({
-              email,
-              password_hash: securityData.hash,
-              salt: securityData.salt,
-              status: UserService.STATUS_ENABLE
-            })
+            // let inserted = await this.model.create({
+            //   email,
+            //   password_hash: securityData.hash,
+            //   salt: securityData.salt,
+            //   status: UserService.STATUS_ENABLE,
+            // });
             return {
               status: true,
             };
-          }
-        }
+          },
+        },
         // ====
-      }
+      },
     });
   }
-
+  
   async updatePinCode(user, pin) {
     await this.model.updateById(user.id, {
-      pin_code: pin
+      pin_code: pin,
     });
   }
-
+  
   async sendPinCode(user) {
     const pin = randomInt(4, 6);
     await this.updatePinCode(user, pin);
@@ -185,7 +190,7 @@ class UserService extends Service {
     });
     */
   }
-
+  
   /**
    * Make token with payload
    * @param {{}} user - user model
@@ -196,9 +201,9 @@ class UserService extends Service {
       id: user.id,
       email: user.email,
       status: user.status,
-    })
+    });
   }
-
+  
   /**
    * Compare open password with password hash
    * @param {string} sourcePassword
@@ -208,7 +213,7 @@ class UserService extends Service {
   validatePassword(sourcePassword, user) {
     return this.makeHash(sourcePassword, user.salt) === user.password_hash;
   }
-
+  
   /**
    * Make random new salt
    * @returns {string}
@@ -216,7 +221,7 @@ class UserService extends Service {
   makeSalt() {
     return crypto.randomBytes(16).toString('hex');
   }
-
+  
   /**
    * Get password hash based on public password and salt
    * @param {string} sourcePassword
@@ -224,9 +229,15 @@ class UserService extends Service {
    * @returns {string}
    */
   makeHash(sourcePassword, salt) {
-    return crypto.pbkdf2Sync(sourcePassword, salt, 1000, 64, `sha512`).toString(`hex`)
+    return crypto.pbkdf2Sync(
+      sourcePassword,
+      salt,
+      1000,
+      64,
+      `sha512`,
+    ).toString(`hex`);
   }
-
+  
   /**
    * Get password hash and new salt
    * @param {string} sourcePassword
@@ -235,7 +246,7 @@ class UserService extends Service {
   makeHashSalt(sourcePassword) {
     let salt = this.makeSalt();
     let hash = this.makeHash(sourcePassword, salt);
-    return {hash, salt}
+    return {hash, salt};
   }
 }
 

@@ -81,11 +81,11 @@ export default {
       this.errorEmail = [];
       this.error = '';
     },
-    login() {
+    register() {
       this.clearErrors();
-      const {email, password, passwordConfirm} = this;
+      const {email, password, passwordConfirm, secretKey} = this;
       this.$store
-      .dispatch('register', {email, password, passwordConfirm})
+      .dispatch('register', {email, password, passwordConfirm, secretKey})
       .then((data) => {
 
       }).catch((response) => {

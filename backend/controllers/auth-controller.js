@@ -2,9 +2,6 @@ const AbstractController = require('./abstract-controller');
 const crypto = require('crypto');
 
 class AuthController extends AbstractController {
-
-  
-  
   
   async login() {
     
@@ -21,7 +18,8 @@ class AuthController extends AbstractController {
         return this.asJson(response);
       } catch (e){
         if (e.type === 'VALIDATION_ERROR') {
-          return this.asJson({err: 'Validation error', errors: e.data})
+          const errors = this.compactErrors(e.data);
+          return this.asJson({err: 'Validation error', errors})
         }
       }
     } catch (e) {
@@ -46,7 +44,8 @@ class AuthController extends AbstractController {
         return this.asJson(response);
       } catch (e){
         if (e.type === 'VALIDATION_ERROR') {
-          return this.asJson({err: 'Validation error', errors: e.data})
+          const errors = this.compactErrors(e.data);
+          return this.asJson({err: 'Validation error', errors})
         }
       }
     } catch (e) {

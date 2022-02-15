@@ -31,7 +31,7 @@ const __readBody = (res, cb, err) => {
 class AbstractController {
   format = 'html';
   statusCode = 200;
-
+  
   constructor(opts = {}) {
     this.broker = opts.broker;
     this.req = opts.req;
@@ -50,6 +50,15 @@ class AbstractController {
     this.res.writeHeader("Access-Control-Max-Age", "3600");
   }
 
+  compactErrors(listErrors){
+    const errors = [];
+    listErrors.map((error) => {
+      let {field, message} = error;
+      errors.push({field, message});
+    })
+    return errors;
+  }
+  
   asJson(obj, statusCode = 200){
     this.renderRaw({view: JSON.stringify(obj), statusCode, format: 'json'});
   }
