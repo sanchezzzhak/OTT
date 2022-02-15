@@ -12,7 +12,8 @@ const appConfig = {
     enable: false
   },
   publicDir: fsPath.resolve(__dirname + '/../public'),
-  jwt: "",
+  jwt: '',
+  secretRegisterKey: '',
   telegram: '',
 };
 

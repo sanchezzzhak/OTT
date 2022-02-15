@@ -7,7 +7,7 @@ const JWT = require('../../utils/jwt');
 const randomInt = require('../../utils/random-int');
 
 const config = require('../../../config/pg.config');
-const {jwt} = require('../../../config/app.config');
+const {jwt, secretRegisterKey} = require('../../../config/app.config');
 
 class UserService extends Service {
 
@@ -87,7 +87,7 @@ class UserService extends Service {
           async handler(ctx) {
             const defaultError = 'Email or Password is not correct';
             let {email, password, pin} = ctx.params;
-
+            
             const user = await this.model.findOne({
               where: {
                 email: email.toLowerCase()
@@ -126,7 +126,12 @@ class UserService extends Service {
             email: {type: 'email'},
             password: {type: 'string', min: 6},
             passwordConfirm: {type: 'equal', field: 'password'},
+            secretKey: {
+              type: function(value) { return secretRegisterKey === value},
+              message: 'Wrong'
+            },
           },
+          
           /**
            * Register for site
            * @param {Context} ctx
@@ -146,7 +151,15 @@ class UserService extends Service {
             if (user) {
               return {err: 'Email exists or invalid address'}
             }
-
+            let securityData = this.makeHashSalt(password);
+            let inserted = await this.model.create({
+              email,
+              password_hash: securityData.hash,
+              salt: securityData.salt
+            })
+            return {
+              status: true,
+            };
           }
         }
         // ====
