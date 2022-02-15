@@ -30,7 +30,7 @@ export default createStore({
         commit('auth_request');
         $axios.post('login', data).then(response => {
           let data = response.data;
-          if(data.err) {
+          if (data.err) {
             commit('auth_error');
             return reject(data);
           }
@@ -39,7 +39,7 @@ export default createStore({
           localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(user));
           $axios.defaults.headers.common['Authorization'] = 'Bearer' +
-            token;
+              token;
           commit('auth_success', token, user);
           return resolve(data);
         }).catch(err => {
@@ -51,17 +51,17 @@ export default createStore({
     },
     register({commit}, data) {
       return new Promise((resolve, reject) => {
-        // commit('auth_request');
+        commit('auth_request');
         $axios.post('register', data).then(response => {
           let data = response.data;
-          if(data.err) {
+          if (data.err) {
+            commit('auth_error');
             return reject(data);
           }
-          // commit('auth_success', token, user);
+          commit('auth_success', '', {})
           return resolve(data);
         }).catch(err => {
           commit('auth_error');
-          localStorage.removeItem('token');
           return reject(err);
         });
       });

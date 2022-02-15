@@ -1,5 +1,4 @@
 <template>
-
   <div class="container mt-5">
     <div class="row justify-content-center">
       <div class="col-md-4">
@@ -72,7 +71,7 @@ export default {
       errorEmail: [],
     }
   },
-  name: 'SingUp',
+  name: 'register',
   methods: {
     clearErrors() {
       this.errorPassword = [];
@@ -88,6 +87,12 @@ export default {
       .dispatch('register', {email, password, passwordConfirm, secretKey})
       .then((data) => {
 
+        console.log('register data', data)
+
+
+        if (data.status && !this.$store.isAuth) {
+          this.$router.push('/login');
+        }
       }).catch((response) => {
         this.error = response.err;
         response.errors && response.errors.forEach((error) => {

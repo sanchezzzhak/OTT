@@ -83,7 +83,6 @@ export default {
       this.$store
       .dispatch('login', {email, password})
       .then((data) => {
-
         if (this.$store.isAuth) {
           this.$router.push('/dashboard');
         }

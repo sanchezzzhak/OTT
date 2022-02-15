@@ -27,14 +27,6 @@ const routes = [
       title: 'Sing Up',
       layout: 'auth'
     }
-  },{
-    path: '/remind',
-    name: 'Remind',
-    component: () => import(/* webpackChunkName: "register" */ '../views/SingUp.vue'),
-    meta: {
-      title: 'Remind',
-      layout: 'auth'
-    }
   },
   //  {
   //   path: '/dashboard',
