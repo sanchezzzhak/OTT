@@ -155,7 +155,8 @@ class UserService extends Service {
             let inserted = await this.model.create({
               email,
               password_hash: securityData.hash,
-              salt: securityData.salt
+              salt: securityData.salt,
+              status: UserService.STATUS_ENABLE
             })
             return {
               status: true,
