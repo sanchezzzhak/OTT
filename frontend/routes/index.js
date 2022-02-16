@@ -50,7 +50,7 @@ router.beforeEach((to, from, next) => {
     if (store.getters.isAuth) {
       return next();
     }
-    return next("/login");
+    return next("/sing-in");
   }
   document.title = to.meta.title || DEFAULT_TITLE;
   next();

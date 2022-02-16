@@ -49,7 +49,7 @@ export default createStore({
         });
       });
     },
-    register({commit}, data) {
+    singup({commit}, data) {
       return new Promise((resolve, reject) => {
         commit('auth_request');
         $axios.post('register', data).then(response => {
