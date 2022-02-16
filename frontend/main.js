@@ -20,6 +20,9 @@ import App from './App.vue';
 
 // app init
 const app = createApp(App);
+app.use(store)
+app.use(router)
+
 app.config.globalProperties.mode = 'production';
 // components
 app.component('bs-input', bsInput);
@@ -29,7 +32,4 @@ app.component('default', DefaultLayout);
 app.component('auth', AuthLayout);
 app.component('dash', DashLayout);
 
-
-app.use(store)
-app.use(router)
 app.mount('#app');

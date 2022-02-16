@@ -97,6 +97,7 @@ class UserService extends Service {
               where: {
                 email: email.toLowerCase(),
               },
+              limit: 1
             });
             // check stage user
             if (!user) {
@@ -147,22 +148,22 @@ class UserService extends Service {
             // check global config open register
             // send verify email
             let {email, password} = ctx.params;
+            email = email.toLowerCase();
             
-            const user = await this.model.findOne({
-              where: {
-                email: email.toLowerCase(),
-              },
+            let user = await this.model.findOne({
+              where: {email},
+              limit: 1
             });
             if (user) {
               return {err: 'Email exists or invalid address'};
             }
             let securityData = this.makeHashSalt(password);
-            // let inserted = await this.model.create({
-            //   email,
-            //   password_hash: securityData.hash,
-            //   salt: securityData.salt,
-            //   status: UserService.STATUS_ENABLE,
-            // });
+            user = await this.model.create({
+              email,
+              password_hash: securityData.hash,
+              salt: securityData.salt,
+              status: UserService.STATUS_ENABLE,
+            });
             return {
               status: true,
             };

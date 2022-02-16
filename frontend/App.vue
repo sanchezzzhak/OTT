@@ -38,8 +38,11 @@
 <!--              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
 <!--            </li>-->
           </ul>
-          <div class="d-flex">
+          <div class="d-flex" v-if="!isAuth()">
             <router-link :to="{name: 'SingIn'}" class="nav-link btn btn-primary text-white">Sing In</router-link>
+          </div>
+          <div class="d-flex" v-else>
+            <router-link :to="{name: 'Logout'}" class="nav-link btn btn-outline-dark text-white">Exit</router-link>
           </div>
         </div>
       </div>
@@ -63,5 +66,10 @@
         return this.$route.meta.layout || 'default';
       },
     },
+    methods: {
+      isAuth() {
+        return false;
+      }
+    }
   };
 </script>
