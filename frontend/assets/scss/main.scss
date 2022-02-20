@@ -34,6 +34,7 @@ body {
   grid-template-columns: 62px 1fr;
   margin: 0 auto;
   overflow: hidden;
+
   .body-wrapper {
     grid-area: body;
     flex: 0 1 100%;
@@ -43,6 +44,7 @@ body {
 .navigation--header {
   grid-area: header;
 }
+
 .navigation--sidebar {
   grid-area: sidebar;
   background: rgba(#191d2a, .8);
@@ -68,6 +70,15 @@ body {
       align-items: center;
       justify-content: center;
       transition: all 0.3s ease-in;
+    }
+
+    &:hover {
+      width: 320px;
+
+      .navigation--link {
+        width: 320px;
+        white-space: nowrap;
+      }
     }
   }
 }
