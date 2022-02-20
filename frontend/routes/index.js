@@ -5,8 +5,9 @@ const DEFAULT_TITLE = 'OTT';
 
 const checkNotAuth = (to, from, next) => {
   if (store.getters.isAuth) {
-    next('/')
+    return next('/')
   }
+  next();
 };
 
 const routes = [
@@ -52,7 +53,10 @@ const routes = [
       auth: true,
       title: 'Dashboard',
       layout: 'dash'
-    }
+    },
+    children: [
+      { path: 'stat', component: () => import('../views/dashboard/Stat.vue') },
+    ]
   }
 ];
 

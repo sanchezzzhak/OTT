@@ -1,6 +1,9 @@
 <template>
   <div class="default-wrapper">
-    <slot/>
+    <header-nav></header-nav>
+    <div class="body-wrapper bg-gradient">
+      <slot/>
+    </div>
   </div>
 </template>
 <script>
