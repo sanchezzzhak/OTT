@@ -3,6 +3,12 @@ import store from '../stores';
 
 const DEFAULT_TITLE = 'OTT';
 
+const checkNotAuth = (to, from, next) => {
+  if (store.getters.isAuth) {
+    next('/')
+  }
+};
+
 const routes = [
   {
     path: '/',
@@ -18,7 +24,8 @@ const routes = [
     meta: {
       title: 'Sing In',
       layout: 'auth'
-    }
+    },
+    beforeEnter: checkNotAuth
   }, {
     path: '/sing-up',
     name: 'SingUp',
@@ -26,26 +33,27 @@ const routes = [
     meta: {
       title: 'Sing Up',
       layout: 'auth'
-    }
+    },
+    beforeEnter: checkNotAuth
   }, {
     path: '/logout',
     name: 'Logout',
+    meta: {
+      auth: true
+    },
     beforeEnter: (to, from, next) => {
-      store.dispatch('logout')
-      next('/');
+      store.dispatch('logout').then(res => next('/'))
+    }
+  }, {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue'),
+    meta: {
+      auth: true,
+      title: 'Dashboard',
+      layout: 'dash'
     }
   }
-
-
-  //  {
-  //   path: '/dashboard',
-  //   name: 'Dashboard',
-  //   component: () => import('../views/Dashboard.vue'),
-  //   meta: {
-  //     auth: true,
-  //     title: 'Dashboard'
-  //   }
-  // }
 ];
 
 
@@ -55,12 +63,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // if (to.matched.some(record => record.meta.auth)) {
-  //   if (store.getters.isAuth) {
-  //     return next();
-  //   }
-  //   return next("/sing-in");
-  // }
+  if (to.matched.some(record => record.meta.auth)) {
+    if (store.getters.isAuth) {
+      return next();
+    }
+    return next("/sing-in");
+  }
   document.title = to.meta.title || DEFAULT_TITLE;
   next();
 });

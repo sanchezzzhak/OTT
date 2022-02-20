@@ -15,8 +15,8 @@
         ><span class="navbar-toggler-icon"></span></button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li class="nav-item">
-
+            <li class="nav-item" v-if="isAuth()">
+              <router-link :to="{name: 'Dashboard'}" class="nav-link">Dashboard</router-link>
             </li>
 <!--            <li class="nav-item">-->
 <!--            </li>-->
@@ -38,7 +38,7 @@
 <!--              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
 <!--            </li>-->
           </ul>
-          <div class="d-flex" v-if="isAuth()">
+          <div class="d-flex" v-if="!isAuth()">
             <router-link :to="{name: 'SingIn'}" class="nav-link btn btn-primary text-white">Sing In</router-link>
           </div>
           <div class="d-flex" v-else>
@@ -47,7 +47,6 @@
         </div>
       </div>
     </nav>
-
 
     <component :is="layout">
       <router-view></router-view>
@@ -60,16 +59,18 @@
 <style lang="scss" scoped></style>
 
 <script>
+
+  import {mapState} from 'vuex'
   export default {
     computed: {
       layout() {
         return this.$route.meta.layout || 'default';
       },
+      ...mapState(['token'])
     },
     methods: {
-      isAuth () {
-        console.log('isAuth', this.$store.isAuth)
-        return this.$store.isAuth
+      isAuth() {
+        return this.token && this.token.length;
       }
     }
   };
