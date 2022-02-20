@@ -38,7 +38,7 @@
 <!--              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>-->
 <!--            </li>-->
           </ul>
-          <div class="d-flex" v-if="!isAuth()">
+          <div class="d-flex" v-if="isAuth()">
             <router-link :to="{name: 'SingIn'}" class="nav-link btn btn-primary text-white">Sing In</router-link>
           </div>
           <div class="d-flex" v-else>
@@ -67,8 +67,9 @@
       },
     },
     methods: {
-      isAuth() {
-        return false;
+      isAuth () {
+        console.log('isAuth', this.$store.isAuth)
+        return this.$store.isAuth
       }
     }
   };

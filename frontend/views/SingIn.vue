@@ -45,7 +45,7 @@
             </div>
             <div class="col-6">
               <p class="text-center">
-                <router-link :to="{name: 'Remind'}">Remind</router-link>
+
               </p>
             </div>
           </div>

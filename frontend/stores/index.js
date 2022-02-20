@@ -38,8 +38,7 @@ export default createStore({
           const user = data.user;
           localStorage.setItem('token', token);
           localStorage.setItem('user', JSON.stringify(user));
-          $axios.defaults.headers.common['Authorization'] = 'Bearer' +
-              token;
+          $axios.defaults.headers.common['Authorization'] = 'Bearer' + token;
           commit('auth_success', token, user);
           return resolve(data);
         }).catch(err => {
@@ -77,7 +76,9 @@ export default createStore({
     },
   },
   getters: {
-    isAuth: state => !!state.token,
+    isAuth: state => {
+      return state.token && state.token.length
+    },
     authStatus: state => state.status,
   },
   modules: {},

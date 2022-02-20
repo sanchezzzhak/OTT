@@ -7,14 +7,14 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: () => import(/* webpackChunkName: "login" */ '../views/Home.vue'),
+    component: () => import('../views/Home.vue'),
     meta: {
       title: 'Home'
     }
   }, {
     path: '/sing-in',
     name: 'SingIn',
-    component: () => import(/* webpackChunkName: "login" */ '../views/SingIn.vue'),
+    component: () => import('../views/SingIn.vue'),
     meta: {
       title: 'Sing In',
       layout: 'auth'
@@ -22,16 +22,25 @@ const routes = [
   }, {
     path: '/sing-up',
     name: 'SingUp',
-    component: () => import(/* webpackChunkName: "register" */ '../views/SingUp.vue'),
+    component: () => import('../views/SingUp.vue'),
     meta: {
       title: 'Sing Up',
       layout: 'auth'
     }
-  },
+  }, {
+    path: '/logout',
+    name: 'Logout',
+    beforeEnter: (to, from, next) => {
+      store.dispatch('logout')
+      next('/');
+    }
+  }
+
+
   //  {
   //   path: '/dashboard',
   //   name: 'Dashboard',
-  //   component: () => import(/* webpackChunkName: "dashboard" */ '../views/Dashboard.vue'),
+  //   component: () => import('../views/Dashboard.vue'),
   //   meta: {
   //     auth: true,
   //     title: 'Dashboard'
@@ -46,12 +55,12 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.auth)) {
-    if (store.getters.isAuth) {
-      return next();
-    }
-    return next("/sing-in");
-  }
+  // if (to.matched.some(record => record.meta.auth)) {
+  //   if (store.getters.isAuth) {
+  //     return next();
+  //   }
+  //   return next("/sing-in");
+  // }
   document.title = to.meta.title || DEFAULT_TITLE;
   next();
 });
