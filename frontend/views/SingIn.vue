@@ -8,7 +8,7 @@
             Sign in to OTT Dashboard
           </div>
           <div class="card-body">
-            <div v-if="error.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
+            <div v-if="error && error.length" class="alert alert-danger alert-dismissible fade show" role="alert">
               {{error}}
               <button type="button" @click="clearErrors()" class="btn-close"></button>
             </div>

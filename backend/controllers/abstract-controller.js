@@ -82,7 +82,14 @@ class AbstractController {
       this.res.end(context);
     }
   }
-  
+
+  setCorsHeaders() {
+    this.res.writeHeader("Access-Control-Allow-Origin", "*");
+    this.res.writeHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+    this.res.writeHeader("Access-Control-Allow-Headers", "authorization, origin, content-type, accept, x-requested-with");
+    this.res.writeHeader("Access-Control-Max-Age", "3600");
+  }
+
   /**
    * request to microservices models, while for post requests
    * @param {string} actionName
@@ -90,10 +97,13 @@ class AbstractController {
    */
   async callRestAction(actionName) {
     if (this.req.getMethod() === 'options') {
-      this.end('');
+      this.setCorsHeaders();
+      this.res.end();
       return;
     }
-    
+
+    this.setCorsHeaders();
+
     try {
       let content = await this.readBody();
       let json = JSON.parse(content.toString());
