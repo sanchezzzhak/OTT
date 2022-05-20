@@ -1,3 +1,11 @@
+
+:root {
+  --bs-dark: #10131b;
+  --bs-dark-rgb: 16,19,27;
+  --link-color: #0e82ff;
+  --bg-overlay: 0, 0, 0, .4
+}
+
 body {
   background-image: linear-gradient(132.6deg, rgba(71, 139, 214, 1) 23.3%, rgba(37, 216, 211, 1) 84.7%);
   color: var(--bs-dark);
@@ -22,8 +30,7 @@ body {
   display: flex;
   width: 100%;
   height: calc(100vh - 58px);
-  background-color: rgba(0, 0, 0, .4);
-  flex: auto;
+  background-color: rgba(var(--bg-overlay));
 }
 
 .dash-wrapper {
@@ -38,6 +45,9 @@ body {
   .body-wrapper {
     grid-area: body;
     flex: 0 1 100%;
+    width: 100%;
+    text-align: start;
+    padding: 10px 10px;
   }
 }
 
@@ -50,7 +60,8 @@ body {
   background: rgba(#191d2a, .8);
 
   .navigation--block {
-    background: #10131b;
+    background: var(--bs-dark);
+    color: var(--link-color);
     transition: all 0.3s ease-in;
     width: 62px;
     -ms-flex-direction: column;
@@ -59,22 +70,32 @@ body {
     position: relative;
 
     .navigation--link {
-      background: red;
+      overflow: hidden;
       position: relative;
       text-decoration: none;
-      font-size: 0;
       width: 62px;
       height: 59px;
-      display: inline-flex;
+      display: flex;
       -ms-flex-align: center;
       align-items: center;
-      justify-content: center;
       transition: all 0.3s ease-in;
+      .icon {
+        margin: 0 22px;
+        display: inline-block;
+        width: 19px;
+        height: 18px;
+      }
+      .label {
+        font-size: 11px;
+        text-transform: uppercase;
+        transition: all 0.3s ease-in;
+      }
     }
 
     &:hover {
       width: 320px;
-
+      justify-content: center;
+      transition: all 0.3s ease-in;
       .navigation--link {
         width: 320px;
         white-space: nowrap;
