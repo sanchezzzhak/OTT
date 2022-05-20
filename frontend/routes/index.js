@@ -1,10 +1,12 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
-import store from '../stores';
+import {useStore} from '../stores/main-store';
+
 
 const DEFAULT_TITLE = 'OTT';
 
 const checkNotAuth = (to, from, next) => {
-  if (store.getters.isAuth) {
+  const store = useStore();
+  if (store.isAuth) {
     return next('/')
   }
   next();
@@ -43,7 +45,7 @@ const routes = [
       auth: true
     },
     beforeEnter: (to, from, next) => {
-      store.dispatch('logout').then(res => next('/'))
+      store.logout().then(res => next('/'))
     }
   }, {
     path: '/dashboard',
@@ -67,8 +69,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  const store = useStore();
   if (to.matched.some(record => record.meta.auth)) {
-    if (store.getters.isAuth) {
+    if (store.isAuth) {
       return next();
     }
     return next("/sing-in");

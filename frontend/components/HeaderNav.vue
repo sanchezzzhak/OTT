@@ -46,15 +46,14 @@
   </nav>
 </template>
 <script>
-import {mapState} from 'vuex'
+
+import {useStore} from '../stores/main-store';
 
 export default {
-  computed: {
-    ...mapState(['token'])
-  },
   methods: {
     isAuth() {
-      return this.token && this.token.length;
+      const store = useStore();
+      return store.token && store.token.length;
     }
   }
 }

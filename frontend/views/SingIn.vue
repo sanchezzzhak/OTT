@@ -58,10 +58,13 @@
 </template>
 
 <script>
+  import {useStore} from '../stores/main-store';
 
   export default {
     data() {
+      let store = useStore();
       return {
+        store,
         email: '',
         password: '',
         error: '',
@@ -80,8 +83,8 @@
       login() {
         this.clearErrors();
         const {email, password} = this;
-        this.$store.dispatch('login', {email, password}).then((data) => {
-          if (this.$store.isAuth) {
+        this.store.login({email, password}).then((data) => {
+          if (this.store.isAuth) {
             this.$router.push('/dashboard');
           }
         }).catch((response) => {

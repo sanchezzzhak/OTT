@@ -36,13 +36,14 @@
     "path-to-regexp": "^6.2.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
+    "pinia": "^2.0.14",
     "register-service-worker": "^1.7.1",
     "sequelize": "^6.13.0",
     "sequelize-cli": "^6.4.1",
     "uWebSockets.js": "uNetworking/uWebSockets.js#v20.6",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.12",
-    "vuex": "^4.0.2"
+    "vue-i18n": "^9.1.10",
+    "vue-router": "^4.0.12"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.0",
