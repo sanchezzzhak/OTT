@@ -1,6 +1,6 @@
 <template>
     <div class="page-settings container-fluid">
-        <h4>{{ $t('pages.settings') }}</h4>
+        <h4>{{ $t('Settings') }}</h4>
         <div class="row">
             <div class="col-md-6">
                 <div class="clipboard-container">

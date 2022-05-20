@@ -36,6 +36,9 @@ class UserService extends Service {
           email: {
             type: Sequelize.STRING, unique: true, allowNull: false,
           },
+          role: {
+            type: Sequelize.STRING, allowNull: true,
+          },
           salt: Sequelize.STRING,
           password_hash: Sequelize.STRING,
           status: {
@@ -170,6 +173,21 @@ class UserService extends Service {
           },
         },
         // ====
+        validJwt: {
+          params: {
+            token: {type: 'string'},
+          },
+          /**
+           * check jwt token is correct
+           * @param ctx
+           * @returns {Promise<{status: boolean}>}
+           */
+          async handler(ctx) {
+            let {token} = ctx.params;
+            let status = await  this.validateToken(token);
+            return {status};
+          },
+        }
       },
     });
   }
@@ -191,7 +209,23 @@ class UserService extends Service {
     });
     */
   }
-  
+
+  async validateToken(token) {
+    let payout = this.jwt.extract(token);
+    if (!payout) {
+      return false;
+    }
+    let user = await this.model.findOne({
+      where: {id: payout.id},
+      limit: 1
+    });
+    if (!user) {
+      return false;
+    }
+    return token === this.makeToken(user);
+  }
+
+
   /**
    * Make token with payload
    * @param {{}} user - user model

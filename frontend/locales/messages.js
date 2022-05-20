@@ -2,6 +2,8 @@ export const messages = {
   en: {
     language: 'Language',
     dashboard: 'Dashboard',
+    Stats: 'Stats',
+    Settings: 'Settings',
     sing_in: 'Sing In',
     exit: 'Exit',
     pages: {
@@ -17,11 +19,10 @@ export const messages = {
   ru: {
     language: 'Язык',
     dashboard: 'Панель управления',
+    Stats: 'Статистика',
+    Settings: 'Настройки',
     sing_in: 'Вход',
     exit: 'Выход',
-    pages: {
-      settings: 'Настройки'
-    },
     attributes: {
       clickUrl: 'Клик URL'
     },
