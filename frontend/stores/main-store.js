@@ -7,7 +7,8 @@ export const useStore = defineStore('main', {
     success: '',
     token: localStorage.getItem('token') || '',
     user: {},
-    status: ''
+    status: '',
+    language:  localStorage.getItem('language'),
   }),
   
   getters: {
@@ -17,6 +18,9 @@ export const useStore = defineStore('main', {
     authStatus: state => state.status,
   },
   actions: {
+    language: (value) => {
+      localStorage.setItem('language', value);
+    },
     login(data) {
       return new Promise((resolve, reject) => {
         this.status = 'auth_request';

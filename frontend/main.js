@@ -11,6 +11,7 @@ import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import bsInput from "./components/bootstrap/bsInput.vue";
 import bsSwitch from "./components/bootstrap/bsSwitch.vue";
+import bsCopy from "./components/bootstrap/bsCopy.vue";
 import HeaderNav from "./components/HeaderNav.vue";
 import Sidebar from "./components/Sidebar.vue";
 import DefaultLayout from './layouts/Default.vue';
@@ -23,7 +24,7 @@ import router from './routes';
 
 // i18n init
 const i18n = createI18n({
-  locale: 'ru',
+  locale: localStorage.getItem('language') || 'en',
   fallbackLocale: 'en',
   messages,
 });
@@ -38,6 +39,7 @@ app.config.globalProperties.mode = 'production';
 // components
 app.component('bs-input', bsInput);
 app.component('bs-switch', bsSwitch);
+app.component('bs-copy', bsCopy);
 app.component('sidebar', Sidebar);
 app.component('header-nav', HeaderNav);
 // layouts
