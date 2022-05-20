@@ -12,8 +12,8 @@
 export default {
   data: () => ({
     items: [
-      {label: 'Stats', to: {path: '/stat'}, icon: 'fa-solid fa-chart-line'},
-      {label: 'Settings', to: {path: '/settings'}, icon: 'fa-solid fa-gear'},
+      {label: 'Stats', to: {path: '/dashboard/stat'}, icon: 'bi bi-bar-chart'},
+      {label: 'Settings', to: {path: '/dashboard/settings'}, icon: 'bi bi-gear-fill'},
     ],
   }),
   name: "sidebar",

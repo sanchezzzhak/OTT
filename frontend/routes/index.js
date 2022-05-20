@@ -1,12 +1,10 @@
 import {createRouter, createWebHashHistory} from 'vue-router'
 import {useStore} from '../stores/main-store';
 
-
 const DEFAULT_TITLE = 'OTT';
 
 const checkNotAuth = (to, from, next) => {
-  const store = useStore();
-  if (store.isAuth) {
+  if (useStore().isAuth) {
     return next('/')
   }
   next();
@@ -45,7 +43,7 @@ const routes = [
       auth: true
     },
     beforeEnter: (to, from, next) => {
-      store.logout().then(res => next('/'))
+      useStore().logout().then(res => next('/'))
     }
   }, {
     path: '/dashboard',
@@ -58,6 +56,7 @@ const routes = [
     },
     children: [
       { path: 'stat', component: () => import('../views/dashboard/Stat.vue') },
+      { path: 'settings', component: () => import('../views/dashboard/Settings.vue') },
     ]
   }
 ];
@@ -79,4 +78,5 @@ router.beforeEach((to, from, next) => {
   document.title = to.meta.title || DEFAULT_TITLE;
   next();
 });
+
 export default router;
