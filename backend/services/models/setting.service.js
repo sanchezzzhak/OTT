@@ -17,11 +17,14 @@ class SettingService extends Service {
         name: 'settings',
         define: {
           name: {
-            type: Sequelize.STRING, unique: true, allowNull: false,
+            type: Sequelize.STRING, allowNull: false, primaryKey: true,
           },
           value: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           }
+        },
+        options: {
+          timestamps: false
         }
       },
       settings: {
