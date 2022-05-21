@@ -18,7 +18,7 @@ export const useStore = defineStore('main', {
     authStatus: state => state.status,
   },
   actions: {
-    language: (value) => {
+    language(value) {
       localStorage.setItem('language', value);
     },
     login(data) {
@@ -81,5 +81,3 @@ export const useStore = defineStore('main', {
   }
   
 })
-
-

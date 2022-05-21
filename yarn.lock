@@ -1323,10 +1323,10 @@ next-tick@1, next-tick@^1.1.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
 
-node-device-detector@^1.4.4:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/node-device-detector/-/node-device-detector-1.4.4.tgz#9a8d5e52d6b067034fec16cad9a5ec2ce2f6c23c"
-  integrity sha512-L+Pa2teS46qT9cnbVaDvU9X3YzUXmTY07UFMzeF3do6SpD0Tz8vSr9vHT7+iwSCfjuqRZv/bUg/8/kFCopG+JA==
+node-device-detector@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/node-device-detector/-/node-device-detector-2.0.2.tgz#a79d6bf7a3f29aba63550bab7743e2adcbb6b687"
+  integrity sha512-RnFUAKbR08Nu0zEDb3FTESsepzGCESd/zwgSeM669Z+H7z1PAwd/u3EjC7JSNkrl+GNmGCzKHEI9UJxCfTbzeg==
   dependencies:
     js-yaml "^4.1.0"
 

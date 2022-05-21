@@ -91,18 +91,42 @@ class AbstractController {
   }
 
   /**
+   * @usage
+   * ```js
+   * if (this.setCorsHeadersOver()) {
+   *  return;
+   * }
+   * // old code...
+   * ```
+   * @returns {boolean}
+   */
+  setCorsHeadersOver() {
+    if (this.req.getMethod() === 'options') {
+      this.setCorsHeaders();
+      this.res.end();
+      return true;
+    }
+    this.setCorsHeaders();
+    return false;
+  }
+
+  /**
+   * Get an authorization token
+   * @returns {string|null}
+   */
+  getBearerToken() {
+    return this.req.getHeader('authorization').split('Bearer ')[1] ?? null;
+  }
+
+  /**
    * request to microservices models, while for post requests
    * @param {string} actionName
    * @returns {Promise<void>}
    */
   async callRestAction(actionName) {
-    if (this.req.getMethod() === 'options') {
-      this.setCorsHeaders();
-      this.res.end();
+    if (this.setCorsHeadersOver()) {
       return;
     }
-
-    this.setCorsHeaders();
 
     try {
       let content = await this.readBody();

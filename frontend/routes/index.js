@@ -64,6 +64,21 @@ const routes = [
         name: 'Settings',
         path: 'settings',
         component: () => import('../views/dashboard/Settings.vue'),
+        children: [
+          {
+            name: 'Tracker links',
+            path: '',
+            component: () => import('../views/dashboard/settings/TrackerLinks.vue'),
+          }, {
+            name: 'Settings User',
+            path: 'user',
+            component: () => import('../views/dashboard/settings/User.vue'),
+          }, {
+            name: 'Settings Notification',
+            path: 'notification',
+            component: () => import('../views/dashboard/settings/Notification.vue'),
+          }
+        ]
       },
     ],
   },
@@ -72,6 +87,7 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
+  linkExactActiveClass: "active"
 });
 
 router.beforeEach((to, from, next) => {

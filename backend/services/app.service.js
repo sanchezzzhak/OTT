@@ -27,6 +27,10 @@ class AppService extends Service {
     this.getServerUws().any('/register', async (res, req) => {
       return this.runControllerAction('auth', 'register', res, req);
     });
+
+    this.getServerUws().any('/setting/update', async (res, req) => {
+      return this.runControllerAction('setting', 'update', res, req);
+    });
   }
   
 }

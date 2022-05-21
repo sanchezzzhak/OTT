@@ -1,6 +1,7 @@
 export const messages = {
   en: {
     language: 'Language',
+    TrackerLinks: 'Tracker links',
     dashboard: 'Dashboard',
     Stats: 'Stats',
     Settings: 'Settings',
@@ -18,6 +19,7 @@ export const messages = {
   },
   ru: {
     language: 'Язык',
+    TrackerLinks: 'Ссылки на трекер',
     dashboard: 'Панель управления',
     Stats: 'Статистика',
     Settings: 'Настройки',

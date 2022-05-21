@@ -1,32 +1,32 @@
 <template>
-    <div class="page-settings container-fluid">
-        <h4>{{ $t('Settings') }}</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="clipboard-container">
-                    <bs-input
-                        id="click-url"
-                        :label="$t('attributes.clickUrl')"
-                        v-model="clickUrl"
-                    />
-                    <bs-copy selector="#click-url"/>
+  <div class="page-settings container-fluid">
+    <h4>{{ $t('Settings') }}</h4>
 
-                </div>
-            </div>
-            <div class="col-md-6">
-                With OTT you don't need to place any PHP code on your landing pages.
-                Visitors are redirected based on data stored in a cookie and referrer.
-            </div>
-        </div>
-    </div>
+    <ul class="nav nav-pills nav-pills-dark">
+      <li class="nav-item" v-for="item in items">
+        <router-link class="nav-link nav" :to="item.to">
+          <i class="icon" v-if="item.icon" :class="item.icon"></i> <span class="label">{{ $t(item.label) }}</span>
+        </router-link>
+      </li>
+    </ul>
+
+    <router-view></router-view>
+
+
+  </div>
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        clickUrl: '',
-      };
-    },
-  };
+
+export default {
+  data() {
+    return {
+      items: [
+        {label: 'TrackerLinks', to: {path: '/dashboard/settings'}, icon: 'bi bi-link'},
+        {label: 'User', to: {path: '/dashboard/settings/user'}, icon: 'bi bi-person'},
+        {label: 'Notification', to: {path: '/dashboard/settings/notification'}, icon: 'bi bi-app-indicator'},
+      ],
+    };
+  },
+};
 </script>

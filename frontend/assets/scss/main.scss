@@ -20,6 +20,9 @@ body {
   color: #2c3e50;
 }
 
+.nav-pills-dark .nav-link{
+  color: var(--bs-light)
+}
 
 .auth-wrapper, .default-wrapper, .dash-wrapper {
   overflow: hidden;
