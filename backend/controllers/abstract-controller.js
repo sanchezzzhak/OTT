@@ -142,6 +142,13 @@ class AbstractController {
     
   }
   
+  getRemoteIp() {
+    if (this.res.aborted) {
+      return '';
+    }
+    return this.req.getRemoteAddressAsText();
+  }
+  
   /**
    * @usage
    * ```js

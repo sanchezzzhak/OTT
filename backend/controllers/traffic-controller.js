@@ -2,8 +2,8 @@ const AbstractController = require('./abstract-controller');
 const {randomUUID} = require('crypto');
 
 const EVENTS = {
-  HIT: 1,         // the very first click or lucky, start started
-  HEAT: 7         // event for heat map graph
+  HIT: 1,          // the very first click or lucky, start started
+  HEAT: 7,         // event for heat map graph
 };
 
 class TrafficController extends AbstractController {
@@ -15,34 +15,50 @@ class TrafficController extends AbstractController {
   async index() {
     this.setCorsHeadersOver();
     this.setClientHintsHeaders();
-  
-    let trafficId = randomUUID();
-    let result = await this.#pushBuffer()
     
+    let trafficId = randomUUID();
     let id = this.req.getParameter(0);
     let data = JSON.stringify({
       trafficId, // this.broker.generateUid()
+    });
+    
+    let result = await this.#pushBuffer({
+      trafficId,
+      event: EVENTS.HIT,
     });
     
     this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});
   }
   
   /**
-   * get device detect for
+   * detect device, client, os or bot
    * @returns {Promise<void>}
    */
-  async deviceInfo() {
+  async trafficDeviceInfo() {
     let useragent = this.getUserAgent();
     let headers = this.getClientHintHeaders();
-  
+    
     return await this.broker.callRestAction('detector.detect', {
-      useragent, headers
+      useragent, headers,
     });
   }
   
   /**
-   * save traffic data for buffer table
-   *
+   * check traffic stage is unique for 24 hour or other setting
+   * @returns {Promise<void>}
+   */
+  async trafficUniqueInfo(){
+    let useragent = this.getUserAgent();
+    let ip = this.getRemoteIp();
+    let domain = '';  // todo add later
+    return await this.broker.callRestAction('traffic.check-unique', {
+      useragent, ip, domain
+    });
+  }
+  
+  /**
+   * save traffic for buffer table.
+   * with subsequent saving to productive storage
    * @param params
    * @returns {Promise<null|void>}
    */
@@ -53,14 +69,24 @@ class TrafficController extends AbstractController {
     }
     
     // detect device only for EVENTS.HIT
+    let data = {};
     let deviceInfo = {};
+    let trafficUnique = {};
     if (eventId === EVENTS.HIT) {
-      deviceInfo = await this.deviceInfo();
+      let result = await Promise.allSettled([
+        this.trafficDeviceInfo(),
+        this.trafficUniqueInfo()
+      ])
+      deviceInfo = result[0];
+      trafficUnique = result[1];
     }
-
-    return await this.broker.callRestAction('stat.buffer', params);
+    
+    
+    return await this.broker.callRestAction(
+      'stat-buffer.model.save',
+      data
+    );
   }
-  
   
   /**
    * aggregate traffic by trafficId save to buffer table
