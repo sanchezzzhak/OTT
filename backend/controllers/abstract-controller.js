@@ -82,14 +82,66 @@ class AbstractController {
       this.res.end(context);
     }
   }
-
+  
   setCorsHeaders() {
-    this.res.writeHeader("Access-Control-Allow-Origin", "*");
-    this.res.writeHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    this.res.writeHeader("Access-Control-Allow-Headers", "authorization, origin, content-type, accept, x-requested-with");
-    this.res.writeHeader("Access-Control-Max-Age", "3600");
+    this.res.writeHeader('Access-Control-Allow-Origin', '*');
+    this.res.writeHeader('Access-Control-Allow-Methods',
+      'GET, POST, PUT, DELETE, OPTIONS');
+    this.res.writeHeader('Access-Control-Allow-Headers',
+      'authorization, origin, content-type, accept, x-requested-with');
+    this.res.writeHeader('Access-Control-Max-Age', '3600');
   }
-
+  
+  /**
+   * set client hints for headers
+   */
+  setClientHintsHeaders() {
+    this.res.writeHeader('accept-ch', [
+      'sec-ch-ua-full-version',
+      'sec-ch-ua-full-version-list',
+      'sec-ch-ua-platform',
+      'sec-ch-ua-platform-version',
+      'sec-ch-ua-arch',
+      'sec-ch-ua-bitness',
+      'sec-ch-prefers-color-scheme',
+    ].join(', '));
+  }
+  
+  /**
+   * get client hints and allow headers for request
+   * @returns {{}}
+   */
+  getClientHintHeaders() {
+    let headers = {};
+    
+    if (this.res.aborted) {
+      return headers;
+    }
+    
+    this.req.forEach((key, value) => {
+      const has = key.toLowerCase().indexOf('sec-ch-') !== -1 ||
+        key.toLowerCase().indexOf('x-requested-with') !== -1;
+      
+      if (has) {
+        headers[key] = value;
+      }
+    });
+    
+    return headers;
+  }
+  
+  /**
+   * get useragent for request
+   * @returns {string}
+   */
+  getUserAgent() {
+    if (this.res.aborted) {
+      return '';
+    }
+    return this.req.getHeader('user-agent');
+    
+  }
+  
   /**
    * @usage
    * ```js
@@ -109,7 +161,7 @@ class AbstractController {
     this.setCorsHeaders();
     return false;
   }
-
+  
   /**
    * Get an authorization token
    * @returns {string|null}
@@ -117,7 +169,7 @@ class AbstractController {
   getBearerToken() {
     return this.req.getHeader('authorization').split('Bearer ')[1] ?? null;
   }
-
+  
   /**
    * request to microservices models, while for post requests
    * @param {string} actionName
@@ -127,7 +179,7 @@ class AbstractController {
     if (this.setCorsHeadersOver()) {
       return;
     }
-
+    
     try {
       let content = await this.readBody();
       let json = JSON.parse(content.toString());
