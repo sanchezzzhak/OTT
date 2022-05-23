@@ -2,6 +2,20 @@ const {Service} = require('moleculer');
 const {UwsServer} = require('../mixins/uws.mixin');
 const appConfig = require('../../config/app.config');
 
+const ROUTERS = [
+  // traffic
+  {path: '/t/:id', controller: 'traffic', action: 'index', method: 'get'},
+  // frontend UI
+  {path: '/login', controller: 'auth', action: 'login', method: 'any'},
+  {path: '/register', controller: 'auth', action: 'register', method: 'any'},
+  {
+    path: '/setting/update',
+    controller: 'setting',
+    action: 'update',
+    method: 'any',
+  },
+];
+
 class AppService extends Service {
   constructor(broker) {
     super(broker);
@@ -14,22 +28,23 @@ class AppService extends Service {
     });
   }
   
+  /**
+   * bind native uws routers for array
+   */
   start() {
-    // native uws routers
-    this.getServerUws().get('/t/:id', async (res, req) => {
-      return this.runControllerAction('traffic', 'index', res, req);
-    });
-
-    this.getServerUws().any('/login', async (res, req) => {
-      return this.runControllerAction('auth', 'login', res, req);
-    });
-    
-    this.getServerUws().any('/register', async (res, req) => {
-      return this.runControllerAction('auth', 'register', res, req);
-    });
-
-    this.getServerUws().any('/setting/update', async (res, req) => {
-      return this.runControllerAction('setting', 'update', res, req);
+    ROUTERS.forEach((route) => {
+      if (route.method === 'get') {
+        this.getServerUws().get(route.path, async (res, req) => {
+          return this.runControllerAction(route.controller, route.action, res,
+            req);
+        });
+      }
+      if (route.method === 'any') {
+        this.getServerUws().any(route.path, async (res, req) => {
+          return this.runControllerAction(route.controller, route.action, res,
+            req);
+        });
+      }
     });
   }
   
