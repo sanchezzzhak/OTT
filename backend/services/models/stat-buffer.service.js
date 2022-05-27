@@ -22,10 +22,10 @@ class StatBufferService extends Service {
             type: Sequelize.INTEGER, allowNull: true, defaultValue: null,
           },
           status: {
-            type: Sequelize.INTEGER, allowNull: true, defaultValue: 0,
+            type: Sequelize.INTEGER, allowNull: true, defaultValue: null,
           },
           traffic_id: {
-            type: Sequelize.UUID,
+            type: Sequelize.UUID, allowNull: false,
           },
           domain: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
@@ -33,7 +33,7 @@ class StatBufferService extends Service {
           ip_type: {
             type: Sequelize.INTEGER,
           },
-          ip:  {
+          ip: {
             type: Sequelize.STRING,
             allowNull: true,
             defaultValue: null,
@@ -57,21 +57,21 @@ class StatBufferService extends Service {
           app_name: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
-          // ======= Bot information
+          // ======= bot information
           bot_name: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
           bot_category: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
-          // ======= OS information
+          // ======= os information
           os_name: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
           os_version: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
-          // ======= Client information
+          // ======= client information
           client_type: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
@@ -87,7 +87,7 @@ class StatBufferService extends Service {
           client_engine_version: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
-          // ======= Device information
+          // ======= device information
           device_type: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
@@ -124,15 +124,12 @@ class StatBufferService extends Service {
           },
         },
       },
-      settings: {
-        fields: [],
-      },
       actions: {
         // ====
         save: {
           params: {
-            event_id: {type: 'integer'},
-            traffic_id: {type: 'string'},
+            // event_id: {type: 'integer'},
+            // traffic_id: {type: 'string'},
           },
           /**
            * Save buffer stat
@@ -144,7 +141,6 @@ class StatBufferService extends Service {
             let {name, value} = ctx.params;
             
             // todo save traffic to tmp table
-            
             
           },
         },
