@@ -195,6 +195,7 @@ class AbstractController {
         let response = await this.broker.call(actionName, json);
         return this.asJson(response);
       } catch (e) {
+        console.log(e)
         if (e.type === 'VALIDATION_ERROR') {
           const errors = this.compactErrors(e.data);
           return this.asJson({err: 'Validation error', errors});

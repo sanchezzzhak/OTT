@@ -37,7 +37,7 @@ class UserService extends Service {
             type: Sequelize.STRING, unique: true, allowNull: false,
           },
           role: {
-            type: Sequelize.STRING, allowNull: true,
+            type: Sequelize.STRING, allowNull: true, defaultValue: null
           },
           salt: Sequelize.STRING,
           password_hash: Sequelize.STRING,
@@ -76,7 +76,7 @@ class UserService extends Service {
         },
       },
       settings: {
-        fields: ['id', 'email', 'salt', 'password_hash', 'status'],
+        fields: ['id', 'email', 'salt', 'password_hash', 'status', 'role'],
       },
       actions: {
         // ====

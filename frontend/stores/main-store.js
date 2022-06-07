@@ -57,7 +57,7 @@ export const useStore = defineStore('main', {
             this.status = 'auth_error';
             return reject(data);
           }
-          this.status = 'auth_success';
+          this.status = 'singup_success';
           this.token = '';
           this.user = {};
           return resolve(data);

@@ -66,10 +66,13 @@
 
 
 <script>
+  import {useStore} from '../stores/main-store';
 
   export default {
     data() {
+      let store = useStore();
       return {
+        store,
         email: '',
         password: '',
         secretKey: '',
@@ -90,11 +93,12 @@
         this.errorEmail = [];
         this.error = '';
       },
+
       singup() {
         this.clearErrors();
         const {email, password, passwordConfirm, secretKey} = this;
-        this.$store.dispatch('singup', {email, password, passwordConfirm, secretKey}).then((data) => {
-          if (data.status && !this.$store.isAuth) {
+        this.store.singup({email, password, passwordConfirm, secretKey}).then((data) => {
+          if (this.store.status === 'singup_success' && !this.store.isAuth) {
             this.$router.push('/sing-in');
           }
         }).catch((response) => {
