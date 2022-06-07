@@ -11,6 +11,7 @@ const {jwt, secretRegisterKey} = require('../../../config/app.config');
 
 console.log({secretRegisterKey})
 
+
 class UserService extends Service {
   
   static STATUS_ENABLE = 1;
@@ -184,32 +185,58 @@ class UserService extends Service {
            */
           async handler(ctx) {
             let {token} = ctx.params;
-            let status = await  this.validateToken(token);
+            let status = await this.validateToken(token);
             return {status};
           },
-        }
+        },
       },
+      started: this.startedService
     });
   }
-  
+
+  /**
+   * Callback for started
+   * Update columns for users table
+   * @returns {Promise<void>}
+   */
+  async startedService() {
+    await this.model.sync({force: true});
+  }
+
+  /**
+   * Update pin code for user in user table
+   * @param user
+   * @param pin
+   * @returns {Promise<void>}
+   */
   async updatePinCode(user, pin) {
     await this.model.updateById(user.id, {
       pin_code: pin,
     });
   }
-  
+
+  /**
+   * send new pin code for telegram
+   * @param user
+   * @returns {Promise<void>}
+   */
   async sendPinCode(user) {
     const pin = randomInt(4, 6);
     await this.updatePinCode(user, pin);
     // send code to telegram
-    /*
-    await this.broker.call('telegram.send', {
+
+    await this.broker.call('telegram.sendMessage', {
       chatId: user.telegram_id,
-      message: String(pin);
+      text: String(pin)
     });
-    */
+
   }
 
+  /**
+   * JWT token validation
+   * @param token
+   * @returns {Promise<boolean>}
+   */
   async validateToken(token) {
     let payout = this.jwt.extract(token);
     if (!payout) {
