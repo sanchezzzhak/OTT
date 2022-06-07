@@ -24,14 +24,14 @@ class AppService extends Service {
       mixins: [
         UwsServer({config: appConfig}),
       ],
-      started: this.start,
+      started: this.startedService,
     });
   }
   
   /**
    * bind native uws routers for array
    */
-  start() {
+  startedService() {
     ROUTERS.forEach((route) => {
       if (route.method === 'get') {
         this.getServerUws().get(route.path, async (res, req) => {

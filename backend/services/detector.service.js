@@ -7,52 +7,39 @@ const ClientHints = require('node-device-detector/client-hints');
 class DetectorService extends Service {
   #detector;
   #clientHints;
-  
+
   constructor(broker) {
     super(broker);
     this.parseServiceSchema({
       name: 'detector',
-      started: this.start,
+      started: this.startedService,
       methods: {
-        detector: {
-          /**
-           *
-           * @param ctx
-           * @returns {Promise<{common: (DetectResult|{}), bot: (ResultBot|{})}>}
-           */
-          async handler(ctx) {
-            let {useragent, headers} = ctx.params;
-            return this.detectTraffic(useragent, headers);
-          },
+        /**
+         *
+         * @param ctx
+         * @returns {Promise<{common: (DetectResult|{}), bot: (ResultBot|{})}>}
+         */
+        async detect(ctx) {
+          let {useragent, headers} = ctx.params;
+          let bot = this.#detector.parseBot(useragent);
+          let common = this.#detector.detect(useragent,
+            this.#clientHints.parse(headers));
+
+          return {common, bot};
         },
+
       },
     });
   }
-  
-  start() {
+
+  startedService() {
     this.#detector = new DeviceDetector({
       deviceIndexes: true,
       deviceAliasCode: true,
     });
     this.#clientHints = new ClientHints;
   }
-  
-  /**
-   *
-   * @param userAgent
-   * @param headers
-   * @returns {{common: (DetectResult|{}), bot: (ResultBot|{})}}
-   */
-  detectTraffic(userAgent, headers = {}) {
-    let bot = this.#detector.parseBot(userAgent);
-    let common = this.#detector.detect(userAgent,
-      this.#clientHints.parse(headers));
-    
-    return {
-      common, bot,
-    };
-  }
-  
+
 }
 
 module.exports = DetectorService;
