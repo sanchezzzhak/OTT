@@ -27,6 +27,7 @@
               id="password"
               label="Password"
               v-model="password"
+              showPasswordEye="show"
               @focus="clearErrors()"
             />
             <div v-for="item in errorPassword">
@@ -45,7 +46,7 @@
             </div>
             <div class="col-6">
               <p class="text-center">
-
+                  <router-link :to="{name: 'Forgot'}">Forgot?</router-link>
               </p>
             </div>
           </div>
@@ -71,9 +72,11 @@
         errorPassword: [],
         errorEmail: [],
         errorPin: [],
+        showPassword: false
       };
     },
     name: 'login',
+    
     methods: {
       clearErrors() {
         this.errorPassword = [];

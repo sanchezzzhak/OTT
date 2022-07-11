@@ -19,6 +19,15 @@ const routes = [
       title: 'Home',
     },
   }, {
+    path: '/forgot',
+    name: 'Forgot',
+    component: () => import('../views/Forgot.vue'),
+    meta: {
+      title: 'Forgot',
+      layout: 'auth',
+    },
+    beforeEnter: checkNotAuth,
+  }, {
     path: '/sing-in',
     name: 'SingIn',
     component: () => import('../views/SingIn.vue'),
@@ -77,8 +86,8 @@ const routes = [
             name: 'Settings Notification',
             path: 'notification',
             component: () => import('../views/dashboard/settings/Notification.vue'),
-          }
-        ]
+          },
+        ],
       },
     ],
   },
@@ -87,7 +96,7 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  linkExactActiveClass: "active"
+  linkExactActiveClass: 'active',
 });
 
 router.beforeEach((to, from, next) => {
