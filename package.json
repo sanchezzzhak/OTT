@@ -33,7 +33,7 @@
     "moleculer": "^0.14.18",
     "moleculer-db": "^0.8.18",
     "moleculer-db-adapter-sequelize": "^0.2.13",
-    "node-device-detector": "^2.0.2",
+    "node-device-detector": "^2.0.4",
     "path-to-regexp": "^6.2.0",
     "pg": "^8.7.1",
     "pg-hstore": "^2.3.4",
