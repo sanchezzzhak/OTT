@@ -22,12 +22,11 @@
             <div v-for="item in errorEmail">
               {{item}}
             </div>
-            <bs-input
+            <bs-password-eye
               type="password"
               id="password"
               label="Password"
               v-model="password"
-              showPasswordEye="show"
               @focus="clearErrors()"
             />
             <div v-for="item in errorPassword">

@@ -1,25 +1,23 @@
 <template>
-  <div :class="formType">
-    <label v-if="labelPos === 'top'" :for="id">{{label}}</label>
-    <input
-      :type="getType(type)"
-      class="form-control"
-      :class="getClasses(size, valid)"
-      :name="name"
-      :id="id"
-      :form="form"
-      :maxlength="maxLength"
-      :placeholder="placeholder"
-      :isRequired="isRequired"
-      v-model="value"
-      @input="$emit('update:modelValue', $event.target.value)"
-      v-bind="$attrs"
-    />
-    <i
-      v-if="hasShowPasswordEye()"
-      @click="togglePasswordShow"
-      class="fas" :class="{ 'fa-eye-slash': this.showPassword, 'fa-eye': !this.showPassword }"></i>
-    <label v-if="labelPos === 'bottom'" :for="id">{{label}}</label>
+  <div class="relative-container">
+    <div :class="formType">
+      <label v-if="labelPos === 'top'" :for="id">{{label}}</label>
+      <input
+        :type="type"
+        class="form-control"
+        :class="getClasses(size, valid)"
+        :name="name"
+        :id="id"
+        :form="form"
+        :maxlength="maxLength"
+        :placeholder="placeholder"
+        :isRequired="isRequired"
+        v-model="value"
+        @input="$emit('update:modelValue', $event.target.value)"
+        v-bind="$attrs"
+      />
+      <label v-if="labelPos === 'bottom'" :for="id">{{label}}</label>
+    </div>
   </div>
 </template>
 
@@ -50,7 +48,6 @@
       placeholder: String,
       type: String,
       label: String,
-      showPasswordEye: Boolean,
       labelPos: {
         type: String,
         default: 'bottom',
@@ -63,19 +60,6 @@
       };
     },
     methods: {
-      getType(type) {
-        if (this.hasShowPasswordEye() && this.showPassword) {
-          return 'text';
-        }
-        return type;
-      },
-      hasShowPasswordEye() {
-        return this.showPasswordEye === 'show';
-      },
-      togglePasswordShow() {
-        this.showPassword = !this.showPassword;
-        this.$forceUpdate();
-      },
       getClasses: (size, valid) => {
         let sizeValue, isValidValue;
         sizeValue = size ? `form-control-${size}` : null;

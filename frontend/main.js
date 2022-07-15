@@ -10,6 +10,7 @@ import 'bootstrap/dist/js/bootstrap.min'
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import bsInput from "./components/bootstrap/bsInput.vue";
+import bsPasswordEye from "./components/bootstrap/bsPasswordEye.vue";
 import bsSwitch from "./components/bootstrap/bsSwitch.vue";
 import bsCopy from "./components/bootstrap/bsCopy.vue";
 import HeaderNav from "./components/HeaderNav.vue";
@@ -37,9 +38,12 @@ app.use(i18n);
 
 app.config.globalProperties.mode = 'production';
 // components
+
 app.component('bs-input', bsInput);
+app.component('bs-password-eye', bsPasswordEye);
 app.component('bs-switch', bsSwitch);
 app.component('bs-copy', bsCopy);
+
 app.component('sidebar', Sidebar);
 app.component('header-nav', HeaderNav);
 // layouts
