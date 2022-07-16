@@ -32,7 +32,7 @@
             <div v-for="item in errorSecretKey">
               {{item}}
             </div>
-            <bs-input
+            <bs-password-eye
               type="password"
               id="password"
               label="Password"
@@ -42,7 +42,7 @@
             <div v-for="item in errorPassword">
               {{item}}
             </div>
-            <bs-input
+            <bs-password-eye
               type="password"
               id="password-confirm"
               label="Password Confirm"

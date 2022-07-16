@@ -19,7 +19,7 @@
     
     <i
       @click.prevent="togglePasswordShow()"
-      class="fas absolute-control" :class="{ 'fa-eye-slash': this.$data.showPassword, 'fa-eye': !this.$data.showPassword }">
+      class="absolute-control fas " :class="showPasswordIcon">
     </i>
     
     <div v-if="showStrengthMeter" :class="[strengthMeterClass]">
@@ -90,6 +90,9 @@
       },
       inputType () {
         return this.$data._showPassword || this.$data._showPassword ? 'text' : 'password'
+      },
+      showPasswordIcon() {
+        return this.$data._showPassword ? 'fa-eye-slash': 'fa-eye';
       },
     },
     methods: {

@@ -122,6 +122,23 @@ class StatBufferService extends Service {
           source5: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
+          created_at: {
+            type: Sequelize.DATE, defaultValue: Sequelize.NOW,
+          },
+          updated_at: {
+            type: Sequelize.DATE, defaultValue: Sequelize.NOW, allowNull: true,
+          },
+        },
+        options: {
+          underscored: true,
+          indexes: [
+            {
+              unique: false,
+              fields: ['status'],
+            }, {
+              unique: false,
+              fields: ['created_at'],
+            }],
         },
       },
       actions: {
