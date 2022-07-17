@@ -27,6 +27,10 @@ class StatBufferService extends Service {
           traffic_id: {
             type: Sequelize.UUID, allowNull: false,
           },
+          project_id: {
+            type: Sequelize.UUID,
+            defaultValue: Sequelize.UUIDV4,
+          },
           domain: {
             type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
@@ -138,6 +142,9 @@ class StatBufferService extends Service {
             }, {
               unique: false,
               fields: ['created_at'],
+            }, {
+              unique: false,
+              fields: ['project_id'],
             }],
         },
       },

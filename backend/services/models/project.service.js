@@ -22,10 +22,13 @@ class ProjectService extends Service {
             primaryKey: true,
           },
           name: {
-            type: Sequelize.STRING, unique: true, allowNull: false,
+            type: Sequelize.STRING, unique: false, allowNull: false,
           },
           token: {
-            type: Sequelize.STRING, unique: false, allowNull: false,
+            type: Sequelize.STRING, unique: true, allowNull: false,
+          },
+          description: {
+            type: Sequelize.STRING, allowNull: true, defaultValue: null,
           },
           status: {
             type: Sequelize.INTEGER, allowNull: true, defaultValue: null,
