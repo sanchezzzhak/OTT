@@ -1,4 +1,5 @@
 // const pathRegexp = require('path-to-regexp');
+require('dotenv').config({ path: __dirname + '/../.env' });
 
 const {resolve} = require('path');
 const {ServiceBroker} = require('moleculer');
