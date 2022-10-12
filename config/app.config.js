@@ -2,11 +2,11 @@ const fsPath = require('path');
 const requireLocalConfig = require('../backend/utils/require-local-config')
 
 const appConfig = {
-  port: 3001,
+  port: process.env.SERVER_PORT ?? 3001,
   ssl: {
-    enable: false,
-    keyPath: "",
-    certPath: ""
+    enable: process.env.SERVER_SSL ?? false,
+    keyPath: process.env.SERVER_SSL_KEY ?? "",
+    certPath:  process.env.SERVER_SSL_CERT ?? ""
   },
   ws: {
     enable: false

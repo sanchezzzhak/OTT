@@ -1,3 +1,3 @@
 module.exports = {
-  transporter: 'tcp'
+  transporter: process.env.MOLECULAR_TRANSPORT ?? 'tcp'
 };
