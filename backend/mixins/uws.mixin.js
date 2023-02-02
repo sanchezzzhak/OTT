@@ -26,6 +26,7 @@ function decodeRouterParam(val) {
   }
 }
 
+
 const UwsServer = ({config: config} = {}) => ({
   server: null,
   name: 'web-server',
@@ -49,15 +50,26 @@ const UwsServer = ({config: config} = {}) => ({
     return Promise.resolve();
   },
 
-  stopped() {
-  },
+  stopped() {},
 
   methods: {
 
+    /**
+     * Get instance UWS server
+     *
+     * @returns {TemplatedApp}
+     */
     getServerUws() {
       return this.server;
     },
 
+    /**
+     * Match route for request
+     *
+     * @param res
+     * @param req
+     * @returns {null}
+     */
     matchRouter(res, req) {
       let pathUrl = req.getUrl();
       let method = req.getMethod();
@@ -87,6 +99,13 @@ const UwsServer = ({config: config} = {}) => ({
       return null;
     },
 
+    /**
+     * Create route and add route to list
+     *
+     * @param opts
+     * @param toLastPos
+     * @returns {{opts: *, middlewares: [], keys: [], params: {}}}
+     */
     addRoute(opts, toLastPos = true) {
       const method = opts.method !== void 0 ? opts.method : 'any';
       const route = this.createRoute(opts);
@@ -109,6 +128,7 @@ const UwsServer = ({config: config} = {}) => ({
     },
 
     /**
+     * run action in controller
      *
      * @param {string} controller
      * @param {string} action
@@ -131,6 +151,14 @@ const UwsServer = ({config: config} = {}) => ({
       });
     },
 
+    /**
+     * run controller/action for match route
+     *
+     * @param route
+     * @param res
+     * @param req
+     * @returns {number|*}
+     */
     runRoute(route, res, req) {
       if (route !== null) {
         try {
@@ -146,6 +174,12 @@ const UwsServer = ({config: config} = {}) => ({
       return -1;
     },
 
+    /**
+     * create route for path and hook events bind
+     *
+     * @param opts
+     * @returns {{opts: *, middlewares: [], keys: [], params: {}}}
+     */
     createRoute(opts) {
       let route = {
         opts,
@@ -174,6 +208,9 @@ const UwsServer = ({config: config} = {}) => ({
       return route;
     },
 
+    /**
+     * init server routers and server listen port
+     */
     listenServer() {
 
       // // adds middleware hook
