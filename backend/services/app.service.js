@@ -3,7 +3,7 @@ const {UwsServer} = require('../mixins/uws.mixin');
 const appConfig = require('../../config/app.config');
 
 const ROUTERS = [
-  // traffic
+  // traffic save
   {path: '/t/:id', controller: 'traffic', action: 'index', method: 'get'},
   // frontend UI
   {path: '/login', controller: 'auth', action: 'login', method: 'any'},
