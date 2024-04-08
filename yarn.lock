@@ -290,7 +290,7 @@ argparse@^2.0.1:
   resolved "https://registry.yarnpkg.com/argparse/-/argparse-2.0.1.tgz#246f50f3ca78a3240f6c997e8a9bd1eac49e4b38"
   integrity sha512-8+9WqebbFzpX9OR+Wa6O29asIogeRMzcGtAINdpMHHyAg10f05aSFVBbcEqGf/PXw1EjAZ+q2/bEBg3DvurK3Q==
 
-args@^5.0.1:
+args@^5.0.1, args@^5.0.3:
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/args/-/args-5.0.3.tgz#943256db85021a85684be2f0882f25d796278702"
   integrity sha512-h6k/zfFgusnv3i5TU08KQkVKuCPBtL/PWQbWkHUxvJrZ2nAyeaUupneemcrgn1xmqxPQsPIzwkUhOpoqPDRZuA==
@@ -564,6 +564,13 @@ ejs@^3.1.7:
   version "3.1.8"
   resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.8.tgz#758d32910c78047585c7ef1f92f9ee041c1c190b"
   integrity sha512-/sXZeMlhS0ArkfX2Aw780gJzXSMPnKjtspYZv+f3NiKLlubezAHDU5+9xz6gd3/NhG3txQCo6xlglmTS+oTGEQ==
+  dependencies:
+    jake "^10.8.5"
+
+ejs@^3.1.9:
+  version "3.1.9"
+  resolved "https://registry.yarnpkg.com/ejs/-/ejs-3.1.9.tgz#03c9e8777fe12686a9effcef22303ca3d8eeb361"
+  integrity sha512-rC+QVNMJWv+MtPgkt0y+0rVEIdbtxVADApW9JXrUVlzHetgcyczP/E7DJmWJ4fJCZF2cPcBk0laWO9ZHMG3DmQ==
   dependencies:
     jake "^10.8.5"
 
@@ -905,6 +912,11 @@ eventemitter2@^6.4.5:
   resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.5.tgz#97380f758ae24ac15df8353e0cc27f8b95644655"
   integrity sha512-bXE7Dyc1i6oQElDG0jMRZJrRAn9QR2xyyFGmBdZleNmyQX0FqGYmhZIrIrpPfm/w//LTo4tVQGOGQcGCb5q9uw==
 
+eventemitter2@^6.4.9:
+  version "6.4.9"
+  resolved "https://registry.yarnpkg.com/eventemitter2/-/eventemitter2-6.4.9.tgz#41f2750781b4230ed58827bc119d293471ecb125"
+  integrity sha512-JEPTiaOt9f04oa6NOkc4aH+nVp5I3wEjpHbIPqfgCdD5v5bUzy7xQqwcVO2aDQgOWhI28da57HksMrzK9HlRxg==
+
 ext@^1.1.2:
   version "1.6.0"
   resolved "https://registry.yarnpkg.com/ext/-/ext-1.6.0.tgz#3871d50641e874cc172e2b53f919842d19db4c52"
@@ -931,6 +943,11 @@ fastest-validator@^1.12.0:
   version "1.12.0"
   resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.12.0.tgz#9d77b3cc1ef9179f06ad4580fdf3308e4cb5113d"
   integrity sha512-Qc7oCVO9hAPz5GUONmToIoa95YWzoe7SLsrjIXTfCFf6HFQXxxWePXe8D+Kp/XCrr5H/pMJwP2xprW07wYv/BQ==
+
+fastest-validator@^1.17.0:
+  version "1.17.0"
+  resolved "https://registry.yarnpkg.com/fastest-validator/-/fastest-validator-1.17.0.tgz#0c032e9c42c40a237d24b20be187f732ebdcc062"
+  integrity sha512-37U/JDP72QSFqcvNnO81f0Aeu9og+5I3mc55b2v2RbV0S2I7KvQEdBtrFeIvaYVgam1bDUgy9F9AK9HolByogA==
 
 file-entry-cache@^6.0.1:
   version "6.0.1"
@@ -1194,6 +1211,11 @@ ipaddr.js@^2.0.1:
   resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-2.0.1.tgz#eca256a7a877e917aeb368b0a7497ddf42ef81c0"
   integrity sha512-1qTgH9NG+IIJ4yfKs2e6Pp1bZg8wbDbKHT21HrLIeYBTRLgMYKnMTPAuI3Lcs61nfx5h1xlXnbJtH1kX5/d/ng==
 
+ipaddr.js@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/ipaddr.js/-/ipaddr.js-2.1.0.tgz#2119bc447ff8c257753b196fc5f1ce08a4cdf39f"
+  integrity sha512-LlbxQ7xKzfBusov6UMi4MFpEg0m+mAm9xyNGEduwXMEDuf4WfzB/RZwMVYEd7IKGvh4IUkEXYxtAVu9T3OelJQ==
+
 is-arguments@^1.0.4:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/is-arguments/-/is-arguments-1.1.1.tgz#15b3f88fda01f2a97fec84ca761a560f123efa9b"
@@ -1392,6 +1414,11 @@ kleur@^4.1.4:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.4.tgz#8c202987d7e577766d039a8cd461934c01cda04d"
   integrity sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==
 
+kleur@^4.1.5:
+  version "4.1.5"
+  resolved "https://registry.yarnpkg.com/kleur/-/kleur-4.1.5.tgz#95106101795f7050c6c650f350c683febddb1780"
+  integrity sha512-o+NO+8WrRiQEE4/7nwRJhN1HWpVmJm511pBHUxPLtp0BUISzlBplORYSmTclCnJvQq2tKu/sgl3xVpkc7ZWuQQ==
+
 leven@2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-2.1.0.tgz#c2e7a9f772094dee9d34202ae8acce4687875580"
@@ -1519,6 +1546,22 @@ moleculer@^0.14.18:
     node-fetch "^2.6.7"
     recursive-watch "^1.1.4"
 
+moleculer@^0.14.32:
+  version "0.14.33"
+  resolved "https://registry.yarnpkg.com/moleculer/-/moleculer-0.14.33.tgz#9ceeb7466b155948348ed3d18cdafaec644b7472"
+  integrity sha512-0B8BT4hyems30UYGzkgP0yuO0HbWRzqytmvVqBBKSW9T65wJhzDu97xLjfpILTvFDPehvWkUvKI+w3557eI0fA==
+  dependencies:
+    args "^5.0.3"
+    eventemitter2 "^6.4.9"
+    fastest-validator "^1.17.0"
+    glob "^7.2.0"
+    ipaddr.js "^2.1.0"
+    kleur "^4.1.5"
+    lodash "^4.17.21"
+    lru-cache "^6.0.0"
+    node-fetch "^2.6.7"
+    recursive-watch "^1.1.4"
+
 moment-timezone@^0.5.34:
   version "0.5.34"
   resolved "https://registry.yarnpkg.com/moment-timezone/-/moment-timezone-0.5.34.tgz#a75938f7476b88f155d3504a9343f7519d9a405c"
@@ -1556,10 +1599,10 @@ next-tick@1, next-tick@^1.1.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.1.0.tgz#1836ee30ad56d67ef281b22bd199f709449b35eb"
   integrity sha512-CXdUiJembsNjuToQvxayPZF9Vqht7hewsvy2sOWafLvi2awflj9mOC6bHIg50orX8IJvWKY9wYQ/zB2kogPslQ==
 
-node-device-detector@^2.0.7:
-  version "2.0.7"
-  resolved "https://registry.yarnpkg.com/node-device-detector/-/node-device-detector-2.0.7.tgz#31691e0d16f3dbfba0e17cea40f88d2ec61d70bf"
-  integrity sha512-bqnVXXyHjN/k7UNSDTbsffUSTSb8NFfJSJ72gua4gTYYvfNDxUVi9Cv2SmNbKNKJdCPf6NpagpKplh4L06XX7Q==
+node-device-detector@^2.0.11:
+  version "2.0.18"
+  resolved "https://registry.yarnpkg.com/node-device-detector/-/node-device-detector-2.0.18.tgz#3bd1d725980100b1fce7c275a34b28dc94bdfb28"
+  integrity sha512-HOE41cF3JnK08dSxa5pn7MUsjkpjEiRrMVokfday094KkKI78p6NdBUx6mR6mcswpuh3v5Yy40EWILWYT3Fimg==
   dependencies:
     js-yaml "^4.1.0"
 
@@ -1569,6 +1612,15 @@ node-fetch@^2.6.7:
   integrity sha512-ZjMPFEfVx5j+y2yF35Kzx5sF7kDzxuDj6ziH4FFbOp87zKDZNx8yExJIb05OGF4Nlt9IHFIMBkRl41VdvcNdbQ==
   dependencies:
     whatwg-url "^5.0.0"
+
+node-moleculer-web@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/node-moleculer-web/-/node-moleculer-web-1.0.0.tgz#68d59a6f229683962a4c04dd5a16e997c7e4f4f0"
+  integrity sha512-e/mjpCROk/7csQQ3DsPsCib0FxC/ZGtHMlfEEG9w3TARWr/qFcbFRKIydm4S8GzDE05uEQJcT5MIvBa/0Vfphw==
+  dependencies:
+    ejs "^3.1.9"
+    moleculer "^0.14.32"
+    uWebSockets.js "github:uNetworking/uWebSockets.js#v20.42.0"
 
 nopt@^5.0.0:
   version "5.0.0"
@@ -2086,6 +2138,10 @@ type@^2.5.0:
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/type/-/type-2.6.0.tgz#3ca6099af5981d36ca86b78442973694278a219f"
   integrity sha512-eiDBDOmkih5pMbo9OqsqPRGMljLodLcwd5XD5JbtNB0o89xZAwynY9EdCDsJU7LtcVCClu9DvM7/0Ep1hYX3EQ==
+
+"uWebSockets.js@github:uNetworking/uWebSockets.js#v20.42.0":
+  version "20.42.0"
+  resolved "https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/f40213ec0a97d0d8721d9d32d92d6eb6ddcd22e7"
 
 uWebSockets.js@uNetworking/uWebSockets.js#v20.10:
   version "20.10.0"
