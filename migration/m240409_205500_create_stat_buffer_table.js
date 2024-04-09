@@ -7,13 +7,12 @@ class m240409_205500_create_stat_buffer_table extends Migration {
 
   async up(){
     await this.createTable(this.table, {
-      id: 'UUID',
+      id: this.primaryUUIDKey(),
       data: this.text(),
       status: this.integer().defaultValue(0),
       created_at: this.timestamp(),
       updated_at: this.timestamp()
     });
-
     await this.createIndexConvention(this.table, ['status']);
     await this.createIndexConvention(this.table, ['created_at']);
 

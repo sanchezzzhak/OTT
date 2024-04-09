@@ -39,7 +39,7 @@
     "moleculer": "^0.14.18",
     "moleculer-db": "^0.8.18",
     "moleculer-db-adapter-sequelize": "^0.2.15",
-    "node-dba": "file:../node-dba",
+    "node-dba": "/srv/www/node-dba",
     "node-device-detector": "^2.1.0",
     "node-moleculer-web": "^1.0.0",
     "ora": "^8.0.1",
