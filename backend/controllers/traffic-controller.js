@@ -1,4 +1,4 @@
-const AbstractController = require('./abstract-controller');
+const {AbstractController} = require('node-moleculer-web');
 const {randomUUID} = require('crypto');
 
 const EVENTS = {
@@ -13,7 +13,7 @@ class TrafficController extends AbstractController {
    * result traffic id for fist request
    */
   async index() {
-    this.setCorsHeadersOver();
+  /*  this.setCorsHeadersOver();
     this.setClientHintsHeaders();
     
     let trafficId = randomUUID();
@@ -27,7 +27,7 @@ class TrafficController extends AbstractController {
       event: EVENTS.HIT,
     });
     
-    this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});
+    this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});*/
   }
   
   /**
@@ -35,12 +35,12 @@ class TrafficController extends AbstractController {
    * @returns {Promise<void>}
    */
   async trafficDeviceInfo() {
-    let useragent = this.getUserAgent();
+  /*  let useragent = this.getUserAgent();
     let headers = this.getClientHintHeaders();
     
     return await this.broker.callRestAction('detector.detect', {
       useragent, headers,
-    });
+    });*/
   }
   
   /**
@@ -48,12 +48,12 @@ class TrafficController extends AbstractController {
    * @returns {Promise<void>}
    */
   async trafficUniqueInfo(){
-    let useragent = this.getUserAgent();
+   /* let useragent = this.getUserAgent();
     let ip = this.getRemoteIp();
-    let domain = '';  // todo add later
+    let domain = '';
     return await this.broker.callRestAction('traffic.check-unique', {
       useragent, ip, domain
-    });
+    });*/
   }
   
   /**
@@ -63,7 +63,7 @@ class TrafficController extends AbstractController {
    * @returns {Promise<null|void>}
    */
   async #pushBuffer(params = {}) {
-    let eventId = params.event ?? 0;
+    /*let eventId = params.event ?? 0;
     if (!eventId) {
       return null;
     }
@@ -85,7 +85,7 @@ class TrafficController extends AbstractController {
     return await this.broker.callRestAction(
       'stat-buffer.model.save',
       data
-    );
+    );*/
   }
   
   /**
@@ -93,10 +93,8 @@ class TrafficController extends AbstractController {
    * for further analysis
    */
   async log() {
-    this.setCorsHeadersOver();
-    this.setClientHintsHeaders();
-    
-    // todo adds - save traffic for buffer table
+    /*this.setCorsHeadersOver();
+    this.setClientHintsHeaders();*/
   }
   
 }

@@ -1,20 +1,12 @@
 const {Service} = require('moleculer');
-const {UwsServer} = require('../mixins/uws.mixin');
-const appConfig = require('../../config/app.config');
+const {UwsServer} = require('node-moleculer-web');
+const {resolve} = require('path');
 
-const ROUTERS = [
-  // traffic save
-  {path: '/t/:id', controller: 'traffic', action: 'index', method: 'get'},
-  // frontend UI
-  {path: '/login', controller: 'auth', action: 'login', method: 'any'},
-  {path: '/register', controller: 'auth', action: 'register', method: 'any'},
-  {
-    path: '/setting/update',
-    controller: 'setting',
-    action: 'update',
-    method: 'any',
-  },
-];
+const TrafficController = require('../controllers/traffic-controller');
+const AuthController = require('../controllers/auth-controller');
+const ProjectController = require('../controllers/project-controller');
+const PingController = require('../controllers/ping-controller');
+const SettingController = require('../controllers/setting-controller');
 
 class AppService extends Service {
   constructor(broker) {
@@ -22,30 +14,40 @@ class AppService extends Service {
     this.parseServiceSchema({
       name: 'app',
       mixins: [
-        UwsServer({config: appConfig}),
+        UwsServer
       ],
-      started: this.startedService,
+      settings: {
+        port: process.env.SERVER_PORT ?? 3000,
+        ip: process.env.SERVER_IP ?? 'localhost',
+        portSchema: process.env.SERVER_PORT_SCHEMA ?? 'none',
+        publicDir: resolve(__dirname + '/../../public'),
+        publicIndex: 'index.html',
+        controllers: {
+          // backend api
+          traffic: TrafficController,
+          ping: PingController,
+          // frontend api
+          auth: AuthController,
+          setting: SettingController,
+          project: ProjectController,
+        },
+      },
+      created: this.createService,
     });
   }
   
   /**
    * bind native uws routers for array
    */
-  startedService() {
-    ROUTERS.forEach((route) => {
-      if (route.method === 'get') {
-        this.getServerUws().get(route.path, async (res, req) => {
-          return this.runControllerAction(route.controller, route.action, res,
-            req);
-        });
-      }
-      if (route.method === 'any') {
-        this.getServerUws().any(route.path, async (res, req) => {
-          return this.runControllerAction(route.controller, route.action, res,
-            req);
-        });
-      }
-    });
+  createService() {
+    // traffic save
+    this.createRoute('get /t/:id #c:traffic.save');
+    // frontend UI api
+    this.createRoute('any /login #c:auth.login');
+    this.createRoute('any /register #c:auth.register');
+    this.createRoute('any /setting/update #c:setting.update');
+
+    this.bindRoutes();
   }
   
 }

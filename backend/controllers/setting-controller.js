@@ -1,4 +1,4 @@
-const AbstractController = require("./abstract-controller");
+const {AbstractController} = require('node-moleculer-web');
 
 
 class SettingController extends AbstractController {
@@ -10,20 +10,17 @@ class SettingController extends AbstractController {
    */
   async update() {
 
-    if (this.setCorsHeadersOver()) {
-      return;
-    }
-
-    let token = this.req.getHeader('authorization')
-    console.log({token});
-
-
-
-
-
-    return this.renderRaw({view: 'ok', statusCode: 200, format: 'txt'});
-
-    // jwt token check
+    // if (this.setCorsHeadersOver()) {
+    //   return;
+    // }
+    //
+    // let token = this.getHeader('authorization');
+    // console.log({ token });
+    //
+    //
+    // return this.renderRaw({ view: 'ok', statusCode: 200, format: 'txt' });
+    //
+    // // jwt token check
   }
 
 

@@ -1,15 +1,15 @@
-const AbstractController = require('./abstract-controller');
+const {AbstractController} = require('node-moleculer-web');
 const crypto = require('crypto');
 
 class AuthController extends AbstractController {
   
-  async login() {
+  /*async login() {
     return await this.callRestAction('user.model.login');
   }
   
   async register() {
    return await this.callRestAction('user.model.register');
-  }
+  }*/
 
 }
 

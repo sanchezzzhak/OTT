@@ -1,5 +1,4 @@
-const AbstractController = require("./abstract-controller");
-
+const { AbstractController } = require('node-moleculer-web');
 
 class ProjectController extends AbstractController {
 
@@ -14,9 +13,8 @@ class ProjectController extends AbstractController {
     //
 
 
-
-
-
-    return this.renderRaw({view: 'ok', statusCode: 200, format: 'txt'});
+    return this.renderRaw({ view: 'ok', statusCode: 200, format: 'txt' });
   }
 }
+
+module.exports = ProjectController;
