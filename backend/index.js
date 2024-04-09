@@ -1,4 +1,4 @@
-require('dotenv').config({ path: __dirname + '/../.env' });
+
 
 const { ServiceBroker } = require('moleculer');
 const { resolve } = require('path');
