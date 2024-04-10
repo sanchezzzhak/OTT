@@ -7,20 +7,23 @@ class m240409_210525_create_user_table extends Migration {
 
   async up(){
 
-    await this.createTable(this.table, {
+    const columns = {
       id: this.primaryUUIDKey(),
       email: this.string().notNull(),
       role: this.string(),
       salt: this.string(),
       password_hash: this.string(),
       status: this.integer(),
-      created_at: this.timestamp(),
-      updated_at: this.timestamp(),
-      last_seen_at: this.timestamp(),
       telegram_id: this.string(),
       pin_auth: this.integer(),
       pin_code: this.string(10),
-    });
+      created_at: this.timestamp().defaultExpression(this.currentTimestamp()),
+      updated_at: this.timestamp().defaultExpression(this.currentTimestamp())
+        .onUpdate(this.currentTimestamp()),
+      last_seen_at: this.timestamp(),
+    };
+
+    await this.createTable(this.table, columns);
 
     await this.createIndexConvention(this.table, ['status']);
     await this.createIndexConvention(this.table, ['telegram_id']);

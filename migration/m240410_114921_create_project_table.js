@@ -1,22 +1,22 @@
 
 const {Migration} = require('node-dba');
 
-class m240409_205500_create_stat_buffer_table extends Migration {
+class m240410_114921_create_project_table extends Migration {
 
-  table = 'stat_buffer';
+  table = 'project'
 
   async up(){
 
     await this.createTable(this.table, {
       id: this.primaryUUIDKey(),
-      data: this.text().comment('JSON raw data'),
-      status: this.integer().defaultValue(0),
+      name: this.string(),
+      token: this.string(),
+      description: this.string(),
+      status: this.integer(),
       created_at: this.timestamp().defaultExpression(this.currentTimestamp()),
       updated_at: this.timestamp().defaultExpression(this.currentTimestamp())
         .onUpdate(this.currentTimestamp()),
     });
-    await this.createIndexConvention(this.table, ['status']);
-    await this.createIndexConvention(this.table, ['created_at']);
 
     return true;
   }
@@ -26,4 +26,5 @@ class m240409_205500_create_stat_buffer_table extends Migration {
     return true;
   }
 }
-module.exports = m240409_205500_create_stat_buffer_table
+
+module.exports = m240410_114921_create_project_table
