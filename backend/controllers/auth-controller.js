@@ -1,5 +1,6 @@
 const {AbstractController} = require('node-moleculer-web');
 const crypto = require('crypto');
+const JWT = require('../utils/jwt');
 
 class AuthController extends AbstractController {
   

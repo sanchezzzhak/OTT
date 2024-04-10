@@ -6,7 +6,6 @@ class m240409_205500_create_stat_buffer_table extends Migration {
   table = 'stat_buffer';
 
   async up(){
-
     await this.createTable(this.table, {
       id: this.primaryUUIDKey(),
       data: this.text().comment('JSON raw data'),

@@ -1,12 +1,8 @@
 const crypto = require('crypto');
 const {Service} = require('moleculer');
-const DbService = require('moleculer-db');
-const SqlAdapter = require('moleculer-db-adapter-sequelize');
-const Sequelize = require('sequelize');
+
 const JWT = require('../../utils/jwt');
 const randomInt = require('../../utils/random-int');
-
-const config = require('../../../config/pg.config');
 const {jwt, secretRegisterKey} = require('../../../config/app.config');
 
 console.log({secretRegisterKey})
@@ -23,62 +19,8 @@ class UserService extends Service {
     this.jwt = new JWT({key: jwt});
     
     this.parseServiceSchema({
-      name: 'user.model',
-      mixins: [DbService],
-      adapter: new SqlAdapter(config.dsn),
-      model: {
-        name: 'users',
-        define: {
-          id: {
-            type: Sequelize.UUID,
-            defaultValue: Sequelize.UUIDV4,
-            primaryKey: true,
-          },
-          email: {
-            type: Sequelize.STRING, unique: true, allowNull: false,
-          },
-          role: {
-            type: Sequelize.STRING, allowNull: true, defaultValue: null
-          },
-          salt: Sequelize.STRING,
-          password_hash: Sequelize.STRING,
-          status: {
-            type: Sequelize.SMALLINT, defaultValue: 0,
-          },
-          created_at: {
-            type: Sequelize.DATE, defaultValue: Sequelize.NOW,
-          },
-          updated_at: {
-            type: Sequelize.DATE, defaultValue: Sequelize.NOW, allowNull: true,
-          },
-          last_seen_at: {
-            type: Sequelize.DATE, allowNull: true,
-          },
-          telegram_id: {
-            type: Sequelize.STRING, allowNull: true, defaultValue: null,
-          },
-          pin_auth: {
-            type: Sequelize.SMALLINT, defaultValue: 0,
-          },
-          pin_code: {
-            type: Sequelize.STRING(10), allowNull: true, defaultValue: null,
-          },
-        },
-        options: {
-          underscored: true,
-          indexes: [
-            {
-              unique: false,
-              fields: ['status'],
-            }, {
-              unique: false,
-              fields: ['created_at'],
-            }],
-        },
-      },
-      settings: {
-        fields: ['id', 'email', 'salt', 'password_hash', 'status', 'role'],
-      },
+      name: 'user',
+
       actions: {
         // ====
         login: {
