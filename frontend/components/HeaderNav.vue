@@ -1,5 +1,5 @@
 <template>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark rounded-top navigation--header">
+    <nav class="navbar navbar-expand-md navbar-dark rounded-top navigation--header">
         <div class="container-fluid">
             <router-link :to="{name: 'Home'}" class="navbar-brand">OTT</router-link>
             <button class="navbar-toggler"
@@ -25,7 +25,7 @@
                            aria-expanded="false">
                             {{$t('language')}}
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="languageDropdown">
+                        <ul class="dropdown-menu bg-transparent justify-content-start" aria-labelledby="languageDropdown">
                             <li><a class="dropdown-item" @click="changeLanguage">EN</a></li>
                             <li><a class="dropdown-item" @click="changeLanguage">RU</a></li>
                         </ul>
@@ -48,21 +48,24 @@
         </div>
     </nav>
 </template>
-<script>
-
+<script setup>
   import {useStore} from '../stores/main-store';
+  import {useI18n} from 'vue-i18n';
 
-  export default {
-    methods: {
-      isAuth() {
-        const store = useStore();
-        return store.token && store.token.length;
-      },
-      changeLanguage(event){
-        event.stopPropagation();
-        this.$i18n.locale = event.target.innerText.toLowerCase()
-        useStore().language(this.$i18n.locale);
-      }
-    },
-  };
+  const store = useStore();
+
+  const {locale} = useI18n();
+
+  function isAuth() {
+    return store.token && store.token.length;
+  }
+
+  function changeLanguage(event){
+    event.stopPropagation();
+    const value = event.target.innerText.toLowerCase();
+    locale.value = value;
+    store.language(value);
+
+  }
+
 </script>

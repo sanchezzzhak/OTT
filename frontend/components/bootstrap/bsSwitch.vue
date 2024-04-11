@@ -6,13 +6,18 @@
        :name="name"
        :id="id"
        :checked="checked"
-       v-model="value"
-       @input="$emit('update:modelValue', $event.target.value)"
+
     />
     <label class="form-check-label" :class="labelClass" :for="id">
       <slot />
     </label>
   </div>
+
+  <!--
+         v-model="value"
+       @input="$emit('update:modelValue', $event.target.value)"
+       -->
+
 </template>
 
 <script>
@@ -28,4 +33,6 @@ export default {
     inputClass: String,
   },
 };
+</script>
+<script setup>
 </script>

@@ -4,13 +4,22 @@ const JWT = require('../utils/jwt');
 
 class AuthController extends AbstractController {
   
-  /*async login() {
-    return await this.callRestAction('user.model.login');
+  async login() {
+
+    let content = await this.readBody();
+    let json = JSON.parse(content.toString());
+
+
+    // return await this.callRestAction('user.model.login');
   }
-  
+
+
   async register() {
-   return await this.callRestAction('user.model.register');
-  }*/
+
+
+
+    return await this.callRestAction('user.model.register');
+  }
 
 }
 

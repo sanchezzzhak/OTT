@@ -13,22 +13,37 @@ class TrafficController extends AbstractController {
    * result traffic id for fist request
    */
   async index() {
-  /*  this.setCorsHeadersOver();
+    this.setCorsHeaders();
     this.setClientHintsHeaders();
-    
-    let trafficId = randomUUID();
-    let id = this.req.getParameter(0);
-    let data = JSON.stringify({
+    if (this.req.getMethod() === 'options') {
+      return '';
+    }
+    const trafficId = randomUUID();
+    const id = this.req.getParameter(0);
+    const data = JSON.stringify({
       trafficId, // this.broker.generateUid()
     });
-    
-    let result = await this.#pushBuffer({
-      trafficId,
-      event: EVENTS.HIT,
-    });
-    
-    this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});*/
+
+    /*
+  let result = await this.#pushBuffer({
+    trafficId,
+    event: EVENTS.HIT,
+  });
+
+*/
+    return this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});
   }
+
+  async hot() {
+    this.setCorsHeaders();
+    this.setClientHintsHeaders();
+    if (this.req.getMethod() === 'options') {
+      return '';
+    }
+
+
+  }
+
   
   /**
    * detect device, client, os or bot

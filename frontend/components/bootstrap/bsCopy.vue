@@ -3,18 +3,15 @@
         <i class="bi bi-clipboard"></i> {{ $t('interface.copy') }}
     </button>
 </template>
-<script>
-  export default {
-    name: 'bsCopy',
-    props: {
-      selector: ''
-    },
-    methods: {
-      copy() {
-        navigator.clipboard.writeText(
-          document.querySelector(this.$props.selector).value
-        );
-      },
-    }
+<script setup>
+  const props = defineProps({
+    selector: String
+  })
+
+  function copy() {
+    navigator.clipboard.writeText(
+      document.querySelector(props.selector).value
+    );
   }
+
 </script>

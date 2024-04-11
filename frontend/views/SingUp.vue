@@ -1,13 +1,14 @@
 <template>
   <div class="container mt-5">
     <div class="row justify-content-center">
-      <div class="col-md-4">
+      <div class="col-12 col-md-8 col-lg-6 col-xxl-4 py-8 py-xl-0">
 
         <div class="card border-0 shadow rounded">
           <div class="card-header">
             Sign up to OTT Dashboard
           </div>
           <div class="card-body">
+            <p class="mb-6">Please enter your user information.</p>
             <div v-if="error.length > 0" class="alert alert-danger alert-dismissible fade show" role="alert">
               {{error}}
               <button type="button" @click="clearErrors()" class="btn-close"></button>
@@ -54,6 +55,14 @@
             </div>
             <div class="d-grid gap-2 mt-3">
               <button @click.prevent="singup" class="btn btn-primary btn-block">Sing up</button>
+            </div>
+            <div class="d-md-flex justify-content-between mt-4">
+              <div class="mb-2 mb-md-0">
+                <router-link :to="{name: 'SingIn'}" class="fs-6">Already member? Login </router-link>
+              </div>
+              <div>
+                <router-link :to="{name: 'Forgot'}" class="text-inherit fs-6">Forgot your password?</router-link>
+              </div>
             </div>
           </div>
 

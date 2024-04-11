@@ -25,9 +25,10 @@ import router from './routes';
 
 // i18n init
 const i18n = createI18n({
-  locale: localStorage.getItem('language') || 'en',
+  locale: localStorage.getItem('language') || navigator.language,
   fallbackLocale: 'en',
   messages,
+  legacy: false
 });
 
 // app init
@@ -37,18 +38,20 @@ app.use(router)
 app.use(i18n);
 
 app.config.globalProperties.mode = 'production';
-// components
 
+// components
 app.component('bs-input', bsInput);
 app.component('bs-password-eye', bsPasswordEye);
 app.component('bs-switch', bsSwitch);
 app.component('bs-copy', bsCopy);
-
 app.component('sidebar', Sidebar);
 app.component('header-nav', HeaderNav);
+
 // layouts
 app.component('default', DefaultLayout);
 app.component('auth', AuthLayout);
 app.component('dash', DashLayout);
+
+// render
 app.mount('#app');
 

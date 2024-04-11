@@ -11,7 +11,7 @@
       :maxlength="maxLength"
       :placeholder="placeholder"
       :isRequired="isRequired"
-      v-model="value"
+
       @input="$emit('update:modelValue', $event.target.value)"
       v-bind="$attrs"
     />
@@ -27,6 +27,9 @@
     </div>
     
   </div>
+  <!--
+        v-model="value"
+-->
 </template>
 
 <script>
