@@ -13,19 +13,17 @@
         :placeholder="placeholder"
         :isRequired="isRequired"
         v-bind="$attrs"
+        :value="modelValue"
+        @input="emit('update:modelValue', $event.target.value)"
       />
       <label v-if="labelPos === 'bottom'" :for="id">{{ label }}</label>
     </div>
   </div>
-  <!--        v-model="value"-->
-  <!--        @input="$emit('update:modelValue', $event.target.value)"-->
 </template>
 
 
 
 <script setup>
-import { ref, computed } from 'vue'
-
 const props = defineProps({
   modelValue: String,
   size: {
@@ -55,7 +53,7 @@ const props = defineProps({
   showPassword: Boolean,
   isRequired: Boolean
 });
-
+const emit = defineEmits(['update:modelValue'])
 const getClasses = (size, valid) => {
   let sizeValue, isValidValue;
   sizeValue = size ? `form-control-${size}` : null;
