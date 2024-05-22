@@ -48,30 +48,28 @@
       if (!target instanceof HTMLElement) {
         console.warn('Error: target script not found');
       }
+      let endpoint = config.endpoint;
       let id = config.id;
       if (ott[id]) {
         return ott[id];
       }
 
-      let endpoint = config.endpoint;
       if (!endpoint) {
         endpoint = location.host;
       }
-
       let tr = new TrackApp(config);
       /** @var HtmlElement */
       let e = target || dom.body;
       loadScript(e, '//' + endpoint + '/t/' + id).then((s) => {
         e.removeChild(s);
-        // let win["_ott_" + id];
         if (!options) {
           tr.trafficId = options.trafficId;
         }
         tr.init = true;
+
       }).catch(e => {
         console.error('error init', e);
       });
-
       return ott[id] = tr;
     }
 
@@ -82,18 +80,16 @@
       this.config = config;
     }
 
-
-    _send(args) {
-      console.log('_send', args)
+    send(args) {
+      console.log('send', args)
     }
 
     push(name, options) {
-      this._queueProcess();
+      this.queueProcess();
     }
 
-    _queueProcess() {
+    queueProcess() {
     }
   }
-
   win._ott = TrackApp;
 }(window, document);
