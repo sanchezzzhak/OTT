@@ -1,5 +1,4 @@
-
-
+require('dotenv').config({ path: __dirname + '/../.env', override: true });
 const { ServiceBroker } = require('moleculer');
 const { resolve } = require('path');
 // configs init

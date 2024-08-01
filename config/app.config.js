@@ -1,5 +1,4 @@
 const fsPath = require('path');
-const requireLocalConfig = require('../backend/utils/require-local-config');
 
 const appConfig = {
   port: Number(process.env.SERVER_PORT ?? 3001),
@@ -18,5 +17,5 @@ const appConfig = {
 };
 
 module.exports = {
-  ...appConfig, ...requireLocalConfig(__dirname + '/local/app.config.js'),
+  ...appConfig
 };

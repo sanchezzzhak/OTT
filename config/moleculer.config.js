@@ -1,9 +1,8 @@
 // register all env vars
-require('dotenv').config({ path: __dirname + '/../.env' });
 const { resolve } = require('node:path');
 const {DBA} = require('node-dba');
 // load all db config to global storage
-DBA.loadConfigsForDir(resolve(__dirname + '/local/db'));
+DBA.loadConfigsForDir(resolve(__dirname + '/db'));
 
 module.exports = {
   transporter: process.env.MOLECULAR_TRANSPORT ?? 'TCP',

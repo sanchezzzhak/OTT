@@ -1,8 +1,13 @@
+require('dotenv').config({
+  path: __dirname + '/../env',
+  override: true
+});
+
 const { DBA, MigrationManager } = require('node-dba');
 const { resolve } = require('node:path');
 const { Argument } = require('commander');
 
-const configDir = resolve(__dirname + '/../config/local/db');
+const configDir = resolve(__dirname + '/../config/db');
 const migrationDir = resolve(__dirname + '/../migration');
 
 DBA.loadConfigsForDir(configDir);
