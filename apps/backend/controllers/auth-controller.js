@@ -16,8 +16,6 @@ class AuthController extends AbstractController {
 
   async register() {
 
-
-
     return await this.callRestAction('user.model.register');
   }
 

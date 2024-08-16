@@ -24,25 +24,7 @@ const pgConfig = {
  };
 
 module.exports = pgConfig;
-```
-create or edit `nano config/local/app.config.js`
-```js
-const appConfig = {
-  port: 3001,       // server port listen
-  ssl: {
-    enable: false,  // use ssl 
-    keyPath: "",    // server public ssl key (set path to file)
-    certPath: ""    // server public ssl key (set path to file)
-  },
-  ws: {
-    enable: false   // use websocket 
-  },
-  jwt: "",          // set random jwt key (json web token)
-  telegram: '',     // set telegram bot key
-};
-
-module.exports = appConfig;
-```
+````
 create config for supervisor
 * create or edit `/etc/supervisor/conf.d/ott_app.conf`
 ```

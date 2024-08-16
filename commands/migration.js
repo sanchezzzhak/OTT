@@ -1,8 +1,3 @@
-require('dotenv').config({
-  path: __dirname + '/../env',
-  override: true
-});
-
 const { DBA, MigrationManager } = require('node-dba');
 const { resolve } = require('node:path');
 const { Argument } = require('commander');

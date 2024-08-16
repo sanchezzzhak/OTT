@@ -6,7 +6,7 @@ const { Command } = require('commander');
 
 const program = new Command();
 
-fs.readdirSync(__dirname + '/command', {
+fs.readdirSync(__dirname + '/commands', {
   withFileTypes: true
 }).forEach((file) => {
   const {
@@ -29,7 +29,6 @@ fs.readdirSync(__dirname + '/command', {
     task.addArgument(arg);
   });
   task.action(action);
-
 });
 
 program.parse();

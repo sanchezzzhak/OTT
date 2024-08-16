@@ -48,6 +48,7 @@
         </div>
     </nav>
 </template>
+
 <script setup>
   import {useStore} from '../stores/main-store';
   import {useI18n} from 'vue-i18n';

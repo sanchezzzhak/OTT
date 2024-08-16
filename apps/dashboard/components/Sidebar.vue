@@ -8,8 +8,8 @@
     </nav>
   </div>
 </template>
-<script>
 
+<script>
 export default {
   name: "sidebar",
   data: () => {
@@ -20,6 +20,5 @@ export default {
       ],
     }
   },
-
 }
 </script>

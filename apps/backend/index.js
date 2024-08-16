@@ -1,8 +1,7 @@
-require('dotenv').config({ path: __dirname + '/../.env', override: true });
+const moleculerConfig = require('../../configs/moleculer.config');
 const { ServiceBroker } = require('moleculer');
 const { resolve } = require('path');
 // configs init
-const moleculerConfig = require('../config/moleculer.config');
 // microservices init
 const broker = new ServiceBroker(moleculerConfig);
 
