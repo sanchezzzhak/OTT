@@ -1,10 +1,12 @@
 <template>
-  <div class="default-wrapper">
+  <main class="default">
     <header-nav></header-nav>
-    <div class="body-wrapper bg-gradient">
+    <sidebar></sidebar>
+    <div class="wrap-sidebar-page-content ">
       <slot/>
     </div>
-  </div>
+
+  </main>
 </template>
 <script>
 export default {}

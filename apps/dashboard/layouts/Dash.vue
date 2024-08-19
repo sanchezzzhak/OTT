@@ -1,11 +1,11 @@
 <template>
-  <div class="dash-wrapper">
+  <main class="dash">
     <header-nav></header-nav>
     <sidebar></sidebar>
-    <div class="body-wrapper bg-gradient">
+    <div class="wrap-sidebar-page-content ">
       <slot/>
     </div>
-  </div>
+  </main>
 </template>
 <script>
 

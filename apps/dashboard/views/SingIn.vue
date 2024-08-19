@@ -39,7 +39,7 @@ function login() {
 
 <template>
   <AuthContent>
-    <div class="card border-0 shadow rounded bg-light bg-gradient">
+    <div class="card border-0 shadow rounded">
       <div class="card-header">
         Sign in to OTT Dashboard
       </div>

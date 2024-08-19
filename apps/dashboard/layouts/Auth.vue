@@ -1,10 +1,11 @@
 <template>
-  <div class="auth-wrapper">
+  <main class="auth">
     <header-nav></header-nav>
-    <div class="body-wrapper bg-gradient">
+    <sidebar></sidebar>
+    <div class="wrap-sidebar-page-content">
       <slot/>
     </div>
-  </div>
+  </main>
 </template>
 
 <script>
@@ -13,11 +14,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.auth-wrapper {
-  justify-content: center;
-  align-items: center;
-    .container {
-        max-width:380px;
-    }
-}
+
 </style>
