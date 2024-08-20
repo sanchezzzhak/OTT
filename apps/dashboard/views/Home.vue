@@ -1,6 +1,5 @@
 <template>
-  <br><br>
-  <div class="home">
+  <div class="content">
     Home Info
   </div>
 </template>

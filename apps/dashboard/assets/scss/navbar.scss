@@ -1,6 +1,4 @@
-$default-color-line: #b1b9c0;
 $default-color-minify-btn: #fafafa;
-$default-link-color: #2d353c;
 $default-sub-menu-color: #f0f3f4;
 $default-menu-color:transaprent;
 $default-hover-menu-color:#e6e9ea;
@@ -29,12 +27,59 @@ $default-hover-menu-color:#e6e9ea;
 
   }
 
+  .nav {
+    --nav-link-padding-x: 1rem;
+    --nav-link-padding-y: 0.5rem;
+    --nav-link-font-weight: ;
+    --nav-link-color: var(--link-color);
+    --nav-link-hover-color: var(--link-hover-color);
+    --nav-link-disabled-color: var(--secondary-color);
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    padding-left: 0;
+    margin-bottom: 0;
+    list-style: none;
+    --navbar-padding-x: 1.5rem;
+    --navbar-padding-y: 0.5rem;
+    --navbar-color: rgba(var(--emphasis-color-rgb), 0.65);
+    --navbar-hover-color: rgba(var(--emphasis-color-rgb), 0.9);
+    --navbar-disabled-color: rgba(var(--emphasis-color-rgb), 0.25);
+    --navbar-active-color: rgba(var(--emphasis-color-rgb), 1);
+    --navbar-brand-padding-y: -0.210078125rem;
+    --navbar-brand-margin-end: 1rem;
+    --navbar-brand-font-size: 1.953125rem;
+    --navbar-brand-color: rgba(var(--emphasis-color-rgb), 1);
+    --navbar-brand-hover-color: rgba(var(--emphasis-color-rgb), 1);
+    --navbar-nav-link-padding-x: 0.5rem;
+    --navbar-toggler-padding-y: 0.25rem;
+    --navbar-toggler-padding-x: 0.75rem;
+    --navbar-toggler-font-size: 1.2rem;
+    --navbar-toggler-border-color: rgba(var(--emphasis-color-rgb), 0.15);
+    --navbar-toggler-border-radius: var(--border-radius);
+    --navbar-toggler-focus-width: 0;
+    --navbar-toggler-transition: box-shadow 0.15s ease-in-out;
+    position: relative;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+  }
+  
   nav {
     display: flow-root;
-    margin: 0 10px 0;
     li {
       width: 100%;
-      margin: 5px 0;
+      display: flex;
     }
   }
 
@@ -49,7 +94,9 @@ $default-hover-menu-color:#e6e9ea;
 
   .nav > li > a {
     line-height: 20px;
-
+    display: flex;
+    width: 100%;
+    padding: 10px 10px;
   }
 
   .sub-menu>li>a:before {
@@ -61,21 +108,18 @@ $default-hover-menu-color:#e6e9ea;
     top: 50%;
     margin-top: -18px;
     margin-left: -7px;
-    color: $default-color-line;
   }
 
   .nav > li.active > a,
   .nav > li.active > a:focus,
   .nav > li.active > a:hover {
-    color: #fff;
-    background: #00acac;
+    background: var(--navbar-vertical-link-hover-bg);
   }
-
 
   .nav > li.expand > a,
   .nav > li > a:focus,
   .nav > li > a:hover {
-    background: $default-hover-menu-color;
+    background: var(--navbar-vertical-link-hover-bg);
   }
 
   .sub-menu > li.active > a,
@@ -111,7 +155,7 @@ $default-hover-menu-color:#e6e9ea;
   }
 
   .nav>li .sub-menu:before {
-    background: $default-color-line;
+    background: var(--navbar-vertical-link-hover-bg);
   }
 
   .sub-menu:before {
@@ -121,13 +165,12 @@ $default-hover-menu-color:#e6e9ea;
     top: 0;
     bottom: 0;
     width: 2px;
-    background: $default-color-line;
+    background: var(--navbar-vertical-link-hover-bg);
   }
   .sub-menu > li > a {
     padding: 5px 20px;
     display: block;
     font-weight: 300;
-    color: #889097;
     text-decoration: none;
     position: relative
   }
@@ -146,7 +189,7 @@ $default-hover-menu-color:#e6e9ea;
   .nav>li.expand>a
   .nav>li>a:focus,
   .nav>li>a:hover{
-    background: #f0f3f4;
+    background: var(--navbar-vertical-link-hover-bg);
   }
 
 }

@@ -6,7 +6,7 @@ import {createI18n} from 'vue-i18n';
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './assets/scss/main.scss'
 // scripts
-import 'bootstrap/dist/js/bootstrap.min'
+
 import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import bsInput from "./components/bootstrap/bsInput.vue";
