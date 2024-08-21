@@ -61,6 +61,7 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.5",
     "vite": "^5.4.2",
+    "rollup": "^4.21.0",
     "@vitejs/plugin-vue": "^5.1.2",
     "eslint": "^8.7.0",
     "sass": "^1.77.8",
