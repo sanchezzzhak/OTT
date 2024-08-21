@@ -54,11 +54,22 @@
 <!--  </div>-->
 
 
-  <nav class="navbar navbar-vertical navbar-expand-lg">
+  <nav class="navbar navbar-vertical navbar-expand-lg" data-navbar-appearance="darker">
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
-      <!-- scrollbar removed-->
+
       <div class="navbar-vertical-content">
         <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+
+
+          <li v-for="(item, key) in items"  class="nav-item"
+              :class="{'has-sub': item.items !== void 0, active: item.active ?? false }"
+              :data-id="key">
+
+          </li>
+
+
+
+
           <li class="nav-item">
             <!-- parent pages-->
             <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-home" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="nv-home">
@@ -93,6 +104,7 @@
               </div>
             </div>
           </li>
+
           <li class="nav-item">
             <!-- label-->
             <p class="navbar-vertical-label">Apps</p>
@@ -1412,7 +1424,6 @@ const onOpenNav = (event) => {
   let key = 1 * li.dataset.id;
   items[key].active =  items[key].active ? false : true;
 
-  console.log(event, key)
 };
 
 </script>

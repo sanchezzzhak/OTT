@@ -1,11 +1,10 @@
 <template>
-  <main class="default">
+  <main class="main" id="top">
     <header-nav></header-nav>
     <sidebar></sidebar>
-    <div class="wrap-sidebar-page-content ">
+    <div class="content">
       <slot/>
     </div>
-
   </main>
 </template>
 <script>

@@ -27129,6 +27129,7 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs .navbar-v
   -webkit-box-pack: center;
   -ms-flex-pack: center;
   justify-content: center;
+  margin-right: 5px;
 }
 .navbar-vertical .dropdown-indicator .dropdown-indicator-icon-wrapper .dropdown-indicator-icon {
   -webkit-transform: scale(0.8);
@@ -27709,6 +27710,7 @@ html:not(.navbar-vertical-collapsed) .navbar-vertical.navbar-expand-xs .navbar-v
 }
 .navbar-vertical .new-page-indicator {
   margin-top: -10px;
+  width: 6px;
 }
 
 .navbar-vertical-collapsed {
