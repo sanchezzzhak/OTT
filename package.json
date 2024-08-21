@@ -54,7 +54,6 @@
     "path-to-regexp": "^6.2.0",
     "pg": "^8.11.5",
     "pg-hstore": "^2.3.4",
-    "pinia": "^2.0.14",
     "register-service-worker": "^1.7.1",
     "sequelize": "^6.13.0",
     "sequelize-cli": "^6.4.1"
@@ -62,7 +61,6 @@
   "devDependencies": {
     "@changesets/cli": "^2.27.5",
     "vite": "^5.4.2",
-    "@rollup/rollup-win32-x64-msvc": "^4.21.0",
     "@vitejs/plugin-vue": "^5.1.2",
     "eslint": "^8.7.0",
     "sass": "^1.77.8",
