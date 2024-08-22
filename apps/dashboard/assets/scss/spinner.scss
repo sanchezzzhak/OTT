@@ -1,0 +1,94 @@
+.spinner-grow {
+  display: inline-block;
+  width: var(--spinner-width);
+  height: var(--spinner-height);
+  vertical-align: var(--spinner-vertical-align);
+  border-radius: 50%;
+  -webkit-animation: var(--spinner-animation-speed) linear infinite var(--spinner-animation-name);
+  animation: var(--spinner-animation-speed) linear infinite var(--spinner-animation-name);
+}
+
+.spinner-border {
+  display: inline-block;
+  width: var(--spinner-width);
+  height: var(--spinner-height);
+  vertical-align: var(--spinner-vertical-align);
+  border-radius: 50%;
+  -webkit-animation: var(--spinner-animation-speed) linear infinite var(--spinner-animation-name);
+  animation: var(--spinner-animation-speed) linear infinite var(--spinner-animation-name);
+  --spinner-width:2rem;
+  --spinner-height:2rem;
+  --spinner-vertical-align:-0.125em;
+  --spinner-border-width:0.25em;
+  --spinner-animation-speed:0.75s;
+  --spinner-animation-name:spinner-border;
+  border: var(--spinner-border-width) solid currentcolor;
+  border-right-color: transparent;
+}
+
+@-webkit-keyframes spinner-border {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-border {
+  to {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
+.spinner-border-sm {
+  --spinner-width:1.35rem;
+  --spinner-height:1.35rem;
+  --spinner-border-width:0.2em;
+}
+
+@-webkit-keyframes spinner-grow {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+@keyframes spinner-grow {
+  0% {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    -webkit-transform: none;
+    transform: none;
+  }
+}
+
+.spinner-grow {
+  --spinner-width:2rem;
+  --spinner-height:2rem;
+  --spinner-vertical-align:-0.125em;
+  --spinner-animation-speed:0.75s;
+  --spinner-animation-name:spinner-grow;
+  background-color: currentcolor;
+  opacity: 0;
+}
+
+.spinner-grow-sm {
+  --spinner-width:1.35rem;
+  --spinner-height:1.35rem;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner-border, .spinner-grow {
+    --spinner-animation-speed:1.5s;
+  }
+}

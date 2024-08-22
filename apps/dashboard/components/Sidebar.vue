@@ -1,123 +1,127 @@
 <template>
-<!--  <div class="theme-gray navbar-vertical-content rounded-0 navigation&#45;&#45;sidebar" id="navbarVerticalCollapse">-->
-<!--      <ul class="navbar-nav flex-column">-->
-<!--        <li v-for="(item, key) in items"  class="nav-item" :class="{'has-sub': item.items !== void 0, active: item.active ?? false }" :data-id="key" >-->
-<!--          <div class="nav-item-wrapper">-->
-
-<!--            <template v-if="item.header">-->
-<!--              <p class="navbar-vertical-label">{{item.header}}}</p>-->
-<!--              <hr class="navbar-vertical-line">-->
-<!--            </template>-->
-
-<!--            <template v-if="item.items !== void 0">-->
-<!--              <a-->
-<!--                href="#{{item.href}}"-->
-<!--                @click="onOpenNav"-->
-<!--                class="nav-link dropdown-indicator label-1 collapsed"-->
-<!--                role="button"-->
-<!--                data-bs-toggle="collapse"-->
-<!--                aria-expanded="false"-->
-<!--                aria-controls="{{item.href}}"-->
-<!--              >-->
-<!--                <div class="d-flex align-items-center">-->
-<!--                  <div class="dropdown-indicator-icon-wrapper"></div>-->
-<!--                  <i class="nav-link-icon" v-if="item.icon" :class="item.icon"></i>-->
-<!--                  <span class="nav-link-text">{{ $t(item.label) }}</span>-->
-<!--                </div>-->
-
-
-<!--              </a>-->
-<!--              <div class="parent-wrapper label-1">-->
-<!--                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" :id="item.href">-->
-<!--                  <li v-for="subItem in item.items">-->
-<!--                    <router-link class="navigation&#45;&#45;link" :to="subItem.to">-->
-<!--                      <i class="icon" v-if="subItem.icon" :class="subItem.icon"></i>-->
-<!--                      <span class="label">{{ $t(subItem.label) }}</span>-->
-<!--                    </router-link>-->
-<!--                  </li>-->
-<!--                </ul>-->
-<!--              </div>-->
-<!--            </template>-->
-
-<!--            <template v-else>-->
-<!--              <router-link class="navigation&#45;&#45;link" :to="item.to">-->
-<!--                <i class="icon" v-if="item.icon" :class="item.icon"></i>-->
-<!--                <span class="label">{{ $t(item.label) }}</span>-->
-<!--              </router-link>-->
-<!--            </template>-->
-
-<!--          </div>-->
-<!--        </li>-->
-
-<!--      </ul>-->
-
-<!--  </div>-->
-
-
   <nav class="navbar navbar-vertical navbar-expand-lg" data-navbar-appearance="darker">
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
 
       <div class="navbar-vertical-content">
         <ul class="navbar-nav flex-column" id="navbarVerticalNav">
 
-
-          <sitebar-nav-item v-for="(item, key) in items" :item="item" :key="key"></sitebar-nav-item>
-
-
-
-
-
-
-          <li class="nav-item">
-            <!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-home" role="button" data-bs-toggle="collapse" aria-expanded="true" aria-controls="nv-home">
-              <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-pie-chart"><path d="M21.21 15.89A10 10 0 1 1 8 2.83"></path><path d="M22 12A10 10 0 0 0 12 2v10z"></path></svg></span><span class="nav-link-text">Home</span><svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg><!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
-              </div>
-            </a>
+        <template v-for="(item, key) in items">
+            <!-- single -->
+            <template v-if="item.items === void 0">
+              <li class="nav-item" :class="{active: item.active ?? false}" :data-id="key">
+                <template v-if="item.header !== void 0">
+                  <p class="navbar-vertical-label">{{ item.header }}</p>
+                  <hr class="navbar-vertical-line">
+                </template>
+                <router-link class="nav-link label-1" :to="item.to" role="button" data-bs-toggle="" aria-expanded="false">
+                  <div class="d-flex align-items-center">
+                    <span class="nav-link-icon">
+                      <i class="icon" v-if="item.icon" :class="item.icon"></i>
+                    </span>
+                    <span class="nav-link-text-wrapper"><span class="nav-link-text">{{ $t(item.label) }}</span></span>
+                  </div>
+                </router-link>
+              </li>
+            </template>
+            <!-- parent level 1-->
+          <template v-else-if="item.items !== void 0">
+            <li class="nav-item-wrapper" :class="{active: item.active ?? false}" :data-id="key">
+              <template v-if="item.header !== void 0">
+                <p class="navbar-vertical-label">{{ item.header }}</p>
+                <hr class="navbar-vertical-line">
+              </template>
+              <a
+                 class="nav-link dropdown-indicator label-1"
+                 href="#cl-{{key}}"
+                 role="button"
+                 data-bs-toggle="collapse"
+                 aria-expanded="true"
+                 aria-controls="cl-{{key}}"
+              >
+                <div class="d-flex align-items-center">
+                  <div class="dropdown-indicator-icon-wrapper" v-html="dropdownIndicatorIcon"></div>
+                  <span class="nav-link-icon"><i class="icon" v-if="item.icon" :class="item.icon"></i></span>
+                  <span class="nav-link-text-wrapper"><span class="nav-link-text">{{ $t(item.label) }}</span></span>
+                  <span v-if="item.indicator ?? false" v-html="pageIndicator"></span>
+                </div>
+              </a>
               <div class="parent-wrapper label-1">
-                <ul class="nav collapse parent show" data-bs-parent="#navbarVerticalCollapse" id="nv-home">
-                  <li class="collapsed-nav-item-title d-none">Home</li>
-                  <li class="nav-item"><a class="nav-link active" href="index.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text">E commerce</span></div>
-                  </a><!-- more inner pages-->
-                  </li>
-                  <li class="nav-item"><a class="nav-link" href="dashboard/project-management.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text">Project management</span></div>
-                  </a><!-- more inner pages-->
-                  </li>
-                  <li class="nav-item"><a class="nav-link" href="dashboard/crm.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text">CRM</span></div>
-                  </a><!-- more inner pages-->
-                  </li>
-                  <li class="nav-item"><a class="nav-link" href="dashboard/travel-agency.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text">Travel agency</span><span class="badge ms-2 badge badge-ext badge-ext-warning ">New</span></div>
-                  </a><!-- more inner pages-->
-                  </li>
-                  <li class="nav-item"><a class="nav-link" href="apps/social/feed.html">
-                    <div class="d-flex align-items-center"><span class="nav-link-text">Social feed</span></div>
-                  </a><!-- more inner pages-->
+                <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="cl-{{key}}">
+                  <li class="collapsed-nav-item-title d-none">{{ $t(item.label) }}</li>
+                  <li class="nav-item" v-for="subItem in item.items">
+                    <router-link
+                      class="nav-link"
+                      :class="{active:subItem.active ?? false}"
+                      :to="subItem.to"
+                      role="button"
+                      data-bs-toggle="collapse"
+                      aria-expanded="true"
+                      aria-controls="cl-{{key}}"
+                      v-if="subItem.items === void 0"
+                    >
+                      <div class="d-flex align-items-center">
+                        <span class="nav-link-text">{{ $t(subItem.label) }}</span>
+                        <span
+                          v-if="subItem.badge"
+                          class="badge ms-2 badge badge-ext badge-ext-warning ">{{ subItem.badge }}
+                        </span>
+                      </div>
+                    </router-link>
+
+
+
                   </li>
                 </ul>
               </div>
-            </div>
-          </li>
+            </li>
+          </template>
+
+        </template>
+
 
           <li class="nav-item">
             <!-- label-->
             <p class="navbar-vertical-label">Apps</p>
             <hr class="navbar-vertical-line"><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-e-commerce" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-e-commerce">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-e-commerce"
+                                             role="button" data-bs-toggle="collapse" aria-expanded="false"
+                                             aria-controls="nv-e-commerce">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></span><span class="nav-link-text">E commerce</span>
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-shopping-cart"><circle cx="9" cy="21"
+                                                                                               r="1"></circle><circle
+                  cx="20" cy="21" r="1"></circle><path
+                  d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></span><span
+                class="nav-link-text">E commerce</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
                 <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-e-commerce">
                   <li class="collapsed-nav-item-title d-none">E commerce</li>
-                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-admin" data-bs-toggle="collapse" aria-expanded="true" aria-controls="nv-admin">
+                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-admin" data-bs-toggle="collapse"
+                                          aria-expanded="true" aria-controls="nv-admin">
                     <div class="d-flex align-items-center">
-                      <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Admin</span>
+                      <div class="dropdown-indicator-icon-wrapper">
+                        <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                             focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                          <path fill="currentColor"
+                                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                        </svg>
+                        <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                      </div>
+                      <span class="nav-link-text">Admin</span>
                     </div>
                   </a><!-- more inner pages-->
                     <div class="parent-wrapper">
@@ -135,7 +139,8 @@
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/admin/customer-details.html">
-                          <div class="d-flex align-items-center"><span class="nav-link-text">Customer details</span></div>
+                          <div class="d-flex align-items-center"><span class="nav-link-text">Customer details</span>
+                          </div>
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/admin/orders.html">
@@ -153,9 +158,19 @@
                       </ul>
                     </div>
                   </li>
-                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-customer" data-bs-toggle="collapse" aria-expanded="true" aria-controls="nv-customer">
+                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-customer"
+                                          data-bs-toggle="collapse" aria-expanded="true" aria-controls="nv-customer">
                     <div class="d-flex align-items-center">
-                      <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Customer</span>
+                      <div class="dropdown-indicator-icon-wrapper">
+                        <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                             focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                          <path fill="currentColor"
+                                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                        </svg>
+                        <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                      </div>
+                      <span class="nav-link-text">Customer</span>
                     </div>
                   </a><!-- more inner pages-->
                     <div class="parent-wrapper">
@@ -165,11 +180,13 @@
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/landing/product-details.html">
-                          <div class="d-flex align-items-center"><span class="nav-link-text">Product details</span></div>
+                          <div class="d-flex align-items-center"><span class="nav-link-text">Product details</span>
+                          </div>
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/landing/products-filter.html">
-                          <div class="d-flex align-items-center"><span class="nav-link-text">Products filter</span></div>
+                          <div class="d-flex align-items-center"><span class="nav-link-text">Products filter</span>
+                          </div>
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/landing/cart.html">
@@ -189,7 +206,8 @@
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/landing/favourite-stores.html">
-                          <div class="d-flex align-items-center"><span class="nav-link-text">Favourite stores</span></div>
+                          <div class="d-flex align-items-center"><span class="nav-link-text">Favourite stores</span>
+                          </div>
                         </a><!-- more inner pages-->
                         </li>
                         <li class="nav-item"><a class="nav-link" href="apps/e-commerce/landing/wishlist.html">
@@ -211,10 +229,25 @@
               </div>
             </div><!-- parent pages-->
             <div class="nav-item-wrapper">
-              <a class="nav-link dropdown-indicator label-1" href="#nv-CRM" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-CRM">
-              <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-phone"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span><span class="nav-link-text">CRM</span>
-              </div>
+              <a class="nav-link dropdown-indicator label-1" href="#nv-CRM" role="button" data-bs-toggle="collapse"
+                 aria-expanded="false" aria-controls="nv-CRM">
+                <div class="d-flex align-items-center">
+                  <div class="dropdown-indicator-icon-wrapper">
+                    <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                         focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                         xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                      <path fill="currentColor"
+                            d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                    </svg>
+                    <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                  </div>
+                  <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                   viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                                   stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                                                   class="feather feather-phone"><path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg></span><span
+                  class="nav-link-text">CRM</span>
+                </div>
               </a>
               <div class="parent-wrapper label-1">
                 <ul class="nav collapse parent" data-bs-parent="#navbarVerticalCollapse" id="nv-CRM">
@@ -254,9 +287,29 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-project-management" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-project-management">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-project-management"
+                                             role="button" data-bs-toggle="collapse" aria-expanded="false"
+                                             aria-controls="nv-project-management">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-clipboard"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg></span><span class="nav-link-text">Project management</span>
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-clipboard"><path
+                  d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2"
+                                                                                                            width="8"
+                                                                                                            height="4"
+                                                                                                            rx="1"
+                                                                                                            ry="1"></rect></svg></span><span
+                class="nav-link-text">Project management</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
@@ -289,9 +342,32 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-travel-agency" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-travel-agency">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-travel-agency"
+                                             role="button" data-bs-toggle="collapse" aria-expanded="false"
+                                             aria-controls="nv-travel-agency">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-briefcase"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span><span class="nav-link-text">Travel agency</span><svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg><!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-briefcase"><rect x="2" y="7" width="20"
+                                                                                         height="14" rx="2"
+                                                                                         ry="2"></rect><path
+                  d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg></span><span class="nav-link-text">Travel agency</span>
+                <svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;"
+                     aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img"
+                     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                  <path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+                </svg>
+                <!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
               </div>
             </a>
               <div class="parent-wrapper label-1">
@@ -301,68 +377,129 @@
                     <div class="d-flex align-items-center"><span class="nav-link-text">Landing</span></div>
                   </a><!-- more inner pages-->
                   </li>
-                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-hotel" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-hotel">
+                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-hotel" data-bs-toggle="collapse"
+                                          aria-expanded="false" aria-controls="nv-hotel">
                     <div class="d-flex align-items-center">
-                      <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Hotel</span><svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg><!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
+                      <div class="dropdown-indicator-icon-wrapper">
+                        <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                             focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                          <path fill="currentColor"
+                                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                        </svg>
+                        <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                      </div>
+                      <span class="nav-link-text">Hotel</span>
+                      <svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;"
+                           aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img"
+                           xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                        <path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+                      </svg>
+                      <!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
                     </div>
                   </a><!-- more inner pages-->
                     <div class="parent-wrapper">
                       <ul class="nav collapse parent" data-bs-parent="#travel-agency" id="nv-hotel">
-                        <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-hotel-admin" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-hotel-admin">
+                        <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-hotel-admin"
+                                                data-bs-toggle="collapse" aria-expanded="false"
+                                                aria-controls="nv-hotel-admin">
                           <div class="d-flex align-items-center">
-                            <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Admin</span>
+                            <div class="dropdown-indicator-icon-wrapper">
+                              <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                                   focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                                <path fill="currentColor"
+                                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                              </svg>
+                              <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                            </div>
+                            <span class="nav-link-text">Admin</span>
                           </div>
                         </a><!-- more inner pages-->
                           <div class="parent-wrapper">
                             <ul class="nav collapse parent" data-bs-parent="#hotel" id="nv-hotel-admin">
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/admin/add-property.html">
-                                <div class="d-flex align-items-center"><span class="nav-link-text">Add property</span></div>
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/admin/add-property.html">
+                                <div class="d-flex align-items-center"><span class="nav-link-text">Add property</span>
+                                </div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/admin/add-room.html">
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/admin/add-room.html">
                                 <div class="d-flex align-items-center"><span class="nav-link-text">Add room</span></div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/admin/room-listing.html">
-                                <div class="d-flex align-items-center"><span class="nav-link-text">Room listing</span></div>
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/admin/room-listing.html">
+                                <div class="d-flex align-items-center"><span class="nav-link-text">Room listing</span>
+                                </div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/admin/room-search.html">
-                                <div class="d-flex align-items-center"><span class="nav-link-text">Search room</span></div>
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/admin/room-search.html">
+                                <div class="d-flex align-items-center"><span class="nav-link-text">Search room</span>
+                                </div>
                               </a><!-- more inner pages-->
                               </li>
                             </ul>
                           </div>
                         </li>
-                        <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-hotel-customer" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-hotel-customer">
+                        <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-hotel-customer"
+                                                data-bs-toggle="collapse" aria-expanded="false"
+                                                aria-controls="nv-hotel-customer">
                           <div class="d-flex align-items-center">
-                            <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Customer</span><svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path></svg><!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
+                            <div class="dropdown-indicator-icon-wrapper">
+                              <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                                   focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                                   xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                                <path fill="currentColor"
+                                      d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                              </svg>
+                              <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                            </div>
+                            <span class="nav-link-text">Customer</span>
+                            <svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator"
+                                 style="font-size: 6px;" aria-hidden="true" focusable="false" data-prefix="fas"
+                                 data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"
+                                 data-fa-i2svg="">
+                              <path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+                            </svg>
+                            <!-- <span class="fa-solid fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px"></span> Font Awesome fontawesome.com -->
                           </div>
                         </a><!-- more inner pages-->
                           <div class="parent-wrapper">
                             <ul class="nav collapse parent" data-bs-parent="#hotel" id="nv-hotel-customer">
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/customer/homepage.html">
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/customer/homepage.html">
                                 <div class="d-flex align-items-center"><span class="nav-link-text">Homepage</span></div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/customer/hotel-details.html">
-                                <div class="d-flex align-items-center"><span class="nav-link-text">Hotel details</span></div>
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/customer/hotel-details.html">
+                                <div class="d-flex align-items-center"><span class="nav-link-text">Hotel details</span>
+                                </div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/customer/hotel-compare.html">
-                                <div class="d-flex align-items-center"><span class="nav-link-text">Hotel compare</span></div>
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/customer/hotel-compare.html">
+                                <div class="d-flex align-items-center"><span class="nav-link-text">Hotel compare</span>
+                                </div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/customer/checkout.html">
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/customer/checkout.html">
                                 <div class="d-flex align-items-center"><span class="nav-link-text">Checkout</span></div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/customer/payment.html">
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/customer/payment.html">
                                 <div class="d-flex align-items-center"><span class="nav-link-text">Payment</span></div>
                               </a><!-- more inner pages-->
                               </li>
-                              <li class="nav-item"><a class="nav-link" href="apps/travel-agency/hotel/customer/gallery.html">
-                                <div class="d-flex align-items-center"><span class="nav-link-text">Gallery</span><span class="badge ms-2 badge badge-ext badge-ext-warning ">new</span></div>
+                              <li class="nav-item"><a class="nav-link"
+                                                      href="apps/travel-agency/hotel/customer/gallery.html">
+                                <div class="d-flex align-items-center"><span class="nav-link-text">Gallery</span><span
+                                  class="badge ms-2 badge badge-ext badge-ext-warning ">new</span></div>
                               </a><!-- more inner pages-->
                               </li>
                             </ul>
@@ -371,9 +508,20 @@
                       </ul>
                     </div>
                   </li>
-                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-flight" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-flight">
+                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-flight"
+                                          data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-flight">
                     <div class="d-flex align-items-center">
-                      <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Flight</span><span class="badge ms-2 badge badge-ext badge-ext-warning ">New</span>
+                      <div class="dropdown-indicator-icon-wrapper">
+                        <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                             focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                          <path fill="currentColor"
+                                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                        </svg>
+                        <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                      </div>
+                      <span class="nav-link-text">Flight</span><span
+                      class="badge ms-2 badge badge-ext badge-ext-warning ">New</span>
                     </div>
                   </a><!-- more inner pages-->
                     <div class="parent-wrapper">
@@ -393,9 +541,20 @@
                       </ul>
                     </div>
                   </li>
-                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-trip" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-trip">
+                  <li class="nav-item"><a class="nav-link dropdown-indicator" href="#nv-trip" data-bs-toggle="collapse"
+                                          aria-expanded="false" aria-controls="nv-trip">
                     <div class="d-flex align-items-center">
-                      <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-text">Trip</span><span class="badge ms-2 badge badge-ext badge-ext-warning ">new</span>
+                      <div class="dropdown-indicator-icon-wrapper">
+                        <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                             focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                             xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                          <path fill="currentColor"
+                                d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                        </svg>
+                        <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                      </div>
+                      <span class="nav-link-text">Trip</span><span
+                      class="badge ms-2 badge badge-ext badge-ext-warning ">new</span>
                     </div>
                   </a><!-- more inner pages-->
                     <div class="parent-wrapper">
@@ -418,12 +577,37 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link label-1" href="apps/chat.html" role="button" data-bs-toggle="" aria-expanded="false">
-              <div class="d-flex align-items-center"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Chat</span></span></div>
+            <div class="nav-item-wrapper"><a class="nav-link label-1" href="apps/chat.html" role="button"
+                                             data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                      width="16px" height="16px"
+                                                                                      viewBox="0 0 24 24" fill="none"
+                                                                                      stroke="currentColor"
+                                                                                      stroke-width="2"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      class="feather feather-message-square"><path
+                d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></span><span
+                class="nav-link-text-wrapper"><span class="nav-link-text">Chat</span></span></div>
             </a></div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-email" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-email">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-email" role="button"
+                                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-email">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-mail"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg></span><span class="nav-link-text">Email</span>
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-mail"><path
+                  d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline
+                  points="22,6 12,13 2,6"></polyline></svg></span><span class="nav-link-text">Email</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
@@ -444,9 +628,23 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-events" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-events">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-events" role="button"
+                                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-events">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bookmark"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></span><span class="nav-link-text">Events</span>
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-bookmark"><path
+                  d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path></svg></span><span class="nav-link-text">Events</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
@@ -463,9 +661,27 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-kanban" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-kanban">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-kanban" role="button"
+                                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-kanban">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trello"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><rect x="7" y="7" width="3" height="9"></rect><rect x="14" y="7" width="3" height="5"></rect></svg></span><span class="nav-link-text">Kanban</span>
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-trello"><rect x="3" y="3" width="18" height="18"
+                                                                                      rx="2" ry="2"></rect><rect x="7"
+                                                                                                                 y="7"
+                                                                                                                 width="3"
+                                                                                                                 height="9"></rect><rect
+                  x="14" y="7" width="3" height="5"></rect></svg></span><span class="nav-link-text">Kanban</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
@@ -486,9 +702,27 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-social" role="button" data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-social">
+            <div class="nav-item-wrapper"><a class="nav-link dropdown-indicator label-1" href="#nv-social" role="button"
+                                             data-bs-toggle="collapse" aria-expanded="false" aria-controls="nv-social">
               <div class="d-flex align-items-center">
-                <div class="dropdown-indicator-icon-wrapper"><svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="caret-right" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg=""><path fill="currentColor" d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path></svg><!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com --></div><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></span><span class="nav-link-text">Social</span>
+                <div class="dropdown-indicator-icon-wrapper">
+                  <svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+                       focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+                       xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+                    <path fill="currentColor"
+                          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+                  </svg>
+                  <!-- <span class="fas fa-caret-right dropdown-indicator-icon"></span> Font Awesome fontawesome.com -->
+                </div>
+                <span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px"
+                                                 viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                                 stroke-linecap="round" stroke-linejoin="round"
+                                                 class="feather feather-share-2"><circle cx="18" cy="5" r="3"></circle><circle
+                  cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51"
+                                                                                             x2="15.42"
+                                                                                             y2="17.49"></line><line
+                  x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg></span><span
+                class="nav-link-text">Social</span>
               </div>
             </a>
               <div class="parent-wrapper label-1">
@@ -505,8 +739,19 @@
                 </ul>
               </div>
             </div><!-- parent pages-->
-            <div class="nav-item-wrapper"><a class="nav-link label-1" href="apps/calendar.html" role="button" data-bs-toggle="" aria-expanded="false">
-              <div class="d-flex align-items-center"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-calendar"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span><span class="nav-link-text-wrapper"><span class="nav-link-text">Calendar</span></span></div>
+            <div class="nav-item-wrapper"><a class="nav-link label-1" href="apps/calendar.html" role="button"
+                                             data-bs-toggle="" aria-expanded="false">
+              <div class="d-flex align-items-center"><span class="nav-link-icon"><svg xmlns="http://www.w3.org/2000/svg"
+                                                                                      width="16px" height="16px"
+                                                                                      viewBox="0 0 24 24" fill="none"
+                                                                                      stroke="currentColor"
+                                                                                      stroke-width="2"
+                                                                                      stroke-linecap="round"
+                                                                                      stroke-linejoin="round"
+                                                                                      class="feather feather-calendar"><rect
+                x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line
+                x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></span><span
+                class="nav-link-text-wrapper"><span class="nav-link-text">Calendar</span></span></div>
             </a></div>
           </li>
           <li class="nav-item">
@@ -1408,7 +1653,21 @@
 
 <script setup>
 
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+
+const pageIndicator = `<svg class="svg-inline--fa fa-circle text-info ms-1 new-page-indicator" style="font-size: 6px;"
+     aria-hidden="true" focusable="false" data-prefix="fas" data-icon="circle" role="img"
+     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+  <path fill="currentColor" d="M256 512A256 256 0 1 0 256 0a256 256 0 1 0 0 512z"></path>
+</svg>`;
+
+const dropdownIndicatorIcon = `<svg class="svg-inline--fa fa-caret-right dropdown-indicator-icon" aria-hidden="true"
+     focusable="false" data-prefix="fas" data-icon="caret-right" role="img"
+     xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512" data-fa-i2svg="">
+    <path fill="currentColor"
+          d="M246.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-9.2-9.2-22.9-11.9-34.9-6.9s-19.8 16.6-19.8 29.6l0 256c0 12.9 7.8 24.6 19.8 29.6s25.7 2.2 34.9-6.9l128-128z"></path>
+</svg>`;
+
 import SitebarNavItem from './SitebarNavItem.vue';
 
 let items = reactive( [
@@ -1419,6 +1678,7 @@ let items = reactive( [
     {label: 'Settings', to: {path: '/dashboard/settings'}, icon: 'bi bi-gear-fill'},
   ]}
 ]);
+
 
 const onOpenNav = (event) => {
   let li = event.target.closest('li');

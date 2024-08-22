@@ -1,0 +1,77 @@
+.toast {
+  --toast-zindex:1090;
+  --toast-padding-x:0;
+  --toast-padding-y:1rem;
+  --toast-spacing:2rem;
+  --toast-max-width:350px;
+  --toast-font-size:1rem;
+  --toast-color:currentColor;
+  --toast-bg:rgba(var(--emphasis-bg-rgb), 0.85);
+  --toast-border-width:var(--border-width);
+  --toast-border-color:var(--border-color);
+  --toast-border-radius:var(--border-radius);
+  --toast-box-shadow:0px 4px 8px -6px rgba(36, 40, 46, 0.03), 0px 16px 8px -4px rgba(36, 40, 46, 0.03);
+  --toast-header-color:var(--secondary-color);
+  --toast-header-bg:transparent;
+  --toast-header-border-color:var(--border-color-translucent);
+  width: var(--toast-max-width);
+  max-width: 100%;
+  font-size: var(--toast-font-size);
+  color: var(--toast-color);
+  pointer-events: auto;
+  background-color: var(--toast-bg);
+  background-clip: padding-box;
+  border: var(--toast-border-width) solid var(--toast-border-color);
+  -webkit-box-shadow: var(--toast-box-shadow);
+  box-shadow: var(--toast-box-shadow);
+  border-radius: var(--toast-border-radius);
+
+  &.showing {
+    opacity: 0;
+  }
+
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.toast-container {
+  --toast-zindex:1090;
+  position: absolute;
+  z-index: var(--toast-zindex);
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+  max-width: 100%;
+  pointer-events: none;
+
+  > :not(:last-child) {
+    margin-bottom: var(--toast-spacing);
+  }
+}
+
+.toast-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: var(--toast-padding-y) var(--toast-padding-x);
+  color: var(--toast-header-color);
+  background-color: var(--toast-header-bg);
+  background-clip: padding-box;
+  border-bottom: var(--toast-border-width) solid var(--toast-header-border-color);
+  border-top-left-radius: calc(var(--toast-border-radius) - var(--toast-border-width));
+  border-top-right-radius: calc(var(--toast-border-radius) - var(--toast-border-width));
+
+  .btn-close {
+    margin-right: calc(-0.5 * var(--toast-padding-x));
+    margin-left: var(--toast-padding-x);
+  }
+}
+
+.toast-body {
+  padding: var(--toast-padding-x);
+  word-wrap: break-word;
+}

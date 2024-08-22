@@ -1,0 +1,100 @@
+.placeholder {
+  display: inline-block;
+  min-height: 1em;
+  vertical-align: middle;
+  cursor: wait;
+  background-color: currentcolor;
+  opacity: 0.5;
+
+  &.btn::before {
+    display: inline-block;
+    content: "";
+  }
+}
+
+.mapbox-container .mapbox-control-btn .placeholder {
+  &.zoomIn::before, &.zoomOut::before, &.fullScreen::before {
+    display: inline-block;
+    content: "";
+  }
+}
+
+.google-map-control-btn .placeholder {
+  &.zoomIn::before, &.zoomOut::before {
+    display: inline-block;
+    content: "";
+  }
+}
+
+.tox {
+  .tox-dialog__footer .placeholder {
+    &.tox-button:last-child::before, &.tox-button--secondary::before {
+      display: inline-block;
+      content: "";
+    }
+  }
+
+  .placeholder {
+    &.tox-button-secondary::before, &.tox-button::before {
+      display: inline-block;
+      content: "";
+    }
+  }
+}
+
+[data-list] .placeholder.page::before, .table-list .placeholder.page::before {
+  display: inline-block;
+  content: "";
+}
+
+.placeholder-xs {
+  min-height: 0.6em;
+}
+
+.placeholder-sm {
+  min-height: 0.8em;
+}
+
+.placeholder-lg {
+  min-height: 1.2em;
+}
+
+.placeholder-glow .placeholder {
+  -webkit-animation: placeholder-glow 2s ease-in-out infinite;
+  animation: placeholder-glow 2s ease-in-out infinite;
+}
+
+@-webkit-keyframes placeholder-glow {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+@keyframes placeholder-glow {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+.placeholder-wave {
+  -webkit-mask-image: linear-gradient(130deg, #000000 55%, rgba(0, 0, 0, 0.8) 75%, #000000 95%);
+  mask-image: linear-gradient(130deg, #000000 55%, rgba(0, 0, 0, 0.8) 75%, #000000 95%);
+  -webkit-mask-size: 200% 100%;
+  mask-size: 200% 100%;
+  -webkit-animation: placeholder-wave 2s linear infinite;
+  animation: placeholder-wave 2s linear infinite;
+}
+
+@-webkit-keyframes placeholder-wave {
+  100% {
+    -webkit-mask-position: -200% 0%;
+    mask-position: -200% 0%;
+  }
+}
+
+@keyframes placeholder-wave {
+  100% {
+    -webkit-mask-position: -200% 0%;
+    mask-position: -200% 0%;
+  }
+}
