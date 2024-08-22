@@ -1,24 +1,28 @@
 <template>
   <nav class="navbar navbar-top fixed-top navbar-expand" id="navbarDefault" data-navbar-appearance="darker">
     <div class="collapse navbar-collapse justify-content-between">
+
       <div class="navbar-logo">
-        <button class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent"
-                type="button" data-bs-toggle="collapse" data-bs-target="#navbarVerticalCollapse"
-                aria-controls="navbarVerticalCollapse" aria-expanded="false"
-                aria-label="Toggle Navigation">
-          <span class="navbar-toggle-icon">
-            <span class="toggle-line"></span>
-          </span>
+        <button
+          class="btn navbar-toggler navbar-toggler-humburger-icon hover-bg-transparent"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarVerticalCollapse"
+          aria-controls="navbarVerticalCollapse"
+          aria-expanded="false"
+          aria-label="Toggle Navigation">
+          <span class="navbar-toggle-icon"><span class="toggle-line"></span></span>
         </button>
-        <a class="navbar-brand me-1 me-sm-3" href="index.html">
+        <a class="navbar-brand me-1 me-sm-3" href="">
           <div class="d-flex align-items-center">
             <div class="d-flex align-items-center">
 <!--              <img src="" alt="ott" width="27">-->
-              <h5 class="logo-text ms-2 d-none d-sm-block">ott</h5>
+              <h5 class="logo-text ms-2 d-none d-sm-block">OTT</h5>
             </div>
           </div>
         </a>
       </div>
+
       <div class="search-box navbar-top-search-box d-none d-lg-block" data-list="{&quot;valueNames&quot;:[&quot;title&quot;]}" style="width:25rem;">
         <form class="position-relative" data-bs-toggle="search" data-bs-display="static"><input class="form-control search-input fuzzy-search rounded-pill form-control-sm" type="search" placeholder="Search..." aria-label="Search">
           <svg class="svg-inline--fa fa-magnifying-glass search-box-icon" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="magnifying-glass" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352a144 144 0 1 0 0-288 144 144 0 1 0 0 288z"></path></svg><!-- <span class="fas fa-search search-box-icon"></span> Font Awesome fontawesome.com -->
@@ -225,6 +229,7 @@
             </div>
           </div>
         </li>
+
         <li class="nav-item dropdown">
           <a class="nav-link" id="navbarDropdownNindeDots" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" data-bs-auto-close="outside" aria-expanded="false"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="2" cy="2" r="2" fill="currentColor"></circle>
@@ -238,9 +243,51 @@
             <circle cx="14" cy="2" r="2" fill="currentColor"></circle>
           </svg></a>
         </li>
-        <li class="nav-item dropdown"><a class="nav-link lh-1 pe-0" id="navbarDropdownUser" href="#!" role="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-haspopup="true" aria-expanded="false">
+
+        <li class="nav-item dropdown">
+          <div class="d-flex">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item dropdown" id="language-nav">
+                <a class="nav-link dropdown-toggle"
+                   id="languageDropdown"
+                   role="button"
+                   data-bs-toggle="dropdown"
+                   aria-expanded="false">
+                  {{locale.toUpperCase()}}
+                </a>
+                <ul class="dropdown-menu justify-content-start" aria-labelledby="languageDropdown">
+                  <li><a class="dropdown-item" @click="changeLanguage">EN</a></li>
+                  <li><a class="dropdown-item" @click="changeLanguage">RU</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+
+        </li>
+
+
+
+        <li class="nav-item dropdown">
+          <a class="nav-link lh-1 pe-0"
+             id="navbarDropdownUser"
+             href="#"
+             role="button"
+             data-bs-toggle="dropdown"
+             data-bs-auto-close="outside"
+             aria-haspopup="true"
+             aria-expanded="false"
+        >
           <div class="avatar avatar-l ">
-            <img class="rounded-circle " src="#assets/img/team/40x40/57.webp" alt="">
+            <span
+              v-if="!store.isAuth || !store.user?.avatar"
+              class="no-avatar rounded-circle"
+              v-html="svgNoAvatar"
+            ></span>
+            <img
+              v-else-if="store.user?.avatar"
+              class="rounded-circle"
+              :src="store.user?.avatar"
+            >
           </div>
         </a>
           <div class="dropdown-menu dropdown-menu-end navbar-dropdown-caret py-0 dropdown-profile shadow border" aria-labelledby="navbarDropdownUser">
@@ -248,9 +295,18 @@
               <div class="card-body p-0">
                 <div class="text-center pt-4 pb-3">
                   <div class="avatar avatar-xl ">
-                    <img class="rounded-circle " src="#assets/img/team/72x72/57.webp" alt="">
+                    <span
+                      v-if="!store.isAuth || !store.user?.avatar"
+                      class="no-avatar rounded-circle"
+                      v-html="svgNoAvatar"
+                    ></span>
+                    <img
+                      v-else-if="store.user?.avatar"
+                      class="rounded-circle"
+                      :src="store.user?.avatar"
+                    >
                   </div>
-                  <h6 class="mt-2 text-body-emphasis">Jerry Seinfield</h6>
+                  <h6 class="mt-2 text-body-emphasis">dsf</h6>
                 </div>
                 <div class="mb-3 mx-3"><input class="form-control form-control-sm" id="statusUpdateInput" type="text" placeholder="Update your status"></div>
               </div>
@@ -297,23 +353,6 @@
 <!--                    <li class="nav-item"></li>-->
 <!--                </ul>-->
 
-<!--                <div class="d-flex">-->
-<!--                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">-->
-<!--                    <li class="nav-item dropdown" id="language-nav">-->
-<!--                      <a class="nav-link dropdown-toggle"-->
-<!--                         id="languageDropdown"-->
-<!--                         role="button"-->
-<!--                         data-bs-toggle="dropdown"-->
-<!--                         aria-expanded="false">-->
-<!--                        {{locale}}-->
-<!--                      </a>-->
-<!--                      <ul class="dropdown-menu bg-transparent justify-content-start" aria-labelledby="languageDropdown">-->
-<!--                        <li><a class="dropdown-item" @click="changeLanguage">EN</a></li>-->
-<!--                        <li><a class="dropdown-item" @click="changeLanguage">RU</a></li>-->
-<!--                      </ul>-->
-<!--                    </li>-->
-<!--                  </ul>-->
-<!--                </div>-->
 
 <!--                <div class="d-flex" v-if="!isAuth()">-->
 <!--                    <router-link :to="{name: 'SingIn'}" class="nav-link btn btn-primary text-white"> {{$t('sing_in')}}-->
@@ -339,6 +378,11 @@
     }
   }
 }
+.no-avatar svg {
+  width: 64px;
+  height: 64px;
+  object-fit: contain;
+}
 </style>
 
 <script setup>
@@ -349,6 +393,8 @@
   const store = useStore();
 
   const {locale} = useI18n();
+
+  const svgNoAvatar = ``;
 
   function isAuth() {
     return store.token && store.token.length;

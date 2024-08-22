@@ -2,8 +2,6 @@
 import AuthContent from './mixins/AuthContent.vue';
 </script>
 <template>
-  <AuthContent>
-
-  </AuthContent>
+  <AuthContent></AuthContent>
 </template>
 

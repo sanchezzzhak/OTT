@@ -102,10 +102,10 @@ function singup() {
         </div>
         <div class="d-md-flex justify-content-between mt-4">
           <div class="mb-2 mb-md-0">
-            <router-link :to="{name: 'SingIn'}" class="fs-6">Already member? Login</router-link>
+            <router-link :to="{name: 'SingIn'}" class="">Already member? Login</router-link>
           </div>
           <div>
-            <router-link :to="{name: 'Forgot'}" class="text-inherit fs-6">Forgot your password?</router-link>
+            <router-link :to="{name: 'Forgot'}" class="text-inherit">Forgot your password?</router-link>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ const routes = [
     component: () => import('../views/SingIn.vue'),
     meta: {
       title: 'Sing In',
-      layout: 'auth',
+      // layout: 'auth',
     },
     beforeEnter: checkNotAuth,
   }, {
@@ -42,7 +42,6 @@ const routes = [
     component: () => import('../views/SingUp.vue'),
     meta: {
       title: 'Sing Up',
-      layout: 'auth',
     },
     beforeEnter: checkNotAuth,
   }, {
@@ -61,7 +60,6 @@ const routes = [
     meta: {
       auth: true,
       title: 'Dashboard',
-      layout: 'dash',
     },
     children: [
       {

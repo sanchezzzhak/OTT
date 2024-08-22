@@ -9,6 +9,7 @@ export const useStore = defineStore('main', {
     user: {},
     status: '',
     language:  localStorage.getItem('language'),
+    sitebar:  localStorage.getItem('sitebar') || 'vertical',
   }),
   
   getters: {

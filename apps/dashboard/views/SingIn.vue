@@ -41,10 +41,10 @@ function login() {
   <AuthContent>
     <div class="card border-0 shadow rounded">
       <div class="card-header">
-        Sign in to OTT Dashboard
+        {{$t('Auth.sign_in_title')}}
       </div>
       <div class="card-body">
-        <p class="mb-6">Please enter your user information.</p>
+        <p class="mb-6">{{$t('Auth.header')}}</p>
         <div v-if="error && error.length" class="alert alert-danger alert-dismissible fade show" role="alert">
           {{ error }}
           <button type="button" @click="clearErrors()" class="btn-close"></button>
@@ -70,19 +70,19 @@ function login() {
           {{ item }}
         </div>
         <div class="d-grid gap-2 mt-3">
-          <button @click.prevent="login" class="btn btn-primary btn-block">Sign in</button>
+          <button @click.prevent="login" class="btn btn-primary btn-block">{{ $t('sign_in') }}</button>
         </div>
       </div>
 
       <div class="row">
         <div class="col-6">
           <p class="text-center">
-            <router-link :to="{name: 'SingUp'}">Sing up</router-link>
+            <router-link :to="{name: 'SingUp'}">{{ $t('sign_up') }}</router-link>
           </p>
         </div>
         <div class="col-6">
           <p class="text-center">
-            <router-link :to="{name: 'Forgot'}">Forgot?</router-link>
+            <router-link :to="{name: 'Forgot'}">{{ $t('forgot') }}?</router-link>
           </p>
         </div>
       </div>

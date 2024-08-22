@@ -16,8 +16,6 @@ import bsCopy from "./components/bootstrap/bsCopy.vue";
 import HeaderNav from "./components/HeaderNav.vue";
 import Sidebar from "./components/Sidebar.vue";
 import DefaultLayout from './layouts/Default.vue';
-import AuthLayout from './layouts/Auth.vue';
-import DashLayout from './layouts/Dash.vue';
 
 import App from './App.vue';
 import {messages} from './locales/messages';
@@ -49,8 +47,8 @@ app.component('header-nav', HeaderNav);
 
 // layouts
 app.component('default', DefaultLayout);
-app.component('auth', AuthLayout);
-app.component('dash', DashLayout);
+// app.component('auth', AuthLayout);
+// app.component('dash', DashLayout);
 
 // render
 app.mount('#app');

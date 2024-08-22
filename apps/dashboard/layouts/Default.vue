@@ -6,7 +6,9 @@
       <slot/>
     </div>
   </main>
+  <ui-config></ui-config>
 </template>
-<script>
-export default {}
+
+<script setup>
+import UiConfig from '../components/ui-config.vue';
 </script>
