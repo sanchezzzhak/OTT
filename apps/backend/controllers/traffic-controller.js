@@ -6,8 +6,27 @@ const EVENTS = {
   HEAT: 7,         // event for heat map graph
 };
 
+const ACTIONS = {
+  INIT: 'init',
+  EVENT: 'event'
+};
+
 class TrafficController extends AbstractController {
-  
+
+  #actionInit() {
+    const trafficId = randomUUID();
+    const id = this.req.getParameter(0);
+    const data = JSON.stringify({
+      trafficId, // this.broker.generateUid()
+    });
+
+    return this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});
+  }
+
+  #actionEvent() {
+    return '';
+  }
+
   /**
    * main method for analytics
    * result traffic id for fist request
@@ -18,11 +37,18 @@ class TrafficController extends AbstractController {
     if (this.req.getMethod() === 'options') {
       return '';
     }
-    const trafficId = randomUUID();
-    const id = this.req.getParameter(0);
-    const data = JSON.stringify({
-      trafficId, // this.broker.generateUid()
-    });
+
+    this.initRequest();
+
+    const action = this.requestData.query.a ?? '';
+    switch (action) {
+      case 'init':
+        return this.#actionInit();
+      case 'event':
+        return this.#actionEvent();
+    }
+
+    return '';
 
     /*
   let result = await this.#pushBuffer({
@@ -31,7 +57,7 @@ class TrafficController extends AbstractController {
   });
 
 */
-    return this.renderRaw({view: `window['_ott_${id}'] = ${data}`, format: 'js'});
+
   }
 
   async hot() {
