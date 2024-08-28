@@ -5,8 +5,8 @@ export function insertScript(target, options = {}) {
     for(let key in options) {
       script[key] = options[key];
     }
-    script.addEventListener('load', () => resolve(true), false);
-    script.addEventListener('error', () => resolve(false), false);
+    script.addEventListener('load', () => resolve(script), false);
+    script.addEventListener('error', () => resolve(null), false);
     target.appendChild(script);
   });
 }

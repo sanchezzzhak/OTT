@@ -1,5 +1,8 @@
 import { once } from "@ott/untils/events"
+import { buildUrl } from "@ott/untils/url"
 import { insertScript } from "@ott/untils/insert-script.js"
+import Check4 from "./fingerprint.js"
+import DeviceCollector from "./device-collector.js"
 
 /**
  * @typedef TrackAppOptions
@@ -27,6 +30,8 @@ import { insertScript } from "@ott/untils/insert-script.js"
     data = {};
     ready = false;
     endpoint = '';
+    fb = '';
+    meta = {};
 
     init() {
       if (this.ready) {
@@ -38,49 +43,115 @@ import { insertScript } from "@ott/untils/insert-script.js"
         this.endpoint = target.dataset.endpoint;
 
         if (!this.id || !this.endpoint) {
-          console.error('error init', new Error(''))
+          console.error('error init data.id or data.endpoint not found');
           return;
         }
 
+        try {
+          (async () => {
+            this.fb = await this.#initFb();
+            this.meta = await this.#initHints();
+            await this.#init()
+          })();
+        } catch (e) {}
+      }
+
+      this.#process();
+    }
+
+    /**
+     * Init meta data
+     * @return {Promise<{Object}>}
+     */
+    #initHints() {
+      return new Promise((resolve)=> {
+        let deviceCollector = new DeviceCollector();
+        deviceCollector.info().then(meta => {
+          resolve(meta);
+        })
+      })
+    }
+
+    /**
+     * Init FingerPrint
+     * @return {Promise<string>}
+     */
+    #initFb() {
+      return new Promise((resolve) => {
+        Check4.load()
+          .then(fs => fs.get())
+          .then(r => {
+              resolve(r.visitorId)
+          })
+      })
+    }
+
+    /**
+     * Init data and save first hit
+     * @return {Promise<void>}
+     */
+    #init() {
+      return new Promise((resolve) => {
         insertScript(target, {
-          src: this.baseUrl() + '?a=init',
+          src: buildUrl(this.#baseUrl() + '?a=init', {
+            fb: this.fb,
+            meta: this.meta,
+          }),
           async: true,
         }).then(s => {
+          if (s === null) {
+            console.error('error script not load');
+            return resolve();
+          }
           target.removeChild(s);
-
-          if (win._ott_data[this.id] &&  win._ott_data[this.id].trafficId) {
-            this.data = recopy(win._ott_data[this.id]);
-            delete win._ott_data;
+          let key = '_ott_' + this.id;
+          if (win[key] &&  win[key].trafficId) {
+            this.data = recopy(win[key]);
+            delete win[key];
             this.ready = true;
           }
-
+          resolve();
         }).catch(e => {
-          console.error('error init', e);
+          console.error('error init catch', e);
+          resolve();
         })
-      }
+      })
     }
 
-    baseUrl() {
-      return location.protocol + '//' + this.endpoint + '/t/' + this.id;
+    /**
+     * Get tracker base url
+     * @return {string}
+     */
+    #baseUrl() {
+      let isProtocol = /https?:\/\//i.test(this.endpoint);
+      let baseUrl = this.endpoint + '/t/' + this.id;
+      return !isProtocol ? location.protocol + '//' + baseUrl : baseUrl;
     }
 
-    send(args) {
+    /**
+     * Send data for ajax
+     * @param args
+     */
+    #send(args) {
       let http = new XMLHttpRequest();
-      http.open("POST", this.baseUrl() + '?a=event');
+      http.open("POST", this.#baseUrl() + '?a=event');
       http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
       http.send(JSON.stringify(args));
     }
 
-    process() {
+    /**
+     * Send all events and replace _qpaq variable to objects
+     */
+    #process() {
       if (!this.ready) {
         return;
       }
       recopy(win._opaq).forEach((arg) => {
-        this.send(arg);
+        this.#send(arg);
       });
       win._qpaq = {
         push: (args) => {
-          this.send(args)
+          this.#send(args)
         }
       }
     }
@@ -90,12 +161,12 @@ import { insertScript } from "@ott/untils/insert-script.js"
     win._opaq = []
   }
   win.ott = new TrackApp();
-  win.ott.init();
+
 
   if (dom.readyState === 'complete'){
-    win.ott.process();
+    win.ott.init();
   } else {
     once(dom, 'DOMContentLoaded', () => {
-      win.ott.process();
+      win.ott.init();
     })
   }
