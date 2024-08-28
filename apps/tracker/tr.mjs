@@ -1,13 +1,16 @@
+import { once } from "@ott/untils/events"
+import { insertScript } from "@ott/untils/insert-script.js"
+
 /**
  * @typedef TrackAppOptions
  * @property {string} id       - counter id
  * @property {string} endpoint - localhost:3001
  */
-
-!function (win, dom) {
-  'use strict';
-
-  const target = document.currentScript;
+  const win = window;
+  const dom = document;
+  const target = dom.currentScript;
+  const q = dom.querySelector;
+  const qq = dom.querySelectorAll;
 
   const arrayChunk = (array, chunk = 10) => {
     let i, j, newArr;
@@ -17,79 +20,82 @@
     return newArr;
   };
 
-  const loadScript = (target, src) => {
-    return new Promise((resolve, reject) => {
-      let script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.async = true;
-      script.src = src;
-      script.addEventListener('load', (e) => resolve(script), false);
-      script.addEventListener('error', (err) => reject(err), false);
-      target.parentNode.insertBefore(script, target.nextSibling);
-    });
-  };
-
-  const ott = {};
-  const q = dom.querySelector;
-  const qq = dom.querySelectorAll;
+  const recopy = (obj) => JSON.parse(JSON.stringify(obj));
 
   class TrackApp {
-    __q = [];
-    init = false;
-    target;
-    trafficId;
+    id = '';
+    data = {};
+    ready = false;
+    endpoint = '';
 
-    /**
-     *
-     * @param {TrackAppOptions} config
-     * @returns {TrackApp|*}
-     */
-    static instance(config) {
-      if (!target instanceof HTMLElement) {
-        console.warn('Error: target script not found');
+    init() {
+      if (this.ready) {
+        return;
       }
-      let endpoint = config.endpoint;
-      let id = config.id;
-      if (ott[id]) {
-        return ott[id];
-      }
+      let target = q(['script[data-ott-id]']);
+      if (target) {
+        this.id = target.dataset.ottId;
+        this.endpoint = target.dataset.endpoint;
 
-      if (!endpoint) {
-        endpoint = location.host;
-      }
-      let tr = new TrackApp(config);
-      /** @var HtmlElement */
-      let e = target || dom.body;
-      loadScript(e, '//' + endpoint + '/t/' + id).then((s) => {
-        e.removeChild(s);
-        if (!options) {
-          tr.trafficId = options.trafficId;
+        if (!this.id || !this.endpoint) {
+          console.error('error init', new Error(''))
+          return;
         }
-        tr.init = true;
 
-      }).catch(e => {
-        console.error('error init', e);
-      });
-      return ott[id] = tr;
+        insertScript(target, {
+          src: this.baseUrl() + '?a=init',
+          async: true,
+        }).then(s => {
+          target.removeChild(s);
+
+          if (win._ott_data[this.id] &&  win._ott_data[this.id].trafficId) {
+            this.data = recopy(win._ott_data[this.id]);
+            delete win._ott_data;
+            this.ready = true;
+          }
+
+        }).catch(e => {
+          console.error('error init', e);
+        })
+      }
     }
 
-    /**
-     * @param {TrackAppOptions} config
-     */
-    constructor(config) {
-      this.config = config;
+    baseUrl() {
+      return location.protocol + '//' + this.endpoint + '/t/' + this.id;
     }
 
     send(args) {
-      console.log('send', args)
+      let http = new XMLHttpRequest();
+      http.open("POST", this.baseUrl() + '?a=event');
+      http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      http.send(JSON.stringify(args));
     }
 
-    push(name, options) {
-      this.queueProcess();
-    }
-
-    queueProcess() {
+    process() {
+      if (!this.ready) {
+        return;
+      }
+      recopy(win._opaq).forEach((arg) => {
+        this.send(arg);
+      });
+      win._qpaq = {
+        push: (args) => {
+          this.send(args)
+        }
+      }
     }
   }
-  win._ott = TrackApp;
-}(window, document);
+
+  if (win._opaq !== void 0) {
+    win._opaq = []
+  }
+  win.ott = new TrackApp();
+  win.ott.init();
+
+  if (dom.readyState === 'complete'){
+    win.ott.process();
+  } else {
+    once(dom, 'DOMContentLoaded', () => {
+      win.ott.process();
+    })
+  }

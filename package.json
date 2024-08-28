@@ -5,7 +5,8 @@
   "main": "backend/index.js",
   "type": "commonjs",
   "workspaces": [
-    "./apps/*"
+    "./apps/*",
+    "./packages/*"
   ],
   "directories": {
     "test": "tests"
