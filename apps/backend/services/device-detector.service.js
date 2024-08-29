@@ -68,7 +68,7 @@ class DeviceDetectorService extends Service {
     });
   }
 
-  createdService() {
+  async createdService() {
     this.detector = new DeviceDetector({
       deviceIndexes: true,
       clientIndexes: true,

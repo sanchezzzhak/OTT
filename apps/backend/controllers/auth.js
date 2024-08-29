@@ -2,7 +2,7 @@ const {AbstractController} = require('node-moleculer-web');
 const crypto = require('crypto');
 const JWT = require('../utils/jwt');
 
-class AuthController extends AbstractController {
+class Auth extends AbstractController {
   
   async login() {
 
@@ -21,4 +21,4 @@ class AuthController extends AbstractController {
 
 }
 
-module.exports = AuthController;
+module.exports = Auth;

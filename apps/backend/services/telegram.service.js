@@ -11,8 +11,6 @@ const COMMAND_GET_UPDATES = 'getUpdates';
 const COMMAND_SET_WEBHOOK = 'setWebhook';
 const COMMAND_GET_WEBHOOK_INFO = 'getWebhookInfo';
 
-const appConfig = require('../../config/app.config');
-const accessKey = appConfig.telegram;
 
 class TelegramService extends Service
 {
@@ -20,7 +18,7 @@ class TelegramService extends Service
     super(broker);
     this.parseServiceSchema({
       name: 'telegram',
-      started: this.startedService,
+      created: this.createdService,
       methods: {
 
         /**
@@ -68,7 +66,7 @@ class TelegramService extends Service
   async command(command, params) {
     let searchParams = new URLSearchParams(params);
     let query = searchParams.toString();
-    let url = `${BASE_API_URL}/${accessKey}/${command}?${query}`;
+    let url = `${BASE_API_URL}/${process.env.TELEGRAM_ACCESS_KEY ?? ''}/${command}?${query}`;
     try {
       let response = await axios({method: 'get', url});
       if (response.status === 200) {
@@ -80,8 +78,8 @@ class TelegramService extends Service
     return null;
   }
 
-  startedService(){
-
+  async createdService(){
+    return true
   }
 }
 

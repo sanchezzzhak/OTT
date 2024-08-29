@@ -15,6 +15,10 @@
     "vue": "^3.4.38",
     "vue-i18n": "^9.11.1",
     "vue-router": "^4.3.0",
-    "pinia": "^2.2.2"
+    "pinia": "^2.2.2",
+    "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.8.2",
+    "@popperjs/core": "^2.11.2",
+    "chart.js": "^3.7.0"
   }
 }

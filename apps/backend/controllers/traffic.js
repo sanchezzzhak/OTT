@@ -11,7 +11,7 @@ const ACTIONS = {
   EVENT: 'event'
 };
 
-class TrafficController extends AbstractController {
+class Traffic extends AbstractController {
 
   #actionInit() {
     const trafficId = randomUUID();
@@ -140,4 +140,4 @@ class TrafficController extends AbstractController {
   
 }
 
-module.exports = TrafficController;
+module.exports = Traffic;

@@ -1,6 +1,6 @@
 const { AbstractController } = require('node-moleculer-web');
 
-class PingController extends AbstractController {
+class Ping extends AbstractController {
 
   async index() {
     return 'ok pong';
@@ -8,4 +8,4 @@ class PingController extends AbstractController {
 
 }
 
-module.exports = PingController;
+module.exports = Ping;

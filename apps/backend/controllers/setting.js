@@ -1,7 +1,7 @@
 const {AbstractController} = require('node-moleculer-web');
 
 
-class SettingController extends AbstractController {
+class Setting extends AbstractController {
 
   /***
    * Update settings for route /settings
@@ -26,4 +26,4 @@ class SettingController extends AbstractController {
 
 }
 
-module.exports = SettingController;
+module.exports = Setting;

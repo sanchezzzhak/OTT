@@ -1,6 +1,6 @@
 const { AbstractController } = require('node-moleculer-web');
 
-class ProjectController extends AbstractController {
+class Project extends AbstractController {
 
 
   /**
@@ -17,4 +17,4 @@ class ProjectController extends AbstractController {
   }
 }
 
-module.exports = ProjectController;
+module.exports = Project;

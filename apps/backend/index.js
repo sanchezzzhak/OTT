@@ -1,8 +1,7 @@
 const moleculerConfig = require('../../configs/moleculer.config');
 const { ServiceBroker } = require('moleculer');
 const { resolve } = require('path');
-// configs init
-// microservices init
+
 const broker = new ServiceBroker(moleculerConfig);
 
 broker.loadServices(
@@ -15,6 +14,9 @@ broker
     broker.logger.info('✔ Broker start completed');
     broker.logger.info('✔ OTT server started');
     broker.logger.info('✔ Good luck');
-  }).catch(e => {
+  })
+  .catch(e => {
     broker.logger.error(e);
   });
+
+
