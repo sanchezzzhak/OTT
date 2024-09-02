@@ -32,6 +32,7 @@ export default function DeviceCollector() {
         'bitness',
         'wow64',
         'model',
+        'formFactors',
         'uaFullVersion',
         'fullVersionList'];
 
