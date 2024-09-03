@@ -58,7 +58,7 @@ const routes = [
     name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
     meta: {
-      auth: true,
+      auth: false,
       title: 'Dashboard',
     },
     children: [

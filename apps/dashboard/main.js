@@ -3,12 +3,10 @@ import {createPinia} from 'pinia';
 import {createI18n} from 'vue-i18n';
 
 // css/scss
-import 'bootstrap/dist/js/bootstrap.bundle.min'
 import './assets/scss/main.scss'
+
 // scripts
-
-import 'bootstrap-icons/font/bootstrap-icons.css'
-
+import 'bootstrap/js/index.umd.js'
 import bsInput from "./components/bootstrap/bsInput.vue";
 import bsPasswordEye from "./components/bootstrap/bsPasswordEye.vue";
 import bsSwitch from "./components/bootstrap/bsSwitch.vue";

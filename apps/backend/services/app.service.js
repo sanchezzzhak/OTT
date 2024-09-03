@@ -14,6 +14,7 @@ const ServiceSettings = {
   portSchema: process.env.SERVER_PORT_SCHEMA ?? 'node',
   publicDir: resolve(__dirname + '/../../../public'),
   publicIndex: 'index.html',
+  staticCompress: true,
   controllers: {
     // backend api
     traffic: TrafficController,

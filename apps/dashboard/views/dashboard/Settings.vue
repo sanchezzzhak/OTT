@@ -1,7 +1,5 @@
 <template>
-  <div class="page-settings container-fluid">
     <h4>{{ $t('Settings') }}</h4>
-
     <ul class="nav nav-pills nav-pills-dark">
       <li class="nav-item" v-for="item in items">
         <router-link class="nav-link nav" :to="item.to">
@@ -11,9 +9,6 @@
     </ul>
 
     <router-view></router-view>
-
-
-  </div>
 </template>
 
 <script>

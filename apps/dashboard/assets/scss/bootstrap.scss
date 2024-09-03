@@ -21798,9 +21798,17 @@ fieldset:disabled .table-list .page,
   padding-bottom: 6rem;
 }
 
-@media (min-width: 576px) {
+@media (min-width: 992px) {
   .content {
     padding-bottom: 4rem;
+    margin-left: 16rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .content {
+    padding-bottom: 4rem;
+    margin-left: 0;
   }
 }
 

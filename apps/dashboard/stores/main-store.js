@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import {$axios} from '../api';
 
+
 export const useStore = defineStore('main', {
 
   state: () => ({
@@ -19,6 +20,7 @@ export const useStore = defineStore('main', {
     authStatus: state => state.status,
   },
   actions: {
+
     language(value) {
       localStorage.setItem('language', value);
     },
