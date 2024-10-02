@@ -7,7 +7,6 @@ const store = useStore();
 const { locale } = useI18n();
 
 function changeLanguage(event) {
-  event.stopPropagation();
   const value = event.target.dataset.lang;
   locale.value = value;
   store.language(value);
@@ -26,7 +25,7 @@ const LangEnActive = ref(false);
            id="languageDropdown"
            role="button"
            data-bs-toggle="dropdown"
-           aria-expanded="false">
+           aria-expanded="true">
           {{ locale.toUpperCase() }}
         </a>
         <ul class="dropdown-menu justify-content-start" aria-labelledby="languageDropdown">
@@ -48,15 +47,17 @@ const LangEnActive = ref(false);
 
 <style lang="scss">
 #language-nav a.dropdown-toggle {
-  font-size: 26px;
+  font-size: 20px;
   padding: 0;
   margin-top: 0.3em;
   font-weight: 100;
-  letter-spacing: -2px;
+  font-family: Arial, serif;
+  letter-spacing: -1px;
   &::after {
     font-size: 18px;
   }
 }
+#language-nav { width: 40px}
 #language-nav .dropdown-item a {
   cursor: pointer;
 }
