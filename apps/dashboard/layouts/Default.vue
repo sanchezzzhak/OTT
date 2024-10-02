@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-import UiConfig from '../components/ui-config.vue';
+import UiConfig from '../components/UI-Config.vue';
 </script>
