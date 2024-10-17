@@ -1,8 +1,6 @@
 <script setup>
 import { useStore } from '../stores/main-store';
 import { useI18n } from 'vue-i18n';
-import { ref } from 'vue';
-
 const store = useStore();
 const { locale } = useI18n();
 
@@ -11,9 +9,6 @@ function changeLanguage(event) {
   locale.value = value;
   store.language(value);
 }
-
-const LangEnActive = ref(false);
-
 
 </script>
 
