@@ -22,8 +22,6 @@
           </div>
         </a>
       </div>
-
-
       <ul class="navbar-nav navbar-nav-icons flex-row">
         <li class="nav-item">
           <navbar-theme-card></navbar-theme-card>
@@ -42,7 +40,6 @@
   .dropdown-menu {
     border: none;
     width: 100%;
-
     li {
       width: 100%
     }

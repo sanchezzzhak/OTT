@@ -13,6 +13,7 @@ import bsSwitch from "./components/bootstrap/bsSwitch.vue";
 import bsCopy from "./components/bootstrap/bsCopy.vue";
 import HeaderNav from "./components/HeaderNav.vue";
 import Sidebar from "./components/Sidebar.vue";
+import bsNavPills from "./components/bootstrap/bsNavPills.vue";
 import DefaultLayout from './layouts/Default.vue';
 
 import App from './App.vue';
@@ -41,6 +42,7 @@ app.component('bs-password-eye', bsPasswordEye);
 app.component('bs-switch', bsSwitch);
 app.component('bs-copy', bsCopy);
 app.component('sidebar', Sidebar);
+app.component('bs-nav-pills', bsNavPills);
 app.component('header-nav', HeaderNav);
 
 // layouts
