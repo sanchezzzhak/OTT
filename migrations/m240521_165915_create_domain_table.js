@@ -1,12 +1,16 @@
 
 const {Migration} = require('node-dba');
 
+/**
+ * The migration for create tables for parking domain system
+ */
 class m240521_165915_create_domain_table extends Migration {
 
   table = 'domain';
 
   async up(){
     await this.createTable(this.table, {
+      id: this.primaryUUIDKey(),
       name: this.string().notNull(),
       description: this.string().null(),
       status: this.tinyInteger(3).defaultValue(0),

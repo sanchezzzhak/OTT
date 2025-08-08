@@ -9,6 +9,7 @@ const program = new Command();
 fs.readdirSync(__dirname + '/commands', {
   withFileTypes: true
 }).forEach((file) => {
+
   const {
     action,
     name,
@@ -17,6 +18,7 @@ fs.readdirSync(__dirname + '/commands', {
     opts,
     args
   } = require(`${file.path}/${file.name}`);
+
   const task = program
     .command(name)
     .description(description)

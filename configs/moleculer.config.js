@@ -12,5 +12,20 @@ module.exports = {
     strategy: process.env.REGISTRY_STRATEGY ?? 'RoundRobin',
     preferLocal: process.env.REGISTRY_PREFER_LOCAL ?? false
   },
-  logger: console
+  logger: console,
+  metrics: {
+    enabled: true,
+    reporter: [
+      {
+        type: "Event",
+        options: {
+          eventName: "$metrics.snapshot",
+          broadcast: false,
+          groups: null,
+          onlyChanges: false,
+          interval: 5,
+        }
+      }
+    ]
+  }
 };

@@ -8,14 +8,8 @@ class m240410_114921_create_project_table extends Migration {
   async up(){
 
     await this.createTable(this.table, {
-      id: this.primaryUUIDKey(),
+      id: this.primaryKey(),
       name: this.string(),
-      token: this.string(),
-      description: this.string(),
-      status: this.integer(),
-      created_at: this.timestamp().defaultExpression(this.currentTimestamp()),
-      updated_at: this.timestamp().defaultExpression(this.currentTimestamp())
-        .onUpdate(this.currentTimestamp()),
     });
 
     return true;

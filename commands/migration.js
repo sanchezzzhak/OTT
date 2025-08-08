@@ -2,8 +2,10 @@ const { DBA, MigrationManager } = require('node-dba');
 const { resolve } = require('node:path');
 const { Argument } = require('commander');
 
-const configDir = resolve(__dirname + '/../config/db');
-const migrationDir = resolve(__dirname + '/../migration');
+const rootApp = __dirname + '/../';
+
+const configDir = resolve(rootApp, 'configs/db');
+const migrationDir = resolve(rootApp, 'migrations');
 
 DBA.loadConfigsForDir(configDir);
 
@@ -28,7 +30,7 @@ const
 
 const action = async function(db, command, limit, name) {
   const migrationManager = new MigrationManager({
-    db: DBA.instance(db, { applicationName: 'ott-dba-migration' }),
+    db: DBA.instance(db, {applicationName: 'ott-dba-migration' }),
     migrations: migrationDir,
     migrationsTableName: 'migration'
   });
