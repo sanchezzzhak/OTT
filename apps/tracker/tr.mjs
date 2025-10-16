@@ -26,12 +26,12 @@ import DeviceCollector from "./device-collector.js"
   const recopy = (obj) => JSON.parse(JSON.stringify(obj));
 
   class TrackApp {
-    id = '';
+    id = '';         // tracker id
     data = {};
-    ready = false;
-    endpoint = '';
-    fb = '';
-    meta = {};
+    ready = false; // stage ready to use complete
+    endpoint = '';   // backend api url
+    fb = '';         // findgerprint id
+    meta = {};          // meta data device info
 
     init() {
       if (this.ready) {
@@ -133,10 +133,16 @@ import DeviceCollector from "./device-collector.js"
      * @param args
      */
     #send(args) {
-      let http = new XMLHttpRequest();
-      http.open("POST", this.#baseUrl() + '?a=event');
-      http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-      http.send(JSON.stringify(args));
+      const url = this.#baseUrl() + '?a=event'
+      const data = JSON.stringify(args);
+      if (navigator.sendBeacon !== void 0) {
+        navigator.sendBeacon(url, data);
+      } else {
+        const http = new XMLHttpRequest();
+        http.open("POST", url);
+        http.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        http.send(data);
+      }
     }
 
     /**
@@ -161,8 +167,6 @@ import DeviceCollector from "./device-collector.js"
     win._opaq = []
   }
   win.ott = new TrackApp();
-
-
   if (dom.readyState === 'complete'){
     win.ott.init();
   } else {

@@ -10,8 +10,8 @@ class m250808_193841_create_monitor_profile_table extends Migration {
       event_id: this.uuid().notNull(),
       format: this.string().notNull(),
       data: 'JSONB NOT NULL',
-      duration_ms: 'DOUBLE PRECISION',
-      sample_rate: 'DOUBLE PRECISION',
+      duration_ms: this.double().precision(),
+      sample_rate: this.double().precision(),
       created_at: 'TIMESTAMPTZ NOT NULL DEFAULT NOW()',
     });
 

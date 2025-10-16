@@ -11,9 +11,9 @@ class m250808_193841_create_monitor_issue_table extends Migration {
       fingerprint: this.string().notNull(),
       title: this.text().null(),
       status: this.text().null(),
-      first_seen: 'TIMESTAMPTZ NOT NULL DEFAULT NOW()',
-      last_seen: 'TIMESTAMPTZ NOT NULL DEFAULT NOW()',
-      count: 'BIGINT NOT NULL DEFAULT 1',
+      first_seen: this.timestampz().notNull().defaultExpression('NOW()'),
+      last_seen: this.timestampz().notNull().defaultExpression('NOW()'),
+      count: this.bigInteger().notNull().defaultValue(1),
       release_id: this.uuid().null(),
     });
 

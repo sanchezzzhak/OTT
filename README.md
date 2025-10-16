@@ -5,7 +5,7 @@
  * Track for events in sites
  * Conversion analysis and effective sale traffic
  
-### Node support versions (14.17.0, 17.1.0  or later)
+### Node support versions (20.x or later)
 
 # Install
 ```
@@ -15,9 +15,6 @@ yarn build
 ``` 
 create or edit `nano config/local/pg.config.js`
 ```js
-/**
- * @docs https://github.com/moleculerjs/moleculer-db/tree/master/packages/moleculer-db-adapter-sequelize#readme
- */
 const pgConfig = {
    dsn: `postgres://USERNAME:PASSWORD@localhost:5432/DATABASE`,
    options: {}
